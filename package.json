@@ -1,0 +1,38 @@
+{
+  "name": "express-vercel",
+  "version": "1.0.0",
+  "description": "Deploy express js to vercel.",
+  "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatuanem199801/express-vercel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hatuanem199801/express-vercel/issues"
+  },
+  "homepage": "https://github.com/hatuanem199801/express-vercel#readme",
+  "dependencies": {
+    "@bochilteam/scraper": "^4.2.4",
+    "@replit/node-fetch": "^3.1.0",
+    "@tobyg74/tiktok-api-dl": "^1.0.13",
+    "axios": "^1.6.7",
+    "ejs": "^3.1.9",
+    "express": "^4.17.1",
+    "google-it": "^1.6.4",
+    "google-tts-api": "^2.0.2",
+    "gpti": "^2.0.1",
+    "luxon": "^3.4.4",
+    "scrape-youtube": "^2.4.0",
+    "ytmp3-scrap": "^1.0.0",
+    "ytmp4": "^1.0.2"
+  }
+}
