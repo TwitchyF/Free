@@ -11,7 +11,7 @@ const google = require("./func/search-google.js");
 const ytmp3 = require("ytmp3-scrap");
 const ytmp4 = require("ytmp4");
 const translate = require("./func/ai-translate.js");
-const hari = require("./func/other-date.js"); 
+const hari = require("./func/other-date.js");
 
 router.get('/snapsave', async (req, res) => {
   try {
