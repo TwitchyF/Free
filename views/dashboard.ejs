@@ -100,11 +100,28 @@
     </div>
 
     <!-- Scripts -->
-    <script>
-        window['CboxReady'] = function (Cbox) {
-            Cbox('button', '5-949299-YAN0DX');
-        }
-    </script>
+  
+  <!--- botika webchat begin -->
+  <script src="https://chat.botika.online/client/assets/js/botika.widget.js"></script>
+  <script>
+    window.BotikaChat.init({
+      'client': 'Cg8dLOu',
+      'widget': {
+        'theme': 'custom',
+        'theme-color' :'#4E0A47',
+        'title': 'Alicia',
+        'description': 'Description',
+        'caption': 'Bantuan',
+        'greeting': 'false',
+        'greeting-message': '',
+        'greeting-button': 'Hello',
+        'logo': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaZMaMQFWSGMDTieR0OSAvuQ12IKyUT192lm5uGzhHUXePhIWs1laRu9vr&s=10',
+        'history': false
+      }
+    });
+  </script>
+  <!--- botika webchat end -->
+  
     <script src="https://static.cbox.ws/embed/2.js" async></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
