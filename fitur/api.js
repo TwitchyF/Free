@@ -12,7 +12,7 @@ const ytmp3 = require("ytmp3-scrap");
 const ytmp4 = require("ytmp4");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
-const quotes = require("./func/other-quotes.js");
+const nueai = require("./func/other-quotes.js");
 
 router.get('/snapsave', async (req, res) => {
   try {
@@ -262,9 +262,11 @@ router.get("/google", async (req, res) => {
   }
 });
 
-router.get("/quotes", async (req, res) => {
+router.get("/nueai", async (req, res) => {
+  const { text, user } = req.query;
+
   try {
-    const result = await quotes.get('get', 'v1');
+    const result = await nueai.get(text, user);
     res.json({ result });
   } catch (error) {
     console.error("Error:", error);
