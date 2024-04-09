@@ -12,6 +12,7 @@ const ytmp3 = require("ytmp3-scrap");
 const ytmp4 = require("ytmp4");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
+const quotes = require("./func/other-quotes.js");
 
 router.get('/snapsave', async (req, res) => {
   try {
@@ -258,6 +259,16 @@ router.get("/google", async (req, res) => {
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/quotes", async (req, res) => {
+  try {
+    const result = await quotes.get('get', 'v1');
+    res.json({ result });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
