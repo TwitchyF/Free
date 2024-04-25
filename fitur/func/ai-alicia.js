@@ -27,9 +27,9 @@ const get = async (text, user) => {
         return "Aku tidak mengerti";
     };
 
-    let hasil = await gpt(text, user, "blaael9y3cu1706606677060");
+    let hasil = await gpt(text, user+'v1', "blaael9y3cu1706606677060");
     for (let i = 0; i < 3 && hasil === "Maaf, aku belum mengerti dengan pertanyaanmu. Bisa kamu menjelaskannya lagi?"; i++) {
-        hasil = await gpt(text, user, "blaael9y3cu1706606677060");
+        hasil = await gpt(text, user+'v1', "blaael9y3cu1706606677060");
     }
     return hasil;
 };
