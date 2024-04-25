@@ -31,12 +31,6 @@ const get = async (text, user) => {
     for (let i = 0; i < 3 && hasil === "Maaf, aku belum mengerti dengan pertanyaanmu. Bisa kamu menjelaskannya lagi?"; i++) {
         hasil = await gpt(text, user+'v1', "blaael9y3cu1706606677060");
     }
-  const response = await axios.get(`https://nue-api.vercel.app/api/gpt?model=gpt-4&prompt=Tambahkan emoji pada teks yang saya berikan menggunakan emoji ekspresi di setiap frasa/kata nya
-
-teks : ${hasil}
-  
-Note : hanya berikan teks yang sudah di modifikasi!!`);
-
-  return response.data.result.gpt
+  return hasil
 };
 module.exports = { get };
