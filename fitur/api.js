@@ -63,7 +63,7 @@ router.get('/gemini', async (req, res) => {
       }
     });
 
-    res.json(response.data);
+    res.json({status : 200, result : response.data.candidates[0].content.parts[0].text})
   } catch (error) {
     if (error.response) {
       console.error('Error:', error.response.data);
