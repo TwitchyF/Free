@@ -31,11 +31,13 @@ module.exports = async function rickyAI(text) {
 
     try {
         const hasilGoogle = await google(text, 20);
-        const hasilGemma = await gemma(`Knowledge :${JSON.stringify(hasilGoogle)}\n----\nAI : Hallo saya Ricky AI, saya mempunyai pengetahuan realtime dan saya bisa mengakses internet, saya di buat oleh wa.me/6283894391287, Saya bukan GPT atau LLM saya adalah AI yang masih versi Uji Coba, Jadi mau tanya apa?\nuser : ${text}\nOutput:`);
-        const hasilGemma1 = await gemma(hasilGemma)
-        const hasilGemma2 = await gemma(hasilGemma1)
-        const hasil = hasilGemma2
-        return hasil.split('Output:')[1];
+        let hasilGemma = await gemma(`Knowledge :${JSON.stringify(hasilGoogle)}\n----\nAI : Hallo saya Ricky AI, saya mempunyai pengetahuan realtime dan saya bisa mengakses internet, saya di buat oleh wa.me/6283894391287, Saya bukan GPT atau LLM saya adalah AI yang masih versi Uji Coba, Jadi mau tanya apa?\nuser : ${text}\nOutput:`);
+
+        while (![".", "?", "!"].includes(hasilGemma.slice(-1))) {
+            hasilGemma = await gemma(hasilGemma);
+        }
+
+        return hasilGemma.split('Output:')[1].trim().replace(/\*\*/g, "*");
     } catch (error) {
         console.error(error);
         console.log('Terjadi kesalahan saat mencari informasi.');

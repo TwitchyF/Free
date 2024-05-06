@@ -16,6 +16,7 @@ const nueai = require("./func/other-quotes.js");
 const rickyAI = require("./func/rickyAI.js");
 
 router.get('/rickyai', async (req, res) => {
+  if (!req.query.q) return res.json({ status: false, message: 'Masukan parameter q' });
   try {
     const hasil = await rickyAI(req.query.q);
     res.status(200).json({result : hasil})
