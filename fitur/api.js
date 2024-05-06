@@ -13,20 +13,6 @@ const ytmp4 = require("ytmp4");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const nueai = require("./func/other-quotes.js");
-const rickyAI = require("./func/rickyAI.js");
-
-router.get('/rickyai', async (req, res) => {
-  if (!req.query.q) return res.json({ status: false, message: 'Masukan parameter q' });
-  try {
-    const hasil = await rickyAI(req.query.q);
-    res.status(200).json({result : hasil})
-  } catch (error) {
-    res.status(500).json({
-      status: 500,
-      message: "Terjadi kesalahan saat menggunakan rickyAI",
-    });
-  }
-})
 
 router.get('/snapsave', async (req, res) => {
   try {
