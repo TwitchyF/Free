@@ -1,4 +1,4 @@
-const { googleImage, snapsave } = require("@bochilteam/scraper");
+const { snapsave } = require("@bochilteam/scraper");
 const express = require("express");
 const axios = require("axios");
 const tiktok = require("@tobyg74/tiktok-api-dl");
@@ -13,6 +13,7 @@ const ytmp4 = require("ytmp4");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const nueai = require("./func/other-quotes.js");
+const googleImage = require("./func/search-image.js")
 
 router.get('/snapsave', async (req, res) => {
   try {
@@ -242,7 +243,7 @@ router.get("/image", async (req, res) => {
   const query = req.query.query;
   if (!query) return res.status(400).json({ error: "Masukkan query" });
   try {
-    const hasil = await googleImage(query);
+    const hasil = await googleImage.get(query);
     res.json(hasil);
   } catch (error) {
     res.status(500).json({ error: "Terjadi kesalahan" });
