@@ -33,6 +33,7 @@
     "gpti": "^2.0.1",
     "luxon": "^3.4.4",
     "scrape-youtube": "^2.4.0",
+    "sharp": "^0.33.4",
     "ytmp3-scrap": "^1.0.0",
     "ytmp4": "^1.0.2"
   }
