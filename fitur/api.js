@@ -8,13 +8,23 @@ const googleTTS = require("google-tts-api");
 const alicia = require("./func/ai-alicia.js");
 const gpt = require("./func/ai-gpt.js");
 const google = require("./func/search-google.js");
-const ytmp3 = require("ytmp3-scrap");
-const ytmp4 = require("ytmp4");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const nueai = require("./func/other-quotes.js");
-const googleImage = require("./func/search-image.js")
+const googleImage = require("./func/search-image.js");
+const ytdl = require("ytdl-core");
 
+router.get('/ytdl', async (req, res) => {
+  const url = req.query.url;
+  if (!url) return res.json({ status: false, download:{}, info:{} });
+  try {
+    const info = await ytdl.getInfo(url);
+    
+    res.json({status: true, download : {audio:`https://tattered-classy-comic.glitch.me/yt-mp3?url=${url}`, video:`https://tattered-classy-comic.glitch.me/yt-mp4?url=${url}`}, info : info.videoDetails})
+  } catch (error) {
+    res.json({status: false, download:{}, info:{}})
+  }
+});
 router.get('/snapsave', async (req, res) => {
   try {
     if (!req.query.url) {
@@ -92,46 +102,6 @@ router.get("/translate", async (req, res) => {
     res.status(200).json({ status: 200, result: hasil });
   } catch (error) {
     res.status(500).json({ status: 500, message: error.message });
-  }
-});
-
-router.get("/ytmp4", async (req, res) => {
-  if (!req.query.url)
-    return res.status(400).json({
-      status: 400,
-      message: "Masukkan parameter url",
-    });
-  try {
-    const result = await ytmp4(req.query.url);
-    res.status(200).json({
-      status: 200,
-      result,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 500,
-      message: "Terjadi kesalahan",
-    });
-  }
-});
-
-router.get("/ytmp3", async (req, res) => {
-  if (!req.query.url)
-    return res.status(400).json({
-      status: 400,
-      message: "Masukkan parameter url",
-    });
-  try {
-    const result = await ytmp3(req.query.url);
-    res.status(200).json({
-      status: 200,
-      result,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 500,
-      message: "Terjadi kesalahan",
-    });
   }
 });
 
