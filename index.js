@@ -12,6 +12,7 @@ app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
 app.get("/uptime", async (req, res) => {
+  const apiUrl = 'https://tattered-classy-comic.glitch.me/';
   try {
         const response = await axios.get(apiUrl);
         if (response.status === 200) {
