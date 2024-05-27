@@ -25,6 +25,7 @@ router.get('/ytdl', async (req, res) => {
     res.json({status: false, download:{}, info:{}})
   }
 });
+
 router.get('/snapsave', async (req, res) => {
   try {
     if (!req.query.url) {
@@ -44,8 +45,8 @@ router.get('/snapsave', async (req, res) => {
     }
     res.status(200).json({
       status: 200,
-      result: hasil[0].url,
-      type: type
+      type, 
+      result: hasil[0].url
     });
   } catch (error) {
     res.status(500).json({
