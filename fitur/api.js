@@ -14,6 +14,33 @@ const nueai = require("./func/other-quotes.js");
 const googleImage = require("./func/search-image.js");
 const ytdl = require("ytdl-core");
 
+router.get('/play', async (req, res) => {
+  const q = req.query.query;
+  try {
+    const response = await axios.get(`https://nue-api.vercel.app/api/yt-search?query=${q}`);
+    const videos = response.data;
+
+    const filteredVideos = videos.filter(video => video.duration < 600);
+    const topVideo = filteredVideos.length > 0 ? filteredVideos[0] : null;
+
+    const hasil = topVideo ? topVideo.link : null;
+
+    if (hasil) {
+      const result = await axios.get(`https://nue-api.vercel.app/api/ytdl?url=${hasil}`);
+      res.json(result.data);
+    } else {
+      res.status(404).json({
+        status: false,
+        message: 'No videos found with a duration less than 10 minutes.'
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: error.message
+    });
+  }
+});
 router.get('/ytdl', async (req, res) => {
   const url = req.query.url;
   if (!url) return res.json({ status: false, download:{}, info:{} });
