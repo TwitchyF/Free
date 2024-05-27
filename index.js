@@ -11,6 +11,18 @@ app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
+app.get("/redirect", async (req, res) =>{
+  if (!req.query.re) return res.send("Invalid token")
+  try {
+    const re = req.query.re;
+    const link = Buffer.from(re, 'base64').toString('utf-8');
+  if (link.includes("https://")) return res.redirect(link);
+  res.send("Invalid token");
+  } catch (error) {
+    res.send("Invalid token");
+  }
+});
+
 app.get("/uptime", async (req, res) => {
   const apiUrl = 'https://tattered-classy-comic.glitch.me/';
   try {
