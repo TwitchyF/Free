@@ -47,7 +47,7 @@ router.get('/ytdl', async (req, res) => {
   try {
     const info = await ytdl.getInfo(url);
     const randomId = Math.random().toString(36).substr(2, 12).toUpperCase();
-    const dlMp3 = Buffer.from(`https://tattered-classy-comic.glitch.me/yt-mp4?id=${randomId}&url=${url}&date=${Date.now()}`).toString('base64');
+    const dlMp3 = Buffer.from(`https://tattered-classy-comic.glitch.me/yt-mp3?id=${randomId}&url=${url}&date=${Date.now()}`).toString('base64');
     const dlMp4 = Buffer.from(`https://tattered-classy-comic.glitch.me/yt-mp4?id=${randomId}&url=${url}&date=${Date.now()}`).toString('base64');
     
     
