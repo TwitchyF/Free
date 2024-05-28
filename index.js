@@ -15,9 +15,13 @@ app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid token")
   try {
     const re = req.query.re;
-    const link = Buffer.from(re, 'base64').toString('utf-8');
-  if (link.includes("https://")) return res.redirect(link);
-  res.send("Invalid token");
+    const linkMentah = Buffer.from(re, 'base64').toString('utf-8');
+    const link = linkMentah.split("*/link/*")[1];
+    if (link) {
+      res.redirect(link);
+    } else {
+      res.send("Invalid token");
+    }
   } catch (error) {
     res.send("Invalid token");
   }
