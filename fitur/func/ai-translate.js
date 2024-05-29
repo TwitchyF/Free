@@ -69,9 +69,9 @@ async function get(text, lang) {
 
         const query = `aku ingin anda menerjemahkan teks di bawah ke bahasa ${languageList[uppercaseLang]}
 
-Text: ${text}
+Text: \`${text}\`.
 
-note: aku ingin anda memberikan teks terjemahan tanpa tambahan teks apapun.`;
+note: Berikan teks yang sudah di terjemahkan secara langsung tanpa tambahan apapun`;
 
         const result = await gpt.get('gpt-4',query);
         return result.gpt;
