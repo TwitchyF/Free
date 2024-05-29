@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+router.get('/error', function (req, res) {
+  res.status(500).render('error');
+});
+
 router.get('/googlee023af832ca272f7.html', (req, res) => {
 res.render('googlee023af832ca272f7');
 });
