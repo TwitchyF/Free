@@ -1,4 +1,3 @@
-const { snapsave } = require("@bochilteam/scraper");
 const express = require("express");
 const axios = require("axios");
 const tiktok = require("@tobyg74/tiktok-api-dl");
