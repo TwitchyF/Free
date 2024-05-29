@@ -14,6 +14,18 @@ const nueai = require("./func/other-quotes.js");
 const googleImage = require("./func/search-image.js");
 const ytdl = require("ytdl-core");
 
+router.get('/notfound',async(req,res)=>{
+  res.send(`
+    <html>
+    <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1 class="text-center" style="margin-top: 200px; font-size: 72px; color: #333;">404</h1>
+    </body>
+    </html>
+    `)
+});
 router.get('/play', async (req, res) => {
   const q = req.query.query;
   try {
