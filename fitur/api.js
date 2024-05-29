@@ -59,32 +59,15 @@ router.get('/ytdl', async (req, res) => {
 });
 
 router.get('/snapsave', async (req, res) => {
+ const url = req.query.url;
+  if (!url) return res.json({ status: false, download:null});
   try {
-    if (!req.query.url) {
-      return res.status(400).json({
-        status: 400,
-        message: "Masukkan parameter url"
-      });
-    }
-
-    const hasil = await snapsave(req.query.url);
-    const response = await axios.head(hasil[0].url);
-    let type = 'video';
-    if (response.headers['content-type'].includes('image')) {
-      type = 'image';
-    } else if (response.headers['content-type'].includes('video')) {
-      type = 'video';
-    }
-    res.status(200).json({
-      status: 200,
-      type, 
-      result: hasil[0].url
-    });
+    const randomKey = Array(500).fill('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').map(function(x) {return x[Math.floor(Math.random() * x.length)] }).join('')+"*/link/*";
+    const urlapi = randomKey+"https://tattered-classy-comic.glitch.me/snapsave?url="+url
+    const redirect = Buffer.from(urlapi).toString('base64');
+    res.json({status: true, download:`https://nueapi.vercel.app/redirect?re=${redirect}`});
   } catch (error) {
-    res.status(500).json({
-      status: 500,
-      message: error.message
-    });
+    res.json({status: false, download:null});
   }
 });
 
