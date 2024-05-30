@@ -14,7 +14,7 @@ app.set('json spaces', 2);
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
   const stringMentah = Buffer.from(re, 'base64').toString('utf-8');
-  res.json(stringMentah);
+  res.json(JSON.parse(stringMentah));
 });
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid token")
