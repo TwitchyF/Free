@@ -49,7 +49,7 @@
             cursor: not-allowed;
         }
 
-        .button:hover:enabled {
+        .button:hover {
             background-color: #0056b3; /* Darker shade of primary color */
         }
 
@@ -101,27 +101,22 @@
         <div class="menu-item">
             <h2>Text To Speech</h2>
             <p>Ubah teks ke audio</p>
-            <input type="text" class="input-field" id="tts-text" placeholder="Masukkan text">
+            <input type="text" class="input-field" id="tts-text" placeholder="Masukkan text" oninput="enableDisableButton('tts-button', 'tts-text')">
             <button class="button" id="tts-button" disabled onclick="tryNow('/api/tts?lang=id&text=', 'tts-text')">Try Now</button>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.input-field').forEach(input => {
-            input.addEventListener('input', function() {
-                const button = document.getElementById(input.id.replace('url', 'button'));
-                button.disabled = !this.value;
-            });
-        });
+        function enableDisableButton(buttonId, inputId) {
+            const input = document.getElementById(inputId);
+            const button = document.getElementById(buttonId);
+            button.disabled = !input.value.trim();
+        }
 
         function tryNow(endpoint, inputId) {
             const input = document.getElementById(inputId);
-            if (input.value) {
-                location.href = endpoint + encodeURIComponent(        <div class="menu-item">
-            <h2>Acara</h2>
-            <p>Endpoint untuk acara</p>
-            <button class="button" onclick="location.href='/api/acara'">Try Now</button>
-        </div>input.value);
+            if (input.value.trim()) {
+                location.href = endpoint + encodeURIComponent(input.value.trim());
             }
         }
     </script>

@@ -117,8 +117,9 @@
     <script>
         document.querySelectorAll('.input-field').forEach(input => {
             input.addEventListener('input', function() {
-                const button = document.getElementById(input.id.replace('url', 'button'));
-                button.disabled = !this.value;
+                const buttonId = input.id.replace('-url', '-button').replace('-query', '-button');
+                const button = document.getElementById(buttonId);
+                button.disabled = !this.value.trim();
             });
         });
 

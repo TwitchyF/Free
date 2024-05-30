@@ -91,42 +91,41 @@
         <div class="menu-item">
             <h2>Alicia AI</h2>
             <p>Alicia AI yang cuek dan pemalas</p>
-            <input type="text" class="input-field" id="alicia-text" placeholder="Masukkan perintah">
-            <button class="button" id="instagram-button" disabled onclick="tryNow(`/api/alicia?user=Ricky&text=`, 'alicia-text')">Try Now</button>
+            <input type="text" class="input-field" id="alicia-text" placeholder="Masukkan perintah" oninput="checkInput('alicia-text', 'instagram-button')">
+            <button class="button" id="instagram-button" disabled onclick="tryNow('/api/alicia?user=Ricky&text=', 'alicia-text')">Try Now</button>
         </div>
         <div class="menu-item">
             <h2>Gemini Pro</h2>
             <p>Ai fast dari google AI</p>
-            <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan perintah">
-            <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?q=', 'gemini-q')">Try Now</button>
+            <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan perintah" oninput="checkInput('tiktok-url', 'gemini-q')">
+            <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?q=', 'tiktok-url')">Try Now</button>
         </div>
         <div class="menu-item">
             <h2>ChatGpt</h2>
             <p>Semua models ChatGPT</p>
-            <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah">
+            <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah" oninput="checkInput('chatgpt-prompt', 'youtube-button')">
             <button class="button" id="youtube-button" disabled onclick="tryNow('/api/gpt?model=gpt-3.5-turbo&prompt=', 'chatgpt-prompt')">Try Now</button>
         </div>
         <div class="menu-item">
             <h2>Translate</h2>
             <p>Terjemahkan bahasa menggunakan AI gpt</p>
-            <input type="text" class="input-field" id="tr-text" placeholder="Masukkan perintah">
+            <input type="text" class="input-field" id="tr-text" placeholder="Masukkan perintah" oninput="checkInput('tr-text', 'ytdl-button')">
             <button class="button" id="ytdl-button" disabled onclick="tryNow('/api/translate?lang=en&text=', 'tr-text')">Try Now</button>
         </div>
         <div class="menu-item">
             <h2>NueAI</h2>
             <p>Nue Ai cerdas dan fast</p>
-            <input type="text" id="nueaiUrl" class="input-field" placeholder="Masukan perintah">
+            <input type="text" id="nueaiUrl" class="input-field" placeholder="Masukan perintah" oninput="checkInput('nueaiUrl', 'button')">
             <button id="button" class="button" disabled onclick="tryNow('/api/nueai?user=Ricky&text=', 'nueaiUrl')">Try Now</button>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.input-field').forEach(input => {
-            input.addEventListener('input', function() {
-                const button = document.getElementById(input.id.replace('url', 'button'));
-                button.disabled = !this.value;
-            });
-        });
+        function checkInput(inputId, buttonId) {
+            const input = document.getElementById(inputId);
+            const button = document.getElementById(buttonId);
+            button.disabled = !input.value;
+        }
 
         function tryNow(endpoint, inputId) {
             const input = document.getElementById(inputId);

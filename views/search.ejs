@@ -111,9 +111,20 @@
     <script>
         document.querySelectorAll('.input-field').forEach(input => {
             input.addEventListener('input', function() {
-                const button = document.getElementById(input.id.replace('url', 'button'));
+                const button = document.getElementById(input.id.replace('-query', '-button'));
                 button.disabled = !this.value;
             });
         });
 
         function tryNow(endpoint, inputId) {
+    const query = document.getElementById(inputId).value;
+    if (query.trim() !== "") {
+        window.location.href = endpoint + encodeURIComponent(query);
+    } else {
+        alert("Please enter a valid query.");
+    }
+}
+
+    </script>
+</body>
+</html>
