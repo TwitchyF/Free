@@ -11,6 +11,11 @@ app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
+app.get("/succes", async (req,res)=>{
+  const re = req.query.re;
+  const stringMentah = Buffer.from(re, 'base64').toString('utf-8');
+  res.json(stringMentah);
+});
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid token")
   try {
