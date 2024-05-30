@@ -8,8 +8,9 @@
     <meta name="tag" content="free api, nue-api, rest-api, azzapi">
     <style>
         body {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOvOxBbxnGSq2BuaZVxGR4pH92HH6k0Da_36Onm6yt_EM0Jdd6K63SmiM&s=10');
-            color: #f8f9fa; /* Bootstrap's light color for text */
+            background-color: #121212;
+            color: #f8f9fa; /* White color for text */
+            font-family: Arial, sans-serif;
         }
 
         .menu {
@@ -18,69 +19,115 @@
             align-items: center;
             margin: 20px;
             padding: 10px;
-            border: 1px solid #343a40; /* Bootstrap's dark color for border */
+            border: 1px solid #343a40; /* Dark color for border */
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
         }
 
         .menu-item {
-            width: 100%; /* Full width */
+            width: 100%;
+            max-width: 500px;
             margin: 10px;
-            padding: 5px;
+            padding: 20px;
             border: 1px solid #343a40;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            background-color: #1f1f1f; /* Darker background for items */
+            border-radius: 8px;
         }
 
         .button {
             display: inline-block;
-            margin: 5px;
-            padding: 10px;
+            margin: 10px 0;
+            padding: 10px 20px;
             border: none;
             color: #f8f9fa;
-            background-color: #007bff; /* Bootstrap's primary color */
+            background-color: #007bff; /* Primary color */
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .button:disabled {
+            background-color: #6c757d; /* Gray color when disabled */
+            cursor: not-allowed;
+        }
+
+        .button:hover:enabled {
+            background-color: #0056b3; /* Darker shade of primary color */
+        }
+
+        .home-button {
+            margin: 20px;
+            padding: 10px;
+            border: none;
+            background: transparent;
             cursor: pointer;
         }
 
-        .button:hover {
-            background-color: #0056b3; /* Darker shade of Bootstrap's primary color */
+        .home-button img {
+            width: 40px;
+            height: 40px;
         }
 
-        /* Add hover effect to the HOME menu item */
-        .menu-item a[href="/"]:hover {
-            color: #007bff; /* Bootstrap's primary color */
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #343a40;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            color: #f8f9fa;
+        }
+
+        .input-field:focus {
+            border-color: #007bff;
+            outline: none;
         }
     </style>
 </head>
 <body>
     <div class="menu">
         <h1>Nue-APIs</h1>
-      <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1146079/t/1"></script>
-      <div class="menu-item">
+        <button class="home-button" onclick="location.href='/dashboard'">
+            <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
+        </button>
+        <div class="menu-item">
             <h2>Instagram</h2>
-            <p>unduh foto/video instagram</p>
-            <a href="/api/snapsave?url=https://www.instagram.com/p/ByxKbUSnubS/?utm_source=ig_web_copy_link" class="button">try now</a>
-      </div>
+            <p>Unduh foto/video Instagram</p>
+            <input type="text" class="input-field" id="instagram-url" placeholder="Masukkan URL Instagram">
+            <button class="button" id="instagram-button" disabled onclick="tryNow('/api/snapsave?url=', 'instagram-url')">Try Now</button>
+        </div>
         <div class="menu-item">
             <h2>TikTok</h2>
-            <p>unduh video/audio tiktok</p>
-            <a href="/api/tt-dl?url=https://vm.tiktok.com/ZSFR5m8vn/" class="button">try now</a>
+            <p>Unduh video/audio TikTok</p>
+            <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan URL TikTok">
+            <button class="button" id="tiktok-button" disabled onclick="tryNow('/api/tt-dl?url=', 'tiktok-url')">Try Now</button>
         </div>
-      <div class="menu-item">
+        <div class="menu-item">
             <h2>Play</h2>
-            <p>Cari dan play video/audio youtube</p>
-            <a href="/api/play?query=dj ya odna" class="button">try now</a>
-      </div>
-      <div class="menu-item">
-            <h2>YoutubeDL</h2>
-            <p>Unduh video/audio youtube</p>
-            <a href="/api/ytdl?url=https://www.youtube.com/watch?v=36uDReSdFDU" class="button">try now</a>
-      </div>
+            <p>Cari dan play video/audio YouTube</p>
+            <input type="text" class="input-field" id="youtube-query" placeholder="Masukkan query YouTube">
+            <button class="button" id="youtube-button" disabled onclick="tryNow('/api/play?query=', 'youtube-query')">Try Now</button>
+        </div>
+        <div class="menu-item">
+            <h2>YouTubeDL</h2>
+            <p>Unduh video/audio YouTube</p>
+            <input type="text" class="input-field" id="ytdl-url" placeholder="Masukkan URL YouTube">
+            <button class="button" id="ytdl-button" disabled onclick="tryNow('/api/ytdl?url=', 'ytdl-url')">Try Now</button>
+        </div>
     </div>
 
     <script>
-        window['CboxReady'] = function (Cbox) {
-            Cbox('button', '5-949299-YAN0DX');
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('input', function() {
+                const button = document.getElementById(input.id.replace('url', 'button'));
+                button.disabled = !this.value;
+            });
+        });
+
+        function tryNow(endpoint, inputId) {
+            const input = document.getElementById(inputId);
+            if (input.value) {
+                location.href = endpoint + encodeURIComponent(input.value);
+            }
         }
     </script>
-    <script src="https://static.cbox.ws/embed/2.js" async></script>
 </body>
 </html>

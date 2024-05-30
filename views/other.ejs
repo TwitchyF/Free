@@ -8,8 +8,9 @@
     <meta name="tag" content="free api, nue-api, rest-api, azzapi">
     <style>
         body {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOvOxBbxnGSq2BuaZVxGR4pH92HH6k0Da_36Onm6yt_EM0Jdd6K63SmiM&s=10');
-            color: #f8f9fa; /* Bootstrap's light color for text */
+            background-color: #121212;
+            color: #f8f9fa; /* White color for text */
+            font-family: Arial, sans-serif;
         }
 
         .menu {
@@ -18,65 +19,111 @@
             align-items: center;
             margin: 20px;
             padding: 10px;
-            border: 1px solid #343a40; /* Bootstrap's dark color for border */
+            border: 1px solid #343a40; /* Dark color for border */
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
         }
 
         .menu-item {
-            width: 100%; /* Full width */
+            width: 100%;
+            max-width: 500px;
             margin: 10px;
-            padding: 5px;
+            padding: 20px;
             border: 1px solid #343a40;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            background-color: #1f1f1f; /* Darker background for items */
+            border-radius: 8px;
         }
 
         .button {
             display: inline-block;
-            margin: 5px;
-            padding: 10px;
+            margin: 10px 0;
+            padding: 10px 20px;
             border: none;
             color: #f8f9fa;
-            background-color: #007bff; /* Bootstrap's primary color */
+            background-color: #007bff; /* Primary color */
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .button:disabled {
+            background-color: #6c757d; /* Gray color when disabled */
+            cursor: not-allowed;
+        }
+
+        .button:hover:enabled {
+            background-color: #0056b3; /* Darker shade of primary color */
+        }
+
+        .home-button {
+            margin: 20px;
+            padding: 10px;
+            border: none;
+            background: transparent;
             cursor: pointer;
         }
 
-        .button:hover {
-            background-color: #0056b3; /* Darker shade of Bootstrap's primary color */
+        .home-button img {
+            width: 40px;
+            height: 40px;
         }
 
-        /* Add hover effect to the HOME menu item */
-        .menu-item a[href="/"]:hover {
-            color: #007bff; /* Bootstrap's primary color */
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #343a40;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            color: #f8f9fa;
+        }
+
+        .input-field:focus {
+            border-color: #007bff;
+            outline: none;
         }
     </style>
 </head>
 <body>
     <div class="menu">
         <h1>Nue-APIs</h1>
-      <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1146079/t/1"></script>
+        <button class="home-button" onclick="location.href='/dashboard'">
+            <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
+        </button>
         <div class="menu-item">
-            <h2>Calendar events</h2>
-            <p>jadwal acara dan libur dari kalender online</p>
-            <a href="/api/acara" class="button">try now</a>
+            <h2>calendar events</h2>
+            <p>Melihat daftar acara kalender</p>
+            <button class="button" onclick="location.href='/api/acara'">Try Now</button>
         </div>
-      <div class="menu-item">
-            <h2>Date Now</h2>
-            <p>Waktu dan tanggal saat ini</p>
-            <a href="/api/date" class="button">try now</a>
-      </div>
         <div class="menu-item">
-            <h2>Text 2 speech</h2>
-            <p>Pengubah teks menjadi suara</p>
-            <a href="/api/tts?text=I Love U&lang=en" class="button">try now</a>
+            <h2>Date Now</h2>
+            <p>Waktu, tanggal dan acara yang akan datang</p>
+            <button class="button" onclick="location.href='/api/date'">Try Now</button>
+        </div>
+        <div class="menu-item">
+            <h2>Text To Speech</h2>
+            <p>Ubah teks ke audio</p>
+            <input type="text" class="input-field" id="tts-text" placeholder="Masukkan text">
+            <button class="button" id="tts-button" disabled onclick="tryNow('/api/tts?lang=id&text=', 'tts-text')">Try Now</button>
         </div>
     </div>
-  
 
     <script>
-        window['CboxReady'] = function (Cbox) {
-            Cbox('button', '5-949299-YAN0DX');
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('input', function() {
+                const button = document.getElementById(input.id.replace('url', 'button'));
+                button.disabled = !this.value;
+            });
+        });
+
+        function tryNow(endpoint, inputId) {
+            const input = document.getElementById(inputId);
+            if (input.value) {
+                location.href = endpoint + encodeURIComponent(        <div class="menu-item">
+            <h2>Acara</h2>
+            <p>Endpoint untuk acara</p>
+            <button class="button" onclick="location.href='/api/acara'">Try Now</button>
+        </div>input.value);
+            }
         }
     </script>
-    <script src="https://static.cbox.ws/embed/2.js" async></script>
 </body>
 </html>

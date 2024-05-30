@@ -8,8 +8,9 @@
     <meta name="tag" content="free api, nue-api, rest-api, azzapi">
     <style>
         body {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOvOxBbxnGSq2BuaZVxGR4pH92HH6k0Da_36Onm6yt_EM0Jdd6K63SmiM&s=10');
-            color: #f8f9fa; /* Bootstrap's light color for text */
+            background-color: #121212;
+            color: #f8f9fa; /* White color for text */
+            font-family: Arial, sans-serif;
         }
 
         .menu {
@@ -18,73 +19,121 @@
             align-items: center;
             margin: 20px;
             padding: 10px;
-            border: 1px solid #343a40; /* Bootstrap's dark color for border */
+            border: 1px solid #343a40; /* Dark color for border */
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
         }
 
         .menu-item {
-            width: 100%; /* Full width */
+            width: 100%;
+            max-width: 500px;
             margin: 10px;
-            padding: 5px;
+            padding: 20px;
             border: 1px solid #343a40;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            background-color: #1f1f1f; /* Darker background for items */
+            border-radius: 8px;
         }
 
         .button {
             display: inline-block;
-            margin: 5px;
-            padding: 10px;
+            margin: 10px 0;
+            padding: 10px 20px;
             border: none;
             color: #f8f9fa;
-            background-color: #007bff; /* Bootstrap's primary color */
+            background-color: #007bff; /* Primary color */
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .button:disabled {
+            background-color: #6c757d; /* Gray color when disabled */
+            cursor: not-allowed;
+        }
+
+        .button:hover:enabled {
+            background-color: #0056b3; /* Darker shade of primary color */
+        }
+
+        .home-button {
+            margin: 20px;
+            padding: 10px;
+            border: none;
+            background: transparent;
             cursor: pointer;
         }
 
-        .button:hover {
-            background-color: #0056b3; /* Darker shade of Bootstrap's primary color */
+        .home-button img {
+            width: 40px;
+            height: 40px;
         }
 
-        /* Add hover effect to the HOME menu item */
-        .menu-item a[href="/"]:hover {
-            color: #007bff; /* Bootstrap's primary color */
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #343a40;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            color: #f8f9fa;
+        }
+
+        .input-field:focus {
+            border-color: #007bff;
+            outline: none;
         }
     </style>
 </head>
 <body>
     <div class="menu">
         <h1>Nue-APIs</h1>
-      <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1146079/t/1"></script>
+        <button class="home-button" onclick="location.href='/dashboard'">
+            <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
+        </button>
         <div class="menu-item">
-            <h2>Alicia A.I</h2>
-            <p>Alicia AI, ai cuek dan pemalas</p>
-            <a href="/api/alicia?text=hallo&user=Ricky" class="button">try now</a>
+            <h2>Alicia AI</h2>
+            <p>Alicia AI yang cuek dan pemalas</p>
+            <input type="text" class="input-field" id="alicia-text" placeholder="Masukkan perintah">
+            <button class="button" id="instagram-button" disabled onclick="tryNow(`/api/alicia?user=Ricky&text=`, 'alicia-text')">Try Now</button>
         </div>
-      <div class="menu-item">
-            <h2>Gemini pro</h2>
-            <p>Gemini AI, model bahasa dari Google AI</p>
-            <a href="/api/gemini?q=siapa anda" class="button">try now</a>
-      </div>
         <div class="menu-item">
-            <h2>GPT Chat</h2>
-            <p>semua model gpt dari https://nexra.aryahcr.cc/</p>
-            <a href="/api/gpt?model=gpt-4&prompt=Hallo apa kabar" class="button">try now</a>
+            <h2>Gemini Pro</h2>
+            <p>Ai fast dari google AI</p>
+            <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan perintah">
+            <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?q=', 'gemini-q')">Try Now</button>
         </div>
-            <div class="menu-item">
-            <h2>gpt translator</h2>
-            <p>penerjemah bahasa menggunakan gpt</p>
-            <a href="/api/translate?text=aku cinta kamu&lang=en" class="button">try now</a>
-            </div>
-      <div class="menu-item">
+        <div class="menu-item">
+            <h2>ChatGpt</h2>
+            <p>Semua models ChatGPT</p>
+            <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah">
+            <button class="button" id="youtube-button" disabled onclick="tryNow('/api/gpt?model=gpt-3.5-turbo&prompt=', 'chatgpt-prompt')">Try Now</button>
+        </div>
+        <div class="menu-item">
+            <h2>Translate</h2>
+            <p>Terjemahkan bahasa menggunakan AI gpt</p>
+            <input type="text" class="input-field" id="tr-text" placeholder="Masukkan perintah">
+            <button class="button" id="ytdl-button" disabled onclick="tryNow('/api/translate?lang=en&text=', 'tr-text')">Try Now</button>
+        </div>
+        <div class="menu-item">
             <h2>NueAI</h2>
-            <p>Ai yang dapat menyelesaikan tugas sehari hari</p>
-            <a href="/api/nueai?text=siapa+anda&user=Ricky" class="button">try now</a>
-      </div>
+            <p>Nue Ai cerdas dan fast</p>
+            <input type="text" id="nueaiUrl" class="input-field" placeholder="Masukan perintah">
+            <button id="button" class="button" disabled onclick="tryNow('/api/nueai?user=Ricky&text=', 'nueaiUrl')">Try Now</button>
+        </div>
+    </div>
 
     <script>
-        window['CboxReady'] = function (Cbox) {
-            Cbox('button', '5-949299-YAN0DX');
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('input', function() {
+                const button = document.getElementById(input.id.replace('url', 'button'));
+                button.disabled = !this.value;
+            });
+        });
+
+        function tryNow(endpoint, inputId) {
+            const input = document.getElementById(inputId);
+            if (input.value) {
+                location.href = endpoint + encodeURIComponent(input.value);
+            }
         }
     </script>
-    <script src="https://static.cbox.ws/embed/2.js" async></script>
 </body>
 </html>
