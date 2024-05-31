@@ -89,6 +89,12 @@
             <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
         </button>
         <div class="menu-item">
+            <h2>anime schedule</h2>
+            <p>Jadwal anime berdasarkan hari</p>
+            <input type="text" class="input-field" id="anime" placeholder="Masukkan hari" oninput="enableDisableButton('anime-button', 'anime')">
+            <button class="button" id="anime-button" disabled onclick="tryNow('/api/anime-jadwal?hari=', 'anime')">Try Now</button>
+        </div>
+        <div class="menu-item">
             <h2>calendar events</h2>
             <p>Melihat daftar acara kalender</p>
             <button class="button" onclick="location.href='/api/acara'">Try Now</button>

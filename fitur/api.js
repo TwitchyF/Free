@@ -12,6 +12,48 @@ const nueai = require("./func/other-quotes.js");
 const googleImage = require("./func/search-image.js");
 const ytdl = require("ytdl-core");
 
+router.get("/anime-jadwal", async (req, res) => {
+  try {
+    const [jadwalApi, jadwalApi2] = await Promise.all([
+      axios.get('https://nya-otakudesu.vercel.app/api/v1/ongoing/1'),
+      axios.get('https://nya-otakudesu.vercel.app/api/v1/ongoing/2')
+    ]);
+    const hasilJson = { jadwal1: jadwalApi.data.ongoing, jadwal2: jadwalApi2.data.ongoing };
+
+    const anime = (hari) => {
+      const semuaJadwal = [...hasilJson.jadwal1, ...hasilJson.jadwal2];
+      let daftarAnime = [];
+      let daftarAnimeRandom = [];
+
+      semuaJadwal.forEach((anime) => {
+        if (anime.updated_day.trim().toLowerCase() === hari.toLowerCase()) {
+          daftarAnime.push(anime.title);
+        } else if (anime.updated_day.trim().toLowerCase() === 'random') {
+          daftarAnimeRandom.push(`${anime.title} *Random*`);
+        }
+      });
+
+      if (daftarAnime.length === 0) {
+        return { list: [], template_text: `Tidak ada anime yang update setiap hari ${hari}.` };
+      } else {
+        const daftarAnimeFinal = [...daftarAnime, ...daftarAnimeRandom];
+        const template = daftarAnimeFinal.map((anime, index) => `${index + 1}. ${anime}\n`).join('');
+        return { 
+          list: daftarAnimeFinal, 
+          template_text: `\`Berikut anime yang update setiap hari ${hari.charAt(0).toUpperCase() + hari.slice(1)}:\`\n${template}> © s.id/nueapi`
+        };
+      }
+    };
+
+    const hari = req.query.hari.trim().toLowerCase();
+    const hasilJadwal = anime(hari);
+
+    res.json(hasilJadwal);
+  } catch (error) {
+    res.json({ list: [], template_text: error.message });
+  }
+});
+
 router.get('/diff', async (req, res) =>{
   if (!req.query.prompt) return res.status(404).send("Invalid prompt");
   res.redirect(`https://tattered-classy-comic.glitch.me/diff?prompt=${req.query.prompt}`);
