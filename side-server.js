@@ -10,7 +10,7 @@ const succes = "https://nue-api.vercel.app/succes?re=";
 const base = "https://nue-api.vercel.app";
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './index.html'));
+res.sendFile(path.join(__dirname, './index.html'));
 });
 
 app.get('/snapsave', async (req, res) => {
