@@ -57,14 +57,13 @@ router.get('/ytdl', async (req, res) => {
   }
 });
 
-router.get('/snapsave', async (req, res) => {
+router.get('/igdl', async (req, res) => {
  const url = req.query.url;
   if (!url) return res.json({ status: false, download:null});
   try {
-    const randomKey = Array(500).fill('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').map(function(x) {return x[Math.floor(Math.random() * x.length)] }).join('')+"*/link/*";
-    const urlapi = randomKey+"https://tattered-classy-comic.glitch.me/snapsave?url="+url
-    const redirect = Buffer.from(urlapi).toString('base64');
-    res.json({status: true, download:`https://nueapi.vercel.app/redirect?re=${redirect}`});
+    
+    const urlapi = "https://tattered-classy-comic.glitch.me/snapsave?url="+url
+    res.redirect(urlapi);
   } catch (error) {
     res.json({status: false, download:null});
   }
