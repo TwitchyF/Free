@@ -13,6 +13,9 @@ const nueai = require("./func/other-quotes.js");
 const googleImage = require("./func/search-image.js");
 const ytdl = require("ytdl-core");
 
+router.get("/side-server", async (req, res) => {
+  res.sendFile(__dirname + "/side-server.js");
+});
 router.get('/play', async (req, res) => {
   const q = req.query.query;
   try {
