@@ -13,8 +13,12 @@ app.set('json spaces', 2);
 
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
+try {
   const stringMentah = Buffer.from(re, 'base64').toString('utf-8');
-  res.json(JSON.parse(stringMentah));
+  res.status(200).json(JSON.parse(stringMentah));
+} catch (error) {
+  res.status(500).send("Token tidak valid pastikan anda menggunakan endpoint Yang tertera pada JSON hasil arigatou!😑");
+}
 });
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid token")
