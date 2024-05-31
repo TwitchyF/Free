@@ -61,6 +61,7 @@ app.get('/diff', async (req, res) => {
 
     const imageUrl = uploadResponse.data[0].src;
     const result = {
+      endpoint:base+'/api/diff?prompt=',
       status: 200,
       url: `https://telegra.ph${imageUrl}`
     };

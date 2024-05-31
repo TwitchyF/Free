@@ -13,6 +13,11 @@ const nueai = require("./func/other-quotes.js");
 const googleImage = require("./func/search-image.js");
 const ytdl = require("ytdl-core");
 
+router.get('/diff', async (req, res) =>{
+  if (!req.query.prompt) return res.status(404).send("Invalid prompt");
+  res.redirect(`https://tattered-classy-comic.glitch.me/diff?prompt=${req.query.prompt}`);
+});
+
 router.get('/play', async (req, res) => {
   const q = req.query.query;
   try {
