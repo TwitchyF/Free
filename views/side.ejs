@@ -24,7 +24,7 @@ app.get('/gpt', async (req, res) => {
                 messages: [],
                 prompt: prompt,
                 model: 'gpt-4',
-                markdown: true
+                markdown: false
             }, (err, data) => {
                 if (err != null) {
                     reject(err);
@@ -33,9 +33,9 @@ app.get('/gpt', async (req, res) => {
                 }
             });
         });
-        const json = {status:200, result:data}
+        const json = {endpoint:base+'/api/gpt?prompt=',status:200, result:data.gpt}
         const red = Buffer.from(JSON.stringify(json)).toString('base64')
-        res.json(data);
+        res.redirect(succes+red);
     } catch (err) {
         console.log(err)
         res.redirect(failed);
