@@ -9,7 +9,7 @@ const failed = "https://nue-api.vercel.app/error"
 const succes = "https://nue-api.vercel.app/succes?re=";
 const base = "https://nue-api.vercel.app";
 
-app.get('/', (req, res) => {
+app.get('/dash', (req, res) => {
 res.sendFile(path.join(__dirname, './index.html'));
 });
 
