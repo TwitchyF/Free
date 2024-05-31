@@ -11,6 +11,9 @@ app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
+app.get("/side-server", async (req, res) => {
+  res.sendFile(__dirname + "/side-server.js");
+});
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
 try {
