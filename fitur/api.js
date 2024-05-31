@@ -5,7 +5,6 @@ const router = express.Router();
 const { youtube } = require("scrape-youtube");
 const googleTTS = require("google-tts-api");
 const alicia = require("./func/ai-alicia.js");
-const gpt = require("./func/ai-gpt.js");
 const google = require("./func/search-google.js");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
@@ -187,45 +186,11 @@ router.get("/acara", async (req, res) => {
 });
 
 router.get("/gpt", async (req, res) => {
-  if (!req.query.model)
-    return res.status(400).json({
-      status: 400,
-      message: "masukkan parameter model",
-      list: `gpt-4
-gpt-4-0613
-gpt-4-32k
-gpt-4-0314
-gpt-4-32k-0314
-gpt-3.5-turbo
-gpt-3.5-turbo-16k
-gpt-3.5-turbo-0613
-gpt-3.5-turbo-16k-0613
-gpt-3.5-turbo-0301
-text-davinci-003
-text-davinci-002
-code-davinci-002
-gpt-3
-text-curie-001
-text-babbage-001
-text-ada-001
-davinci
-curie
-babbage
-ada
-babbage-002
-davinci-002`,
-    });
   if (!req.query.prompt)
     return res
       .status(400)
       .json({ status: 400, message: "masukkan parameter prompt" });
-  try {
-    const hasil = await gpt.get(req.query.model, req.query.prompt);
-    res.status(200).json({ status: 200, result: hasil });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ status: 500, message: "terjadi kesalahan" });
-  }
+  res.redirect(`https://tattered-classy-comic.glitch.me/gpt?prompt=${req.query.prompt}`);
 });
 
 router.get("/image", async (req, res) => {
