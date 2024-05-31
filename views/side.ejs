@@ -35,7 +35,8 @@ app.get('/gpt', async (req, res) => {
         });
         res.json(data);
     } catch (err) {
-        res.redirect(error);
+        console.log(err)
+        res.redirect(failed);
     }
 });
 
