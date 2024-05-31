@@ -29,7 +29,7 @@ app.get('/gemini', async (req, res) => {
       }
     });
 
-    const json = {status : 200, result : response.data.candidates[0].content.parts[0].text}
+    const json = {endpoint:base+"/api/gemini?prompt=",status : 200, result : response.data.candidates[0].content.parts[0].text}
     const red = Buffer.from(JSON.stringify(json)).toString('base64');
   res.redirect(succes+red);
   } catch (error) {
