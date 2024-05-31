@@ -75,36 +75,8 @@ router.get('/igdl', async (req, res) => {
 
 
 router.get('/gemini', async (req, res) => {
-  try {
-    if (!req.query.q) {
-      return res.status(400).json({ error: 'Query parameter "q" is required' });
-    }
-
-    const response = await axios.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyB2tVdHido-pSjSNGrCrLeEgGGW3y28yWg', {
-      contents: [{
-        parts: [{
-          text: req.query.q
-        }]
-      }]
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    res.json({status : 200, result : response.data.candidates[0].content.parts[0].text})
-  } catch (error) {
-    if (error.response) {
-      console.error('Error:', error.response.data);
-      res.status(error.response.status).json({ error: error.response.data.error.message });
-    } else if (error.request) {
-      console.error('No response received:', error.request);
-      res.status(500).json({ error: 'No response received from the server' });
-    } else {
-      console.error('Error during request setup:', error.message);
-      res.status(500).json({ error: 'Error during request setup' });
-    }
-  }
+if (!req.query.prompt) return res.status(404).send("Invalid prompt");
+  res.redirect(`https://tattered-classy-comic.glitch.me/gemini?prompt=${req.query.prompt}`);
 });
 
 router.get("/date", async (req, res) => {
