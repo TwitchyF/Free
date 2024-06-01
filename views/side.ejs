@@ -151,7 +151,7 @@ app.get('/snapsave', async (req, res) => {
     } else if (response.headers['content-type'].includes('video')) {
       type = 'video';
     }
-    const json = {endpoint: base+'/api/igdl?url=URL_INPUT',status: 200,type, result: hasil};
+    const json = {endpoint: base+'/api/snapsave?url=',status: 200,type, result: hasil};
     res.redirect(succes + Buffer.from(JSON.stringify(json)).toString('base64')); 
   } catch (error) {
     res.redirect(failed);
