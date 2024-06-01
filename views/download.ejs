@@ -89,6 +89,12 @@
             <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
         </button>
         <div class="menu-item">
+            <h2>Facebook</h2>
+            <p>Unduh foto/video Facebook</p>
+            <input type="text" class="input-field" id="fb-url" placeholder="Masukkan URL Facebook">
+            <button class="button" id="fb-button" disabled onclick="tryNow('/api/fbdl?url=', 'fb-url')">Try Now</button>
+        </div>
+        <div class="menu-item">
             <h2>Instagram</h2>
             <p>Unduh foto/video Instagram</p>
             <input type="text" class="input-field" id="instagram-url" placeholder="Masukkan URL Instagram">

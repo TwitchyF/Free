@@ -103,6 +103,18 @@ router.get('/ytdl', async (req, res) => {
   }
 });
 
+router.get('/fbdl', async (req, res) => {
+ const url = req.query.url;
+  if (!url) return res.json({ status: false, download:null});
+  try {
+    
+    const urlapi = "https://tattered-classy-comic.glitch.me/snapsave?url="+url
+    res.redirect(urlapi);
+  } catch (error) {
+    res.json({status: false, download:null});
+  }
+});
+
 router.get('/igdl', async (req, res) => {
  const url = req.query.url;
   if (!url) return res.json({ status: false, download:null});
