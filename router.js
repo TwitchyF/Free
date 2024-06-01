@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/side-server', async (req,res) =>{
-  res.render('side')
-});
 router.get('/error', function (req, res) {
   res.status(500).render('error');
 });
