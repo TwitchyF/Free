@@ -154,6 +154,7 @@ app.get('/snapsave', async (req, res) => {
     const json = {endpoint: base+'/api/snapsave?url=',status: 200,type, result: hasil};
     res.redirect(succes + Buffer.from(JSON.stringify(json)).toString('base64')); 
   } catch (error) {
+    console.error(error);
     res.redirect(failed);
   }
 });
