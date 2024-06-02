@@ -9,7 +9,6 @@ const google = require("./func/search-google.js");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const nueai = require("./func/other-quotes.js");
-const googleImage = require("./func/search-image.js");
 const ytdl = require("ytdl-core");
 
 router.get("/anime-jadwal", async (req, res) => {
@@ -210,12 +209,7 @@ router.get("/gpt", async (req, res) => {
 router.get("/image", async (req, res) => {
   const query = req.query.query;
   if (!query) return res.status(400).json({ error: "Masukkan query" });
-  try {
-    const hasil = await googleImage.get(query);
-    res.json(hasil);
-  } catch (error) {
-    res.status(500).json({ error: "Terjadi kesalahan" });
-  }
+  res.redirect(`https://tattered-classy-comic.glitch.me/image?query=${query}`)
 });
 
 router.get("/google", async (req, res) => {
