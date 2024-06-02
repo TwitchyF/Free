@@ -1,5 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
+
+router.get('/req', async (req, res) => {
+    try {
+        const response = await axios.get('https://tattered-classy-comic.glitch.me/read');
+        const data = response.data;
+        res.render('req', { jsonData: data });
+    } catch (error) {
+        console.error('Error fetching JSON data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 router.get('/error', function (req, res) {
   res.status(500).render('error');

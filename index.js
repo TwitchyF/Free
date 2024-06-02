@@ -6,6 +6,15 @@ const axios = require('axios');
 
 const app = express();
 app.use('/', router);
+app.use('/api', async (req, res, next) => {
+  const apiUrl = 'https://tattered-classy-comic.glitch.me/count';
+  try {
+    await axios.get(apiUrl);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 app.use('/api', v1);
 app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
