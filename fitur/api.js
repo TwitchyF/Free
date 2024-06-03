@@ -53,9 +53,9 @@ router.get("/anime-jadwal", async (req, res) => {
   }
 });
 
-router.get('/diff', async (req, res) =>{
+router.get('/dalle-v1', async (req, res) =>{
   if (!req.query.prompt) return res.status(404).send("Invalid prompt");
-  res.redirect(`https://tattered-classy-comic.glitch.me/diff?prompt=${req.query.prompt}`);
+  res.redirect(`https://tattered-classy-comic.glitch.me/dalle-v1?prompt=${req.query.prompt}`);
 });
 
 router.get('/play', async (req, res) => {
