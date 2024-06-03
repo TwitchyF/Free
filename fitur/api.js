@@ -11,6 +11,11 @@ const hari = require("./func/other-date.js");
 const nueai = require("./func/other-quotes.js");
 const ytdl = require("ytdl-core");
 
+router.get('/dalle-mini', async (req, res) =>{
+  if (!req.query.prompt) return res.status(404).send("Invalid prompt");
+  res.redirect(`https://tattered-classy-comic.glitch.me/dalle-mini?prompt=${req.query.prompt}`);
+});
+
 router.get("/anime-jadwal", async (req, res) => {
   try {
     const [jadwalApi, jadwalApi2] = await Promise.all([
