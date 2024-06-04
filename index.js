@@ -23,10 +23,9 @@ app.set('json spaces', 2);
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
 try {
-  const stringMentah = Buffer.from(re, 'base64').toString('ucs-2');
-  res.status(200).json(JSON.parse(stringMentah));
+res.status(200).json(JSON.parse(re));
 } catch (error) {
-  res.status(500).send(error+ "Token tidak valid pastikan anda menggunakan endpoint Yang tertera pada JSON hasil arigatou!😑");
+  res.status(500).send(error+" tidak valid pastikan anda menggunakan endpoint Yang tertera pada JSON hasil arigatou!😑");
 }
 });
 app.get("/redirect", async (req, res) =>{
