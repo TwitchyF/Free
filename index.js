@@ -3,7 +3,6 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
-const base91 = require('node-base91');
 
 const app = express();
 app.use('/', router);
@@ -24,7 +23,7 @@ app.set('json spaces', 2);
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
 try {
-  const stringMentah = base91.decode(re,'utf8');
+  const stringMentah = Buffer.from(re, 'base64').toString('utf-8');
   res.status(200).json(JSON.parse(stringMentah));
 } catch (error) {
   res.status(500).send("Token tidak valid pastikan anda menggunakan endpoint Yang tertera pada JSON hasil arigatou!😑");
