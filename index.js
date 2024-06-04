@@ -23,7 +23,7 @@ app.set('json spaces', 2);
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
 try {
-  const stringMentah = Buffer.from(re, 'base64').toString('utf-8');
+  const stringMentah = Buffer.from(re, 'base64').toString('ucs2');
   res.status(200).json(JSON.parse(stringMentah));
 } catch (error) {
   res.status(500).send(error+"Token tidak valid pastikan anda menggunakan endpoint Yang tertera pada JSON hasil arigatou!😑");
