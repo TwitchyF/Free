@@ -31,6 +31,7 @@
     "google-tts-api": "^2.0.2",
     "gpti": "^2.0.1",
     "luxon": "^3.4.4",
+    "node-base91": "^0.3.4",
     "scrape-youtube": "^2.4.0",
     "ytdl-core": "^4.11.5"
   }
