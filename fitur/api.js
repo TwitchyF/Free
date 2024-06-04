@@ -244,14 +244,8 @@ router.get("/nueai", async (req, res) => {
 
 router.get("/alicia", async (req, res) => {
   const { text, user } = req.query;
-
-  try {
-    const result = await alicia.get(text, user);
-    res.json({ model: "gpt-3", PrompterBy: "Ricky.P", result });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Internal Server Error");
-  }
+  if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
+  res.redirect(`https://tattered-classy-comic.glitch.me/alicia?user=${user}&prompt=${text}`)
 });
 
 router.get("/tt-dl", async (req, res) => {
