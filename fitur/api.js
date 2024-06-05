@@ -4,7 +4,6 @@ const tiktok = require("@tobyg74/tiktok-api-dl");
 const router = express.Router();
 const { youtube } = require("scrape-youtube");
 const googleTTS = require("google-tts-api");
-const alicia = require("./func/ai-alicia.js");
 const google = require("./func/search-google.js");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
