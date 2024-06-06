@@ -113,6 +113,12 @@
             <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?prompt=', 'tiktok-url')">Try Now</button>
         </div>
         <div class="menu-item">
+            <h2>girlfriend AI</h2>
+            <p>AI buat kaum jones</p>
+            <input type="text" id="girlfr-text" class="input-field" placeholder="masukan anunya" oninput="checkInput('girlfr-text', 'girlfr-bt')">
+            <button id="girlfr-bt" class="button" disabled onclick="tryNow('/api/girlfriend?user=Ricky&char=ana&age=17&text=', 'girlfr-text')">Try Now</button>
+        </div>
+        <div class="menu-item">
             <h2>ChatGpt</h2>
             <p>ChatGPT Turbo</p>
             <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah" oninput="checkInput('chatgpt-prompt', 'youtube-button')">
@@ -123,12 +129,6 @@
             <p>Terjemahkan bahasa menggunakan AI gpt</p>
             <input type="text" class="input-field" id="tr-text" placeholder="Masukkan Text" oninput="checkInput('tr-text', 'ytdl-button')">
             <button class="button" id="ytdl-button" disabled onclick="tryNow('/api/translate?lang=en&text=', 'tr-text')">Try Now</button>
-        </div>
-        <div class="menu-item">
-            <h2>girlfriend AI</h2>
-            <p>AI buat kaum jones</p>
-            <input type="text" id="girlfr-text" class="input-field" placeholder="masukan anunya" oninput="checkInput('girlfr-text', 'girlfr-bt')">
-            <button id="girlfr-bt" class="button" disabled onclick="tryNow('/api/girlfriend?user=Ricky&char=ana&age=17&text=', 'girlfr-text')">Try Now</button>
         </div>
     </div>
 
