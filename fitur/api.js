@@ -7,8 +7,13 @@ const googleTTS = require("google-tts-api");
 const google = require("./func/search-google.js");
 const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
-const nueai = require("./func/other-quotes.js");
 const ytdl = require("ytdl-core");
+
+router.get("/girlfriend", async (req, res) => {
+  const { text, user, age, char } = req.query;
+  if (!text && !user && !age && !char) return res.status(400).json({ error: "masukan parameter text, user, age, char" });
+  res.redirect(`https://tattered-classy-comic.glitch.me/girlfriend?char=${char}&prompt=${text}&user=${user}&age=${age}`)
+});
 
 router.get('/dalle-mini', async (req, res) =>{
   if (!req.query.prompt) return res.status(404).send("Invalid prompt");
@@ -226,18 +231,6 @@ router.get("/google", async (req, res) => {
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
-  }
-});
-
-router.get("/nueai", async (req, res) => {
-  const { text, user } = req.query;
-
-  try {
-    const result = await nueai.get(text, user);
-    res.json({ result });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Internal Server Error");
   }
 });
 
