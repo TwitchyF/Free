@@ -45,10 +45,12 @@ app.get("/redirect", async (req, res) =>{
 });
 
 app.get("/uptime", async (req, res) => {
-  const apiUrl = 'https://tattered-classy-comic.glitch.me/';
+  const chatAi = 'https://hammerhead-foamy-tune.glitch.me/';
+  const sideSrvr = 'https://tattered-classy-comic.glitch.me/';
   try {
-        const response = await axios.get(apiUrl);
-        if (response.status === 200) {
+        const sideRes = await axios.get(sideSrvr);
+        const chatRes = await axios.get(chatAi);
+        if (sideRes.status === 200 && chatRes.status === 200) {
           res.send("Server is up and running!");
         } else {
           res.send("Server is down or unreachable.");
