@@ -5,7 +5,7 @@ const axios = require('axios');
 router.get('/dashboard', async (req, res) => {
     try {
         const response = await axios.get('https://tattered-classy-comic.glitch.me/read');
-        const data = response.data;
+        const data = {today:response.data.today, yesterday:response.data.yesterday,all:response.data.total};
         res.render('dashboard', { jsonData: data });
     } catch (error) {
         console.error('Error fetching JSON data:', error);
