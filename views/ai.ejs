@@ -107,6 +107,12 @@
             <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?prompt=', 'tiktok-url')">Try Now</button>
         </div>
         <div class="menu-item">
+            <h2>chatgpt uses sessions</h2>
+            <p>Interaksi dengan NueAI bertenaga GPT dengan session chat agar AI bisa mengingat pesan sebelumnya</p>
+            <input type="text" class="input-field" id="sgpt-text" placeholder="Masukkan perintah" oninput="checkInput('sgpt-text', 'sgpt-button')">
+            <button class="button" id="sgpt-button" disabled onclick="tryNow('/api/sgpt?user=Ricky&text=', 'sgpt-text')">Try Now</button>
+        </div>
+        <div class="menu-item">
             <h2>ChatGpt</h2>
             <p>ChatGPT Turbo</p>
             <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah" oninput="checkInput('chatgpt-prompt', 'youtube-button')">

@@ -9,6 +9,12 @@ const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
+router.get("/sgpt", async (req, res) => {
+  const { text, user } = req.query;
+  if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
+  res.redirect(`https://tattered-classy-comic.glitch.me/sgpt?user=${user}&prompt=${text}`)
+});
+
 router.get("/anime-jadwal", async (req, res) => {
   try {
     const [jadwalApi, jadwalApi2] = await Promise.all([
