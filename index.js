@@ -30,15 +30,7 @@ res.status(200).json(JSON.parse(re));
 });
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid Url");
-  try {
-    const response = await axios.head(req.query.re);
-    if (response.status === 200) {
-      res.redirect(response.request.res.responseUrl)
-    }
-    res.send("Invalid Url")
-  } catch (error) {
-    res.send(error.message)
-  }
+  res.redirect(req.query.re);
 });
 
 app.get("/uptime", async (req, res) => {
