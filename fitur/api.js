@@ -94,11 +94,9 @@ router.get('/ytdl', async (req, res) => {
   if (!url) return res.json({ status: false, download:{}, info:{} });
   try {
     const info = await ytdl.getInfo(url);
-    const randomId1 = Array(500).fill('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').map(function(x) {return x[Math.floor(Math.random() * x.length)] }).join('');
-    const randomId2 = Array(500).fill('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz').map(function(x) {return x[Math.floor(Math.random() * x.length)] }).join('');
-    const dlMp3 = Buffer.from(`${randomId1}*/link/*https://tattered-classy-comic.glitch.me/yt-mp3?url=${url}`).toString('base64');
-    const dlMp4 = Buffer.from(`${randomId2}*/link/*https://tattered-classy-comic.glitch.me/yt-mp4?url=${url}`).toString('base64');
     
+    const dlMp3 = encodeURIComponent(`https://tattered-classy-comic.glitch.me/yt-mp3?url=${url}`);
+    const dlMp4 = encodeURIComponent(`https://tattered-classy-comic.glitch.me/yt-mp4?url=${url}`);
     
     res.json({status: true, download : {audio:`https://nueapi.vercel.app/redirect?re=${dlMp3}`, video:`https://nueapi.vercel.app/redirect?re=${dlMp4}`}, info : info.videoDetails})
   } catch (error) {
@@ -153,7 +151,7 @@ router.get("/tts", async (req, res) => {
       lang: lang,
       slow: false,
       host: "https://translate.google.com",
-      timeout: 10000,
+      timeout: 600000,
       splitPunct: ",.?",
     });
 

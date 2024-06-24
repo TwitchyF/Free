@@ -29,18 +29,15 @@ res.status(200).json(JSON.parse(re));
 }
 });
 app.get("/redirect", async (req, res) =>{
-  if (!req.query.re) return res.send("Invalid token")
+  if (!req.query.re) return res.send("Invalid Url");
   try {
-    const re = req.query.re;
-    const linkMentah = Buffer.from(re, 'base64').toString('utf-8');
-    const link = linkMentah.split("*/link/*")[1];
-    if (link) {
-      res.redirect(link);
-    } else {
-      res.send("Invalid token");
+    const response = await axios.head(req.query.re);
+    if (response.status === 200) {
+      res.redirect(response.request.res.responseUrl)
     }
+    res.send("Invalid Url")
   } catch (error) {
-    res.send("Invalid token");
+    res.send(error.message)
   }
 });
 
