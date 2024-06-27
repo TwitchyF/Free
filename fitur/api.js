@@ -12,7 +12,7 @@ const ytdl = require("ytdl-core");
 router.get("/sgpt", async (req, res) => {
   const { text, user } = req.query;
   if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/sgpt?user=${user}&prompt=${text}`)
+  res.redirect(`https://tattered-classy-comic.glitch.me/sgpt?user=${user}&prompt=${encodeURIComponent(text)}`);
 });
 
 router.get("/anime-jadwal", async (req, res) => {
@@ -119,7 +119,7 @@ router.get('/snapsave', async (req, res) => {
 
 router.get('/gemini', async (req, res) => {
 if (!req.query.prompt) return res.status(404).send("Invalid prompt");
-  res.redirect(`https://tattered-classy-comic.glitch.me/gemini?prompt=${req.query.prompt}`);
+  res.redirect(`https://tattered-classy-comic.glitch.me/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/date", async (req, res) => {
@@ -205,7 +205,7 @@ router.get("/gpt", async (req, res) => {
     return res
       .status(400)
       .json({ status: 400, message: "masukkan parameter prompt" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/gpt?prompt=${req.query.prompt}`);
+  res.redirect(`https://tattered-classy-comic.glitch.me/gpt?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/image", async (req, res) => {
@@ -230,7 +230,7 @@ router.get("/google", async (req, res) => {
 router.get("/alicia", async (req, res) => {
   const { text, user } = req.query;
   if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/alicia?user=${user}&prompt=${text}`)
+  res.redirect(`https://tattered-classy-comic.glitch.me/alicia?user=${user}&prompt=${encodeURIComponent(text)}`)
 });
 
 router.get("/tt-dl", async (req, res) => {
