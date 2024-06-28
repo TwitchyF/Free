@@ -101,7 +101,13 @@
             <button class="button" id="tiktok-button" disabled onclick="tryNow('/api/tt-dl?url=', 'tiktok-url')">Try Now</button>
         </div>
         <div class="menu-item">
-            <h2>Play</h2>
+            <h2>Play Spotify</h2>
+            <p>Cari dan play audio dari Spotify. ENDPOINT https://tattered-classy-comic.glitch.me/spotify?q=</p>
+            <input type="text" class="input-field" id="sp-query" placeholder="Masukkan query YouTube">
+            <button class="button" id="sp-button" disabled onclick="tryNow('/api/play?query=', 'sp-query')">Try Now</button>
+        </div>
+        <div class="menu-item">
+            <h2>Play YT</h2>
             <p>Cari dan play video/audio YouTube</p>
             <input type="text" class="input-field" id="youtube-query" placeholder="Masukkan query YouTube">
             <button class="button" id="youtube-button" disabled onclick="tryNow('/api/play?query=', 'youtube-query')">Try Now</button>

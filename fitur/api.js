@@ -9,9 +9,10 @@ const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
-router.get("/removebg", async (req, res) => {
-  if (!req.query.url) return res.send("Invalid Url");
-  res.redirect(`https://tattered-classy-comic.glitch.me/removebg?url=${encodeURIComponent(req.query.url)}&apikey=${req.query.apikey || ""}`);
+router.get("/spotify", async (req, res) =>{
+  const q = req.query.q;
+  if (!q) return res.status(400).send("Masukkan query");
+  res.redirect(`https://tattered-classy-comic.glitch.me/spotify?q=${q}`);
 })
 router.get("/sgpt", async (req, res) => {
   const { text, user } = req.query;
