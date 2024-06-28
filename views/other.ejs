@@ -104,6 +104,12 @@
             <p>Waktu, tanggal dan acara yang akan datang</p>
             <button class="button" onclick="location.href='/api/date'">Try Now</button>
         </div>
+                <div class="menu-item">
+            <h2>Remove.bg</h2>
+            <p>Hapus background Photo dengan URL</p>
+            <input type="text" class="input-field" id="removebg-text" placeholder="Masukkan text" oninput="enableDisableButton('removebg-but', 'removebg-text')">
+            <button class="button" id="removebg-but" disabled onclick="tryNow('/api/removebg?url=', 'removebg-text')">Try Now</button>
+                </div>
         <div class="menu-item">
             <h2>Text To Speech</h2>
             <p>Ubah teks ke audio</p>
