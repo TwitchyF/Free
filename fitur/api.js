@@ -9,6 +9,12 @@ const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
+router.get("/upscale", async (req, res) => {
+  const url = req.query.url;
+  if (!url) return res.status(400).send("Masukkan url");
+  res.redirect(`https://tattered-classy-comic.glitch.me/upscale?url=${url}`);
+});
+
 router.get("/spotify", async (req, res) =>{
   const q = req.query.q;
   if (!q) return res.status(400).send("Masukkan query");

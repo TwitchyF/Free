@@ -110,6 +110,12 @@
             <input type="text" class="input-field" id="tts-text" placeholder="Masukkan text" oninput="enableDisableButton('tts-button', 'tts-text')">
             <button class="button" id="tts-button" disabled onclick="tryNow('/api/tts?lang=id&text=', 'tts-text')">Try Now</button>
         </div>
+        <div class="menu-item">
+            <h2>Upscale Image</h2>
+            <p>Upscale image from URL</p>
+            <input type="text" class="input-field" id="upscale-url" placeholder="Masukkan URL gambar" oninput="enableDisableButton('upscale-button', 'upscale-url')">
+            <button class="button" id="upscale-button" disabled onclick="tryNow('/api/upscale?url=', 'upscale-url')">Try Now</button>
+        </div>
     </div>
 
     <script>
