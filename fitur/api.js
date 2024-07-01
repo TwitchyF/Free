@@ -8,6 +8,14 @@ const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
+router.get("/sdxl", async (req, res) => {
+  const { prompt, model } = req.query;
+  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdxllist" target="_blank">List berikut</a>`);
+  if (model === "ISI-DI-SINI") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdxllist" target="_blank">List berikut</a>`);
+  
+  res.redirect(`https://tattered-classy-comic.glitch.me/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+});
+
 router.get("/text2img", async (req, res) => {
   const { prompt, model } = req.query;
   if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
