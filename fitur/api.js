@@ -8,6 +8,14 @@ const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
+router.get("/anidif", async (req, res) => {
+  const { prompt, model } = req.query;
+  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
+  if (model === "ISI-DI-SINI") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
+  
+  res.redirect(`https://tattered-classy-comic.glitch.me/anidif?prompt=${encodeURIComponent(prompt)}&model=${model}`);
+});
+
 router.get("/sdxl", async (req, res) => {
   const { prompt, model } = req.query;
   if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdxllist" target="_blank">List berikut</a>`);
@@ -81,11 +89,6 @@ router.get("/anime-jadwal", async (req, res) => {
   } catch (error) {
     res.json({ list: [], template_text: error.message });
   }
-});
-
-router.get('/dalle-v1', async (req, res) =>{
-  if (!req.query.prompt) return res.status(404).send("Invalid prompt");
-  res.redirect(`https://tattered-classy-comic.glitch.me/dalle-v1?prompt=${req.query.prompt}`);
 });
 
 router.get('/play', async (req, res) => {

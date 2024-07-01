@@ -89,6 +89,12 @@
             <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
         </button>
         <div class="menu-item">
+            <h2>Anime diffusion</h2>
+            <p>Ai pembuat gambar anime</p>
+            <input type="text" class="input-field" id="anidif-prompt" placeholder="Masukkan perintah" oninput="checkInput('anidif-prompt', 'anidif-button')">
+            <button class="button" id="anidif-button" disabled onclick="tryNow('/api/anidif?prompt=', 'anidif-prompt')">Try Now</button>
+        </div>
+        <div class="menu-item">
             <h2>Stable-Diffusion</h2>
 <p>Ai pembuat gambar </p>
             <input type="text" class="input-field" id="text2img-prompt" placeholder="Masukkan perintah" oninput="checkInput('text2img-prompt', 'text2img-button')">
@@ -105,12 +111,6 @@
             <p>Alicia AI yang cuek dan pemalas</p>
             <input type="text" class="input-field" id="alicia-text" placeholder="Masukkan perintah" oninput="checkInput('alicia-text', 'instagram-button')">
             <button class="button" id="instagram-button" disabled onclick="tryNow('/api/alicia?user=Ricky&text=', 'alicia-text')">Try Now</button>
-        </div>
-        <div class="menu-item">
-            <h2>Dalle-V1</h2>
-            <p>Ai pembuat gambar</p>
-            <input type="text" class="input-field" id="diffusion" placeholder="Masukkan perintah" oninput="checkInput('diffusion', 'diff-button')">
-            <button class="button" id="diff-button" disabled onclick="tryNow('/api/dalle-v1?prompt=', 'diffusion')">Try Now</button>
         </div>
         <div class="menu-item">
             <h2>Gemini Pro</h2>
