@@ -5,7 +5,6 @@ const router = express.Router();
 const { youtube } = require("scrape-youtube");
 const googleTTS = require("google-tts-api");
 const google = require("./func/search-google.js");
-const translate = require("./func/ai-translate.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
@@ -135,18 +134,6 @@ if (!req.query.prompt) return res.status(404).send("Invalid prompt");
 
 router.get("/date", async (req, res) => {
   res.json(await hari.get());
-});
-router.get("/translate", async (req, res) => {
-  if (!req.query.text)
-    return res
-      .status(400)
-      .json({ status: 400, message: "Masukkan parameter text" });
-  try {
-    const hasil = await translate.get(req.query.text, req.query.lang);
-    res.status(200).json({ status: 200, result: hasil });
-  } catch (error) {
-    res.status(500).json({ status: 500, message: error.message });
-  }
 });
 
 router.get("/tts", async (req, res) => {

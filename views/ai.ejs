@@ -118,12 +118,6 @@
             <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah" oninput="checkInput('chatgpt-prompt', 'youtube-button')">
             <button class="button" id="youtube-button" disabled onclick="tryNow('/api/gpt?model=gpt-3.5-turbo&prompt=', 'chatgpt-prompt')">Try Now</button>
         </div>
-        <div class="menu-item">
-            <h2>Translate</h2>
-            <p>Terjemahkan bahasa menggunakan AI gpt</p>
-            <input type="text" class="input-field" id="tr-text" placeholder="Masukkan Text" oninput="checkInput('tr-text', 'ytdl-button')">
-            <button class="button" id="ytdl-button" disabled onclick="tryNow('/api/translate?lang=en&text=', 'tr-text')">Try Now</button>
-        </div>
     </div>
 
     <script>
