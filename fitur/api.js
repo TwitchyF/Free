@@ -10,7 +10,7 @@ const ytdl = require("ytdl-core");
 
 router.get("/text2img", async (req, res) => {
   const { prompt, model } = req.query;
-  if (!prompt || !model) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
+  if (!prompt || !model && model === "MODELNYA-ISI-DONG") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
   res.redirect(`https://tattered-classy-comic.glitch.me/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
