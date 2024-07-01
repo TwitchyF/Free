@@ -38,11 +38,6 @@ router.get("/upscale", async (req, res) => {
   res.redirect(`https://tattered-classy-comic.glitch.me/upscale?url=${url}`);
 });
 
-router.get("/spotify", async (req, res) =>{
-  const q = req.query.q;
-  if (!q) return res.status(400).send("Masukkan query");
-  res.redirect(`https://tattered-classy-comic.glitch.me/spotify?q=${q}`);
-})
 router.get("/sgpt", async (req, res) => {
   const { text, user } = req.query;
   if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
