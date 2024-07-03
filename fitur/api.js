@@ -8,12 +8,12 @@ const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
-router.get("/anidif", async (req, res) => {
-  const { prompt, model } = req.query;
-  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
+router.get("/diffpreset", async (req, res) => {
+  const { prompt, model, preset } = req.query;
+  if (!prompt || !model || !preset ) return res.status(400).send(`Pastikan prompt, model dan preset terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
   if (model === "ISI-DI-SINI") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
   
-  res.redirect(`https://tattered-classy-comic.glitch.me/anidif?prompt=${encodeURIComponent(prompt)}&model=${model}`);
+  res.redirect(`https://tattered-classy-comic.glitch.me/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
 });
 
 router.get("/sdxl", async (req, res) => {
