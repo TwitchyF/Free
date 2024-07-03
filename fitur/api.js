@@ -10,8 +10,9 @@ const ytdl = require("ytdl-core");
 
 router.get("/diffpreset", async (req, res) => {
   const { prompt, model, preset } = req.query;
-  if (!prompt || !model || !preset ) return res.status(400).send(`Pastikan prompt, model dan preset terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
-  if (model === "ISI-DI-SINI") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
+  if (!prompt) return res.send("Invalid prompt");
+  if (!model) return res.status(400).send(`Invalid model`);
+  if (!preset) return res.status(400).send(`invalid preset`);
   
   res.redirect(`https://tattered-classy-comic.glitch.me/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
 });
@@ -19,7 +20,6 @@ router.get("/diffpreset", async (req, res) => {
 router.get("/sdxl", async (req, res) => {
   const { prompt, model } = req.query;
   if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdxllist" target="_blank">List berikut</a>`);
-  if (model === "ISI-DI-SINI") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdxllist" target="_blank">List berikut</a>`);
   
   res.redirect(`https://tattered-classy-comic.glitch.me/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
@@ -27,7 +27,6 @@ router.get("/sdxl", async (req, res) => {
 router.get("/text2img", async (req, res) => {
   const { prompt, model } = req.query;
   if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
-  if (model === "ISI-DI-SINI") return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
   
   res.redirect(`https://tattered-classy-comic.glitch.me/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
