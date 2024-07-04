@@ -8,6 +8,11 @@ const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 
+router.get("/bard", async (req, res) => {
+  const { text } = req.query;
+  if (!text) return res.status(400).send("Invalid text");
+  res.redirect(`https://tattered-classy-comic.glitch.me/bard?text=${encodeURIComponent(text)}`);
+});
 router.get("/diffpreset", async (req, res) => {
   const { prompt, model, preset } = req.query;
   if (!prompt) return res.send("Invalid prompt");

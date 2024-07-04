@@ -105,8 +105,14 @@
             <button class="button" id="instagram-button" disabled onclick="tryNow('/api/alicia?user=Ricky&text=', 'alicia-text')">Try Now</button>
         </div>
         <div class="menu-item">
-            <h2>Gemini Pro</h2>
-            <p>Ai fast dari google AI</p>
+            <h2>Gemini.google.com</h2>
+            <p>Gemini ini hasil scraping dari gemini.google.com, tidak resmi dan bisa error kapan saja</p>
+            <input type="text" class="input-field" id="gemini-text" placeholder="Masukkan perintah" oninput="checkInput('gemini-text', 'gemini-button')">
+            <button class="button" id="gemini-button" disabled onclick="tryNow('/api/bard?text=', 'gemini-text')">Try Now</button>
+        </div>
+      <div class="menu-item">
+            <h2>Gemini Model</h2>
+            <p>Model gemini dari google AI</p>
             <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan perintah" oninput="checkInput('tiktok-url', 'gemini-q')">
             <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?prompt=', 'tiktok-url')">Try Now</button>
         </div>
