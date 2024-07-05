@@ -7,7 +7,16 @@ const googleTTS = require("google-tts-api");
 const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
+let bmkg_info = require('gempa-id-info')
 
+router.get("/gempa", async (req, res) => {
+  try {
+    const gempa = await bmkg_info.latestGempa();
+    res.json(gempa);
+  } catch (error) {
+    res.status(500).json({ error: "Terjadi kesalahan saat mengambil data gempa." });
+  }
+});
 router.get("/bard", async (req, res) => {
   const { text } = req.query;
   if (!text) return res.status(400).send("Invalid text");
