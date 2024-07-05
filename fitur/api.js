@@ -9,6 +9,21 @@ const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 let bmkg_info = require('gempa-id-info')
 
+router.get('/anime-reaction', async (req, res) => {
+  try {
+    const response = await axios.get('https://anime-reactions.uzairashraf.dev/api/reactions/random');
+    const reactionUrl = response.data.reaction;
+
+    const imageResponse = await axios.get(reactionUrl, { responseType: 'arraybuffer' });
+    const contentType = imageResponse.headers['content-type'];
+
+    res.setHeader('Content-Type', contentType);
+    res.send(imageResponse.data);
+  } catch (error) {
+    console.error('Error fetching reaction:', error);
+    res.status(500).send('Error fetching reaction');
+  }
+});
 router.get("/gempa", async (req, res) => {
   try {
     const gempa = await bmkg_info.latestGempa();
