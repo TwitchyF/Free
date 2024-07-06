@@ -11,19 +11,33 @@ let bmkg_info = require('gempa-id-info')
 
 router.get('/anime-reaction', async (req, res) => {
   try {
-    const response = await axios.get('https://anime-reactions.uzairashraf.dev/api/reactions/random');
-    const reactionUrl = response.data.reaction;
+    // Langkah 1: Ambil daftar kategori dari API
+    const categoriesResponse = await axios.get('https://anime-reactions.uzairashraf.dev/api/categories');
+    const categories = categoriesResponse.data;
 
-    const imageResponse = await axios.get(reactionUrl, { responseType: 'arraybuffer' });
-    const contentType = imageResponse.headers['content-type'];
+    // Langkah 2: Pilih kategori secara acak
+    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
 
+    // Langkah 3: Ambil daftar reaksi dari kategori yang dipilih
+    const reactionsResponse = await axios.get(`https://anime-reactions.uzairashraf.dev/api/reactions?category=${randomCategory}`);
+    const reactions = reactionsResponse.data;
+
+    // Langkah 4: Pilih URL reaksi secara acak
+    const randomReactionUrl = reactions[Math.floor(Math.random() * reactions.length)];
+
+    // Langkah 5: Ambil header untuk memeriksa tipe media
+    const mediaResponse = await axios.get(randomReactionUrl, { responseType: 'stream' });
+    const contentType = mediaResponse.headers['content-type'];
+
+    // Langkah 6: Kirimkan media sebagai respons
     res.setHeader('Content-Type', contentType);
-    res.send(imageResponse.data);
+    mediaResponse.data.pipe(res);
   } catch (error) {
-    console.error('Error fetching reaction:', error);
-    res.status(500).send('Error fetching reaction');
+    console.error(error);
+    res.status(500).send('Terjadi kesalahan pada server');
   }
 });
+
 router.get("/gempa", async (req, res) => {
   try {
     const gempa = await bmkg_info.latestGempa();
