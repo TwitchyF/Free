@@ -292,8 +292,8 @@ router.get("/tt-dl", async (req, res) => {
     const tiktok_url = req.query.url;
     if (!tiktok_url)
       return res.json({ status: false, message: "masukan parameter url" });
-    const result = await tiktok.TiktokDL(tiktok_url, {
-      version: "v3", // version: "v1" | "v2" | "v3"
+    const result = await tiktok.Downloader(tiktok_url, {
+      version: "v2", // version: "v1" | "v2" | "v3"
     });
     res.status(200).json(result);
   } catch (error) {
