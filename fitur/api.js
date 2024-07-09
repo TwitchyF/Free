@@ -189,7 +189,7 @@ if (!req.query.prompt) return res.status(404).send("Invalid prompt");
 });
 
 router.get("/date", async (req, res) => {
-  res.json(await hari.get());
+  res.json(await hari.get(req.query.zone || "Asia/Jakarta"));
 });
 
 router.get("/tts", async (req, res) => {

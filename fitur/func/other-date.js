@@ -1,25 +1,25 @@
 const fetch = require("@replit/node-fetch");
 const { DateTime } = require("luxon");
 
-async function get() {
+async function get(hari) {
   try {
-    const currentDate = DateTime.now().setZone("Asia/Jakarta");
-    const newYearDate = DateTime.local(currentDate.year + 1, 1, 1).setZone("Asia/Jakarta");
+    const currentDate = DateTime.now().setZone(hari);
+    const newYearDate = DateTime.local(currentDate.year + 1, 1, 1).setZone(hari);
     const timeDifference = newYearDate.diff(currentDate).as("days");
 
     const formatDate = (date, format) => date.toFormat(format, { locale: 'id' });
 
     const response = await fetch('https://nue-api.vercel.app/api/acara');
     const acaraList = await response.json();
-    const now = DateTime.now().setZone("Asia/Jakarta");
-    const upcomingEvents = acaraList.filter(event => DateTime.fromISO(event.tanggal, { zone: "Asia/Jakarta" }) >= now).sort((a, b) => DateTime.fromISO(a.tanggal, { zone: "Asia/Jakarta" }) - DateTime.fromISO(b.tanggal, { zone: "Asia/Jakarta" }));
+    const now = DateTime.now().setZone(hari);
+    const upcomingEvents = acaraList.filter(event => DateTime.fromISO(event.tanggal, { zone: hari }) >= now).sort((a, b) => DateTime.fromISO(a.tanggal, { zone: hari }) - DateTime.fromISO(b.tanggal, { zone: hari }));
 
     const formatEventDate = (date) => formatDate(date, 'd LLLL yyyy');
 
     if (upcomingEvents.length > 0) {
       const nearestEvent = upcomingEvents[0];
       const { keterangan, tanggal } = nearestEvent;
-      const daysToEvent = Math.ceil(DateTime.fromISO(tanggal, { zone: "Asia/Jakarta" }).diff(currentDate, 'days').days);
+      const daysToEvent = Math.ceil(DateTime.fromISO(tanggal, { zone: hari }).diff(currentDate, 'days').days);
 
       const info = {
         today: {
@@ -30,8 +30,8 @@ async function get() {
         },
         upcomingEvent: {
           Information: keterangan,
-          formattedEventDate: formatEventDate(DateTime.fromISO(tanggal, { zone: "Asia/Jakarta" })),
-          day: formatDate(DateTime.fromISO(tanggal, { zone: "Asia/Jakarta" }), 'EEEE'),
+          formattedEventDate: formatEventDate(DateTime.fromISO(tanggal, { zone: hari })),
+          day: formatDate(DateTime.fromISO(tanggal, { zone: hari }), 'EEEE'),
           daysToEvent,
         },
       };
