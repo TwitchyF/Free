@@ -11,12 +11,19 @@ let bmkg_info = require('gempa-id-info')
 
 router.get('/anime-reaction', async (req, res) => {
   try {
-    // Langkah 1: Ambil daftar kategori dari API
-    const categoriesResponse = await axios.get('https://anime-reactions.uzairashraf.dev/api/categories');
-    const categories = categoriesResponse.data;
+    let randomCategory;
+    
+    // Cek apakah req.query.category ada
+    if (req.query.category) {
+      randomCategory = req.query.category;
+    } else {
+      // Langkah 1: Ambil daftar kategori dari API jika kategori tidak ditentukan
+      const categoriesResponse = await axios.get('https://anime-reactions.uzairashraf.dev/api/categories');
+      const categories = categoriesResponse.data;
 
-    // Langkah 2: Pilih kategori secara acak
-    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+      // Langkah 2: Pilih kategori secara acak
+      randomCategory = categories[Math.floor(Math.random() * categories.length)];
+    }
 
     // Langkah 3: Ambil daftar reaksi dari kategori yang dipilih
     const reactionsResponse = await axios.get(`https://anime-reactions.uzairashraf.dev/api/reactions?category=${randomCategory}`);
@@ -37,7 +44,6 @@ router.get('/anime-reaction', async (req, res) => {
     res.status(500).send('Terjadi kesalahan pada server');
   }
 });
-
 router.get("/gempa", async (req, res) => {
   try {
     const gempa = await bmkg_info.latestGempa();

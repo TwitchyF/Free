@@ -18,7 +18,7 @@
             --content-color: #666;
             --footer-bg-color: #2c3e50;
             --footer-text-color: #f5f5f5;
-            --banner-bg: url('/api/anime-reaction') no-repeat center center/cover;
+            --banner-bg: url('/api/anime-reaction?category=sad') no-repeat center center/cover;
             --card-bg-color: #ffffff;
             --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -42,6 +42,7 @@
             color: #fff;
             padding: 150px 20px;
             text-align: center;
+            position: relative;
         }
         .banner h1 {
             font-size: 3.5rem;
@@ -152,10 +153,33 @@
         .footer-links a:hover {
             color: var(--link-hover-color);
         }
+        .banner-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .banner-controls i {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #fff;
+            padding: 10px;
+            transition: color 0.3s;
+        }
+        .banner-controls i:hover {
+            color: var(--link-hover-color);
+        }
     </style>
 </head>
 <body>
-<div class="banner"></div>
+<div class="banner">
+    <div class="banner-controls">
+        <i class="fas fa-chevron-left" onclick="prevImage()"></i>
+        <i class="fas fa-chevron-right" onclick="nextImage()"></i>
+    </div>
+</div>
 <div class="menu-card">
     <div class="menu-item"><a href="/ai"><i class="fas fa-robot"></i> AI</a></div>
     <div class="menu-item"><a href="/downloader"><i class="fas fa-download"></i> Downloader</a></div>
@@ -226,24 +250,54 @@
 </footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                            <script>
-window['CboxReady'] = function (Cbox) {
-	Cbox('button', '5-951321-TFAjW9');
-}
+<script>
+    window['CboxReady'] = function (Cbox) {
+        Cbox('button', '5-951321-TFAjW9');
+    }
 </script>
 <script src="https://static.cbox.ws/embed/2.js" async></script>
-	
 <script>
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    const images = [
+        '/api/anime-reaction?category=sad',
+        '/api/anime-reaction?category=sad&tipe=1',
+        '/api/anime-reaction?category=sad&tipe=2',
+    '/api/anime-reaction?category=sad&tipe=3',
+        '/api/anime-reaction?category=sad&tipe=4',
+        '/api/anime-reaction?category=sad&tipe=5'
+    ];
+    let currentIndex = 0;
+
+    function updateBanner() {
+        document.querySelector('.banner').style.background = `url(${images[currentIndex]}) no-repeat center center/cover`;
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateBanner();
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateBanner();
+    }
+
+    function autoChangeImage() {
+        nextImage();
+        setTimeout(autoChangeImage, 10000);
     }
 
     document.addEventListener('DOMContentLoaded', (event) => {
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
         }
+        updateBanner();
+        setTimeout(autoChangeImage, 10000);
     });
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
 </script>
 </body>
 </html>
