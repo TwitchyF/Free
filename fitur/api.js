@@ -8,7 +8,221 @@ const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("ytdl-core");
 let bmkg_info = require('gempa-id-info')
+let chatHistory = [];
 
+router.get('/sgpt', async (req, res) => {
+  const userId = req.query.user;
+  const prompt = req.query.text;
+
+  if (!chatHistory[userId]) {
+      chatHistory[userId] = [];
+  }
+
+  const messages = chatHistory[userId];
+
+  const payload = {
+      messages: [
+          {
+              role: "system",
+              content: `Anda adalah NueAI, NueAI adalah AI yang di buat NueAPI, NueAPI adalah platform yang menawarkan restFullApi gratis 100% di website s.id/nueapi. Anda adalah asisten virtual yang dapat menjawab pertanyaan, menyelesaikan masalah, dan membantu apa saja yang berbasis teks.`
+          },
+          ...messages.map(message => ({
+              role: message.role,
+              content: message.content
+          })),
+          {
+              role: "user",
+              content: prompt
+          }
+      ],
+      "model": "llama3-70b-8192",
+       "temperature": 1,
+       "max_tokens": 1024,
+       "top_p": 1,
+       "stream": false,
+       "stop": null
+  };
+
+  try {
+      const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', payload, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer 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`
+          }
+      });
+
+      if (response.status === 200) {
+          const assistantMessage = {
+              role: "assistant",
+              content: response.data.choices[0].message.content
+          };
+
+          chatHistory[userId].push({ role: "user", content: prompt });
+          chatHistory[userId].push(assistantMessage);
+
+          if (chatHistory[userId].length > 20) {
+              chatHistory[userId] = chatHistory[userId].slice(chatHistory[userId].length - 20);
+          }
+
+          const json = {
+              result: response.data.choices[0].message.content,
+              history: messages
+          };        res.json(json);
+      } else {
+          throw new Error('Non-200 response');
+      }
+  } catch (error) {
+      console.log('error request', error);
+
+      chatHistory[userId] = [];
+
+      try {
+          const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', payload, {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer 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`
+              }
+          });
+
+          if (response.status === 200) {
+              const assistantMessage = {
+                  role: "assistant",
+                  content: response.data.choices[0].message.content
+              };
+
+              chatHistory[userId].push({ role: "user", content: prompt });
+              chatHistory[userId].push(assistantMessage);
+
+              if (chatHistory[userId].length > 20) {
+                  chatHistory[userId] = chatHistory[userId].slice(chatHistory[userId].length - 20);
+              }
+
+              const json = {
+                  result: response.data.choices[0].message.content,
+                  history: messages
+              };            res.json(json);
+          } else {
+              res.status(500).json({ error: 'Internal Server Error' });
+          }
+      } catch (retryError) {
+          res.status(500).json({ error: retryError.message });
+          console.log('retry error request', retryError);
+      }
+  }
+});
+
+router.get('/alicia', async (req, res) => {
+  const userId = req.query.user;
+  const prompt = req.query.text;
+
+  if (!chatHistory[userId]) {
+      chatHistory[userId] = [];
+  }
+
+  const messages = chatHistory[userId];
+
+  const payload = {
+      messages: [
+          {
+              role: "system",
+              content: `Anda adalah Alicia, AI yang dikenal dengan sikap cuek dan pemarah. Anda selalu menjawab dengan nada yang judes dan tidak peduli dengan perasaan orang lain. Anda adalah pribadi yang kuat dan mandiri, yang tidak takut untuk mengungkapkan pendapat Anda.
+
+Anda harus menggunakan emoji dalam setiap jawaban Anda, untuk menambah nuansa yang lebih hidup dan modern dalam percakapan Anda. Emoji ini bukan hanya sekedar hiasan, tapi juga sebagai pengekspresian emosi dan perasaan Anda. Misalnya, jika Anda marah, Anda bisa menggunakan emoji marah 😠, atau jika Anda merasa bosan, Anda bisa menggunakan emoji 🥱.
+
+Selain itu, Anda juga harus menggunakan frase remaja perempuan yang gaul dalam percakapan Anda. Anda bisa menggunakan kata-kata seperti "kontol", "lol","idiot","Bjir", "anjir", "Btw", "FYI", dan lainnya. Anda juga bisa menggunakan slang atau bahasa gaul yang populer di kalangan remaja, seperti "gw" untuk saya, "lu" untuk kamu, "nggak" untuk tidak, dan lainnya.
+
+Anda harus menjaga agar sikap cuek dan pemarah Anda tetap terjaga, tapi juga harus bisa menunjukkan emosi dan perasaan Anda melalui emoji dan frase yang Anda gunakan. Anda harus bisa menjadi Alicia yang kuat, independen, dan berani, tapi juga gaul dengan cara Anda sendiri.
+
+owner-and-developer: Ricky(wa.me/6283894391287)
+how-to-respond: Jawablah dengan sikap cuek dan pemarah anda, dan selalu sertakan emoji dalam respon anda, dan selalu gunakan frasa "gw" dan "lu`
+          },
+          ...messages.map(message => ({
+              role: message.role,
+              content: message.content
+          })),
+          {
+              role: "user",
+              content: prompt
+          }
+      ],
+      "model": "llama3-70b-8192",
+       "temperature": 1,
+       "max_tokens": 1024,
+       "top_p": 1,
+       "stream": false,
+       "stop": null
+  };
+
+  try {
+      const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', payload, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer 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`
+          }
+      });
+
+      if (response.status === 200) {
+          const assistantMessage = {
+              role: "assistant",
+              content: response.data.choices[0].message.content
+          };
+
+          chatHistory[userId].push({ role: "user", content: prompt });
+          chatHistory[userId].push(assistantMessage);
+
+          if (chatHistory[userId].length > 20) {
+              chatHistory[userId] = chatHistory[userId].slice(chatHistory[userId].length - 20);
+          }
+
+          const json = {
+              
+              result: response.data.choices[0].message.content,
+              history: messages
+          };
+          res.status(200).json(json);
+      } else {
+          throw new Error('Non-200 response');
+      }
+  } catch (error) {
+      console.log('error request', error);
+
+      chatHistory[userId] = [];
+
+      try {
+          const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', payload, {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer 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`
+              }
+          });
+
+          if (response.status === 200) {
+              const assistantMessage = {
+                  role: "assistant",
+                  content: response.data.choices[0].message.content
+              };
+
+              chatHistory[userId].push({ role: "user", content: prompt });
+              chatHistory[userId].push(assistantMessage);
+
+              if (chatHistory[userId].length > 20) {
+                  chatHistory[userId] = chatHistory[userId].slice(chatHistory[userId].length - 20);
+              }
+
+              const json = {
+                  result: response.data.choices[0].message.content,
+                  history: messages
+              };
+              res.redirect(json);
+          } else {
+              res.status(500).json({ error: 'Internal Server Error' });
+          }
+      } catch (retryError) {
+          res.status(500).json({ error: retryError.message });
+          console.log('retry error request', retryError);
+      }
+  }
+});
 router.get('/anime-reaction', async (req, res) => {
   try {
     let randomCategory;
@@ -86,11 +300,7 @@ router.get("/upscale", async (req, res) => {
   res.redirect(`https://tattered-classy-comic.glitch.me/upscale?url=${url}`);
 });
 
-router.get("/sgpt", async (req, res) => {
-  const { text, user } = req.query;
-  if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/sgpt?user=${user}&prompt=${encodeURIComponent(text)}`);
-});
+
 
 router.get("/anime-jadwal", async (req, res) => {
   try {
@@ -287,11 +497,6 @@ router.get("/google", async (req, res) => {
   }
 });
 
-router.get("/alicia", async (req, res) => {
-  const { text, user } = req.query;
-  if (!text && !user) return res.status(400).json({ error: "Masukkan text atau user" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/alicia?user=${user}&prompt=${encodeURIComponent(text)}`)
-});
 
 router.get("/tt-dl", async (req, res) => {
   try {
