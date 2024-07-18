@@ -1,67 +1,58 @@
-const axios = require("axios");
+const {
+  GoogleGenerativeAI,
+} = require("@google/generative-ai");
+
+const apiKey = `AIzaSyB2tVdHido-pSjSNGrCrLeEgGGW3y28yWg`;
+const genAI = new GoogleGenerativeAI(apiKey);
+
 let chatHistory = [];
 
 const handleChat = async (req, res, systemMessage) => {
-    const userId = req.query.user;
-    const prompt = req.query.text;
-    chatHistory[userId] = chatHistory[userId] || [];
+  const userId = req.query.user;
+  const prompt = req.query.text;
+  chatHistory[userId] = chatHistory[userId] || [];
 
-    const messages = chatHistory[userId];
-    const payload = {
-        messages: [
-            { role: "system", content: systemMessage },
-            ...messages.map(msg => ({ role: msg.role, content: msg.content })),
-            { role: "user", content: prompt }
-        ],
-        model: "llama3-70b-8192",
-        temperature: 1,
-        max_tokens: 1024,
-        top_p: 1,
-        stream: false,
-        stop: null
-    };
+  const messages = chatHistory[userId];
+  const history = messages.map(msg => ({
+    role: msg.role,
+    parts: [{ text: msg.content }]
+  }));
 
-    try {
-        const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', payload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer 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'
-            }
-        });
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-pro",
+    systemInstruction: systemMessage,
+  });
 
-        if (response.status === 200) {
-            const assistantMessage = { role: "assistant", content: response.data.choices[0].message.content };
-            chatHistory[userId].push({ role: "user", content: prompt }, assistantMessage);
+  const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 64,
+    maxOutputTokens: 1000,
+    responseMimeType: "text/plain",
+  };
 
-            res.json({ result: assistantMessage.content, history: messages });
-        } else {
-            throw new Error('Non-200 response');
-        }
-    } catch (error) {
-        console.error('Error request:', error);
+  try {
+    const chatSession = model.startChat({
+      generationConfig,
+      history,
+    });
 
-        chatHistory[userId] = [];
-        try {
-            const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', payload, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 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'
-                }
-            });
+    const result = await chatSession.sendMessage(prompt);
 
-            if (response.status === 200) {
-                const assistantMessage = { role: "assistant", content: response.data.choices[0].message.content };
-                chatHistory[userId].push({ role: "user", content: prompt }, assistantMessage);
+    if (result) {
+      const modelMessage = { role: "model", content: result.response.text() };
+      chatHistory[userId].push({ role: "user", content: prompt }, modelMessage);
 
-                res.json({ result: assistantMessage.content, history: messages });
-            } else {
-                res.status(500).json({ error: 'Internal Server Error' });
-            }
-        } catch (retryError) {
-            res.status(500).json({ error: retryError.message });
-            console.error('Retry error request:', retryError);
-        }
+      res.json({ result: modelMessage.content, history: messages });
+    } else {
+      throw new Error('Failed to generate response');
     }
+  } catch (error) {
+    console.error('Error request:', error);
+
+    chatHistory[userId] = [];
+    res.status(500).json({ error: error.message });
+  }
 };
 
-module.exports = { handleChat }
+module.exports = { handleChat };
