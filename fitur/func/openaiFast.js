@@ -2,7 +2,10 @@ const {
   GoogleGenerativeAI,
 } = require("@google/generative-ai");
 
-const apiKey = `AIzaSyB2tVdHido-pSjSNGrCrLeEgGGW3y28yWg`;
+const randomPick = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+const apiKey = randomPick(['AIzaSyAS6CLgV1nFuSksdMBwo4gQfro1fHUFBHU','AIzaSyB2tVdHido-pSjSNGrCrLeEgGGW3y28yWg']);
 const genAI = new GoogleGenerativeAI(apiKey);
 
 let chatHistory = [];
@@ -27,7 +30,7 @@ const handleChat = async (req, res, systemMessage) => {
     temperature: 1,
     topP: 0.95,
     topK: 64,
-    maxOutputTokens: 1000,
+    maxOutputTokens: 500,
     responseMimeType: "text/plain",
   };
 
@@ -49,8 +52,6 @@ const handleChat = async (req, res, systemMessage) => {
     }
   } catch (error) {
     console.error('Error request:', error);
-
-    chatHistory[userId] = [];
     res.status(500).json({ error: error.message });
   }
 };
