@@ -20,11 +20,11 @@ const handleChat = async (req, res, systemMessage) => {
         const response = await groq.chat.completions.create({
             messages: payload.messages,
             model: "Gemma2-9b-It",
-            temperature: 0.7,
+            temperature: 1,
             max_tokens: 500,
             top_p: 1,
             stream: false,
-            stop: "."
+            stop: "\n\n\n"
         });
 
         const assistantMessage = { role: "assistant", content: response.choices[0].message.content.trim() };
@@ -34,6 +34,8 @@ const handleChat = async (req, res, systemMessage) => {
         if (chatHistory[userId].length > 20) {
             chatHistory[userId] = chatHistory[userId].slice(-20);
         }
+        assistantMessage.content = assistantMessage.content.replace(/\n\n/g, '\n    ');
+        assistantMessage.content = assistantMessage.content.replace(/\*\*/g, '*');
 
         res.json({ result: assistantMessage.content, history: messages });
     } catch (error) {
