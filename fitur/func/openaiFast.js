@@ -1,64 +1,47 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-
-const apiKey = 'AIzaSyAS6CLgV1nFuSksdMBwo4gQfro1fHUFBHU';
-const genAI = new GoogleGenerativeAI(apiKey);
-
+const Groq = require('groq-sdk');
+const groq = new Groq({apiKey:'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'});
 let chatHistory = [];
 
 const handleChat = async (req, res, systemMessage) => {
-  const userId = req.query.user;
-  const prompt = req.query.text;
-  chatHistory[userId] = chatHistory[userId] || [];
+    const userId = req.query.user;
+    const prompt = req.query.text;
+    chatHistory[userId] = chatHistory[userId] || [];
 
-  const messages = chatHistory[userId];
-  const history = messages.map(msg => ({
-    role: msg.role,
-    parts: [{ text: msg.content }]
-  }));
+    const messages = chatHistory[userId];
+    const payload = {
+        messages: [
+            { role: "system", content: systemMessage },
+            ...messages.map(msg => ({ role: msg.role, content: msg.content })),
+            { role: "user", content: prompt }
+        ]
+    };
 
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    systemInstruction: systemMessage,
-  });
-
-  const generationConfig = {
-    temperature: 1,
-    topP: 0.95,
-    topK: 64,
-    maxOutputTokens: 500,
-    responseMimeType: "text/plain",
-  };
-
-  const maxRetries = 1000; // Maximum number of retries
-  let attempts = 0;
-  let success = false;
-
-  while (attempts < maxRetries && !success) {
-    attempts += 1;
     try {
-      const chatSession = model.startChat({
-        generationConfig,
-        history,
-      });
+        const response = await groq.chat.completions.create({
+            messages: payload.messages,
+            model: "Gemma2-9b-It",
+            temperature: 1,
+            max_tokens: 500,
+            top_p: 1,
+            stream: false,
+            stop: null
+        });
 
-      const result = await chatSession.sendMessage(prompt);
+        const assistantMessage = { role: "assistant", content: response.choices[0].message.content.trim() };
+        chatHistory[userId].push({ role: "user", content: prompt }, assistantMessage);
 
-      if (result) {
-        const modelMessage = { role: "model", content: result.response.text() };
-        chatHistory[userId].push({ role: "user", content: prompt }, modelMessage);
+        // Batasi chatHistory hanya sampai 20 percakapan terbaru
+        if (chatHistory[userId].length > 20) {
+            chatHistory[userId] = chatHistory[userId].slice(-20);
+        }
 
-        res.json({ result: modelMessage.content, history: messages });
-        success = true;
-      } else {
-        throw new Error('Failed to generate response');
-      }
+        res.json({ result: assistantMessage.content, history: messages });
     } catch (error) {
-      console.error(`Attempt ${attempts} - Error request:`, error);
-      if (attempts >= maxRetries) {
-        res.status(500).json({ error: error.message });
-      }
+        console.error('Error request:', error);
+
+        chatHistory[userId] = [];
+        res.status(500).json({ error: 'Error request' });
     }
-  }
 };
 
 module.exports = { handleChat };
