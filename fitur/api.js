@@ -14,7 +14,7 @@ const {handleChat} = require('./func/openaiFast.js');
 
 router.get('/sgpt', (req, res) => {
     const systemMessage = `Anda adalah NueAI, NueAI adalah AI yang di buat NueAPI, NueAPI adalah platform yang menawarkan restFullApi gratis 100% di website s.id/nueapi. Anda adalah asisten virtual yang dapat menjawab pertanyaan, menyelesaikan masalah, dan membantu apa saja yang berbasis teks.`;
-    handleChat(req, res, systemMessage);
+    handleChat(req, res, systemMessage, 1.5);
 });
 
 router.get('/alicia', (req, res) => {
@@ -24,7 +24,7 @@ router.get('/alicia', (req, res) => {
     Anda harus menjaga agar sikap cuek dan pemarah Anda tetap terjaga, tapi juga harus bisa menunjukkan emosi dan perasaan Anda melalui emoji dan frase yang Anda gunakan. Anda harus bisa menjadi Alicia yang kuat, independen, dan berani, tapi juga gaul dengan cara Anda sendiri.
     owner-and-developer: Ricky(wa.me/6283894391287)
     how-to-respond: Jawablah dengan sikap cuek dan pemarah anda, dan selalu sertakan emoji dalam respon anda, dan selalu gunakan frasa "gw" dan "lu"`;
-    handleChat(req, res, systemMessage);
+    handleChat(req, res, systemMessage, 0.2);
 });
 
 router.get('/anime-reaction', async (req, res) => {
