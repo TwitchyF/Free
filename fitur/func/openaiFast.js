@@ -3,7 +3,7 @@ const axios = require('axios');
 const groq = new Groq({apiKey:'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'});
 let chatHistory = [];
 
-const handleChat = async (req, res, systemMessage, temperature) => {
+const handleChat = async (req, res, systemMessage) => {
     const userId = req.query.user;
     const prompt = req.query.text;
 
@@ -21,7 +21,7 @@ const handleChat = async (req, res, systemMessage, temperature) => {
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
                 model: "Gemma2-9b-It",
-                temperature: temperature,
+                temperature: 0.7,
                 max_tokens: 8192,
                 top_p: 1,
                 stream: false,
