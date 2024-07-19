@@ -34,18 +34,16 @@ app.get("/redirect", async (req, res) =>{
 });
 
 app.get("/uptime", async (req, res) => {
-  const chatAi = 'https://hammerhead-foamy-tune.glitch.me/';
+  const chatAi = 'https://copper-ambiguous-velvet.glitch.me/';
   const sideSrvr = 'https://tattered-classy-comic.glitch.me/';
+  let sideRes = null;
+  let chatRes = null;
   try {
-        const sideRes = await axios.get(sideSrvr);
-        const chatRes = await axios.get(chatAi);
-        if (sideRes.status === 200 && chatRes.status === 200) {
-          res.send("Server is up and running!");
-        } else {
-          res.send("Server is down or unreachable.");
-        }
+        sideRes = await axios.get(sideSrvr);
+        chatRes = await axios.get(chatAi);
+          res.send("Server Uptime: " + sideRes.status + " | ChatAI Uptime: " + chatRes.status)
     } catch (error) {
-        res.send(error.message)
+        res.send("Server Uptime: " + sideRes.status + " | ChatAI Uptime: " + chatRes.status)
   }
 })
 
