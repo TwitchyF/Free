@@ -1,7 +1,7 @@
 const Groq = require('groq-sdk');
 const axios = require('axios');
 const groq = new Groq({apiKey:'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'});
-
+let chatHistory = [];
 const handleChat = async (req, res, systemMessage) => {
     const userId = req.query.user;
     const prompt = req.query.text;
@@ -15,7 +15,7 @@ const handleChat = async (req, res, systemMessage) => {
          await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}?json={}`)
         readResponse.data = []
         }
-        let chatHistory = readResponse.data[userId] || [];
+        chatHistory = readResponse.data[userId] || [];
 
         const messages = chatHistory;
         const payload = {
@@ -56,7 +56,16 @@ const handleChat = async (req, res, systemMessage) => {
 
         res.json({ result: assistantMessage.content, history: messages });
     } catch (error) {
-        await axios.get(`https://copper-ambiguous-velvet.glitch.me/delete/${userId}`);
+        if (chatHistory.length > 10) {
+            chatHistory = chatHistory.slice(-10);
+        } else {
+            chatHistory = [];
+        }
+        await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
+            params: {
+                json: JSON.stringify({ [userId]: chatHistory })
+            }
+        });
         console.error('Error request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
