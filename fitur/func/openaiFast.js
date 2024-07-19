@@ -22,7 +22,7 @@ const handleChat = async (req, res, systemMessage, temperature) => {
                 messages: payload.messages,
                 model: "Gemma2-9b-It",
                 temperature: temperature,
-                max_tokens: 100,
+                max_tokens: 8192,
                 top_p: 1,
                 stream: false,
                 stop: "\n\n\n"
