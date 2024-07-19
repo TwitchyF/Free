@@ -57,9 +57,6 @@ const handleChat = async (req, res, systemMessage) => {
         res.json({ result: assistantMessage.content, history: messages });
     } catch (error) {
         console.error('Error request:', error);
-
-        // Menghapus riwayat percakapan jika terjadi kesalahan
-        await axios.get(`https://copper-ambiguous-velvet.glitch.me/delete/${userId}`);
         res.status(500).json({ error: 'Error request' });
     }
 };
