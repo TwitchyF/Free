@@ -15,7 +15,7 @@ const handleChat = async (req, res, systemMessage) => {
          await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}?json={}`)
         readResponse.data = []
         }
-        const chatHistory = readResponse.data[userId] || [];
+        let chatHistory = readResponse.data[userId] || [];
 
         const messages = chatHistory;
         const payload = {
