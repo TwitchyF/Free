@@ -6,6 +6,7 @@ let chatHistory = [];
 const handleChat = async (req, res, systemMessage) => {
     const userId = req.query.user;
     const prompt = req.query.text;
+    systemMessage = systemMessage || req.query.systemPrompt
 
     const sendRequest = async (sliceLength) => {
         try {
@@ -21,8 +22,8 @@ const handleChat = async (req, res, systemMessage) => {
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
                 model: "Gemma2-9b-It",
-                temperature: 0.7,
-                max_tokens: 8192,
+                temperature: 1,
+                max_tokens: 1024,
                 top_p: 1,
                 stream: false,
                 stop: "\n\n\n"
