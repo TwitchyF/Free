@@ -1,6 +1,6 @@
 const Groq = require('groq-sdk');
 const axios = require('axios');
-const groq = new Groq({apiKey:'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'});
+const groq = new Groq({ apiKey: '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' });
 let chatHistory = [];
 
 const handleChat = async (req, res, systemMessage) => {
@@ -32,10 +32,6 @@ const handleChat = async (req, res, systemMessage) => {
             const assistantMessage = { role: "assistant", content: response.choices[0].message.content.trim() };
             chatHistory.push({ role: "user", content: prompt }, assistantMessage);
 
-            if (chatHistory.length > 20) {
-                chatHistory = chatHistory.slice(-20);
-            }
-
             assistantMessage.content = assistantMessage.content.replace(/\n\n/g, '\n    ');
             assistantMessage.content = assistantMessage.content.replace(/\*\*/g, '*');
 
@@ -53,22 +49,20 @@ const handleChat = async (req, res, systemMessage) => {
     };
 
     try {
-        let readResponse = {data:{}}
+        let readResponse = { data: {} }
         try {
-         readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
+            readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
         } catch (error) {
-         await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}?json={}`)
-        readResponse.data = []
+            await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}?json={}`)
+            readResponse.data = []
         }
         chatHistory = readResponse.data[userId] || [];
 
-        let success = await sendRequest(20);
-        if (!success) success = await sendRequest(15);
-        if (!success) success = await sendRequest(10);
-        if (!success) success = await sendRequest(5);
-        if (!success) {
-            chatHistory = [];
-            success = await sendRequest(0);
+        let sliceLength = chatHistory.length;
+        let success = await sendRequest(sliceLength);
+        while (!success && sliceLength > 0) {
+            sliceLength -= 5;
+            success = await sendRequest(sliceLength);
         }
         if (!success) throw new Error('All retries failed');
     } catch (error) {
