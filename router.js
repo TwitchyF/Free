@@ -29,20 +29,9 @@ router.get('/', (req, res) => {
   res.render('home');
 });
 
-router.get('/other', (req, res) => {
-  res.render('other');
+router.get('/menu', (req, res) => {
+  res.render('menu');
 });
 
-router.get('/ai', (req, res) =>{
-  res.render('ai');
-});
-
-router.get('/downloader', (req, res) =>{
-  res.render('download');
-});
-
-router.get('/search', (req, res) =>{
-  res.render('search');
-});
 
 module.exports = router;
