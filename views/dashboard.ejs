@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>NueApi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NueApi - Free REST API for Developers</title>
     <link rel="icon" type="image/png" href="https://telegra.ph/file/e07e0fddc2a2967bd08d6.jpg">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -18,10 +18,11 @@
             --content-color: #666;
             --footer-bg-color: #2c3e50;
             --footer-text-color: #f5f5f5;
-            --banner-bg: url('/api/anime-reaction?category=sad') no-repeat center center/cover;
+            --banner-bg: url('https://anime-reactions.uzairashraf.dev/sad/aqua-sad.jpg') no-repeat center center/cover; 
             --card-bg-color: #ffffff;
             --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         body.dark-mode {
             --bg-color: #333;
             --text-color: #f5f5f5;
@@ -30,6 +31,7 @@
             --footer-bg-color: #222;
             --footer-text-color: #f5f5f5;
         }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -37,122 +39,28 @@
             margin: 0;
             padding: 0;
         }
+
+        /* Banner Section */
         .banner {
             background: var(--banner-bg);
             color: #fff;
-            padding: 150px 20px;
+            padding: 120px 20px;
             text-align: center;
             position: relative;
+            overflow: hidden; /* Hide images during transition */
         }
+
         .banner h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
         .banner p {
-            font-size: 1.5rem;
-        }
-        .menu-card {
-            background-color: var(--card-bg-color);
-            border-radius: 10px;
-            box-shadow: var(--card-shadow);
-            margin: -50px auto 20px auto;
-            max-width: 90%;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        .menu-card .menu-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-        .menu-card .menu-item a {
-            color: var(--link-color);
             font-size: 1.2rem;
-            padding: 10px;
-            text-decoration: none;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            align-items: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
-        .menu-card .menu-item a i {
-            margin-right: 10px;
-        }
-        .menu-card .menu-item a:hover {
-            background-color: var(--link-color);
-            color: #fff;
-            border-radius: 5px;
-        }
-        .toggle-theme {
-            cursor: pointer;
-            color: var(--link-color);
-            font-size: 1.5rem;
-            text-align: center;
-            padding: 10px;
-            transition: color 0.3s;
-        }
-        .toggle-theme:hover {
-            color: var(--link-hover-color);
-        }
-        .content, .blog, .json-display {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .content h2, .blog h2, .json-display h2 {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        .content p, .blog p, .json-display p {
-            color: var(--content-color);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-        .card {
-            box-shadow: var(--card-shadow);
-            border-radius: 10px;
-            border: none;
-            margin-bottom: 20px;
-        }
-        .card-header {
-            background-color: var(--primary-color);
-            color: white;
-            font-size: 1.5em;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-        .card-body {
-            background: var(--card-bg-color);
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            padding: 20px;
-        }
-        .table {
-            margin-bottom: 0;
-        }
-        .table thead th {
-            border-bottom: 2px solid #dee2e6;
-        }
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-        .table td, .table th {
-            padding: 1em;
-        }
-        footer {
-            background-color: var(--footer-bg-color);
-            color: var(--footer-text-color);
-            padding: 20px 0;
-            text-align: center;
-        }
-        .footer-links a {
-            color: var(--footer-text-color);
-            margin: 0 10px;
-        }
-        .footer-links a:hover {
-            color: var(--link-hover-color);
-        }
+
         .banner-controls {
             position: absolute;
             top: 50%;
@@ -161,140 +69,308 @@
             justify-content: space-between;
             transform: translateY(-50%);
         }
+
         .banner-controls i {
             cursor: pointer;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #fff;
-            padding: 10px;
-            transition: color 0.3s;
+            padding: 10px 20px; /* Increased padding for better click area */
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
+
         .banner-controls i:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Menu Card */
+        .menu-card {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            margin: -40px auto 20px auto;
+            max-width: 80%;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-card .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+
+        .menu-card .menu-item a {
+            color: var(--link-color);
+            font-size: 1.1rem;
+            padding: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            border-radius: 5px; /* Added rounded corners to links */
+        }
+
+        .menu-card .menu-item a i {
+            margin-right: 8px;
+        }
+
+        .menu-card .menu-item a:hover {
+            background-color: var(--link-color);
+            color: #fff;
+        }
+
+        /* Theme Toggle */
+        .toggle-theme {
+            cursor: pointer;
+            color: var(--link-color);
+            font-size: 1.4rem;
+            text-align: center;
+            padding: 8px;
+            transition: color 0.3s;
+            position: fixed; /* Fixed position for easy access */
+            top: 10px;
+            right: 10px;
+            z-index: 10; /* Ensure it stays on top */
+        }
+
+        .toggle-theme:hover {
+            color: var(--link-hover-color);
+        }
+
+        /* Content Sections */
+        .content, .blog, .json-display {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .content h2, .blog h2, .json-display h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .content p, .blog p, .json-display p {
+            color: var(--content-color);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Cards */
+        .card {
+            box-shadow: var(--card-shadow);
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.3em;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .card-body {
+            background: var(--card-bg-color);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 15px;
+        }
+
+        /* Table Styling */
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table td, .table th {
+            padding: 0.8em;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg-color);
+            color: var(--footer-text-color);
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .footer-links a {
+            color: var(--footer-text-color);
+            margin: 0 8px;
+        }
+
+        .footer-links a:hover {
             color: var(--link-hover-color);
         }
     </style>
 </head>
 <body>
-<div class="banner">
-    <div class="banner-controls">
-        <i class="fas fa-chevron-left" onclick="prevImage()"></i>
-        <i class="fas fa-chevron-right" onclick="nextImage()"></i>
+
+    <div class="banner">
+        <div class="banner-controls">
+            <i class="fas fa-chevron-left" onclick="prevImage()"></i>
+            <i class="fas fa-chevron-right" onclick="nextImage()"></i>
+        </div>
+        <h1>Welcome to NueApi</h1>
+        <p>Explore our API and discover amazing features!</p>
     </div>
-</div>
-<div class="menu-card">
-    <div class="menu-item"><a href="/ai"><i class="fas fa-robot"></i> AI</a></div>
-    <div class="menu-item"><a href="/downloader"><i class="fas fa-download"></i> Downloader</a></div>
-    <div class="menu-item"><a href="/search"><i class="fas fa-search"></i> Search</a></div>
-    <div class="menu-item"><a href="/other"><i class="fas fa-ellipsis-h"></i> Other</a></div>
-    <div class="menu-item"><a href="https://whatsapp.com/channel/0029Vaj5ZZg5kg7EYRniXS1Z"><i class="fas fa-circle"></i> Info Update</a></div>
-</div>
-<div class="toggle-theme" onclick="toggleTheme()"><i class="fas fa-adjust"></i></div>
-<div class="blog">
-    <div class="container">
-        <div class="card">
-            <div class="card-header text-center">
-                About This Website
-            </div>
-            <div class="card-body">
-                <p>🎉 <b>REST API Gratis 100%</b> 🎉</p>
-                <p>🚀 Dengan berbagai fitur keren seperti:</p>
-                <ul>
-                    <li>🤖 <b>Kecerdasan Buatan</b></li>
-                    <li>📥 <b>Pengunduh</b></li>
-                    <li>🔍 <b>Pencari</b></li>
-                    <li>🔧 <b>Alat-alat untuk Pengembangan Web/Bot</b></li>
-                </ul>
-                <p>API ini sepenuhnya menggunakan permintaan <b>GET</b> untuk HTTPS. Dibuat dan dikembangkan oleh satu orang saja, jadi harap maklum jika ada error atau butuh waktu untuk perbaikan.</p>
-                <p>Selamat menikmati API ini! ✨</p>
+
+    <div class="menu-card">
+        <div class="menu-item"><a href="/ai"><i class="fas fa-robot"></i> AI</a></div>
+        <div class="menu-item"><a href="/downloader"><i class="fas fa-download"></i> Downloader</a></div>
+        <div class="menu-item"><a href="/search"><i class="fas fa-search"></i> Search</a></div>
+        <div class="menu-item"><a href="/other"><i class="fas fa-ellipsis-h"></i> Other</a></div>
+        <div class="menu-item"><a href="https://whatsapp.com/channel/0029Vaj5ZZg5kg7EYRniXS1Z"><i class="fas fa-circle"></i> Info Update</a></div>
+    </div>
+
+    <div class="toggle-theme" onclick="toggleTheme()"><i class="fas fa-adjust"></i></div>
+
+    <div class="container"> 
+        <div class="row"> 
+            <div class="col-md-8 offset-md-2"> 
+                <div class="blog">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            About This Website
+                        </div>
+                        <div class="card-body">
+                            <p>🎉 <b>100% Free REST API</b> 🎉</p>
+                            <p>🚀 With awesome features like:</p>
+                            <ul>
+                                <li>🤖 <b>Artificial Intelligence</b></li>
+                                <li>📥 <b>Downloader</b></li>
+                                <li>🔍 <b>Search</b></li>
+                                <li>🔧 <b>Tools for Web/Bot Development</b></li>
+                            </ul>
+                            <p>This API uses <b>GET</b> requests over HTTPS. It's developed and maintained by a single person, so please be patient with any errors or updates.</p>
+                            <p>Enjoy using the API! ✨</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <h2>Visitor Counter</h2>
+                    <p class="visitor"></p> 
+                </div>
+
+                <div class="json-display">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Request API NueApi
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(let key in jsonData) { %>
+                                        <tr>
+                                            <td><%= key %></td>
+                                            <td><%= jsonData[key] %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div> 
+    </div> 
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer-links">
+                        <a href="https://hammerhead-foamy-tune.glitch.me/">NueAi</a>
+                        <a href="https://wa.me/6283894391287">Contact Site Creator</a>
+                    </div>
+                    <p>© 2024 NueApi. All rights reserved.</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="content">
-    <h2>Visitor Counter</h2>
-    <p class="visitor"></p>
-    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1146079/t/1"></script>
-</div>
-<div class="json-display">
-    <div class="container">
-        <div class="card">
-            <div class="card-header text-center">
-                Request API NueApi
-            </div>
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(let key in jsonData) { %>
-                            <tr>
-                                <td><%= key %></td>
-                                <td><%= jsonData[key] %></td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+    </footer>
 
-                            <script type='text/javascript' src='https://cdn.trakteer.id/js/embed/trbtn.min.js?date=18-11-2023'></script><script type='text/javascript'>(function(){var trbtnId=trbtn.init('Belikan saya Rokok🙃','#be1e2d','https://trakteer.id/NueApi/tip','https://trakteer-uploads.sgp1.digitaloceanspaces.com/images/units/uic-LzjGUfjMrIvdzKmZJprHAfIQBkQ9uJEI1721682244.jpeg','40');trbtn.draw(trbtnId);})();</script>
-                            <script>
-    window['CboxReady'] = function (Cbox) {
-        Cbox('button', '5-951321-TFAjW9');
-    }
-                            </script>
-<footer>
-    <div class="footer-links">
-        <a href="https://hammerhead-foamy-tune.glitch.me/">Alicia_AI</a>
-        <a href="https://wa.me/6283894391287">contact_site_creator</a>
-    </div>
-    <p>&copy; 2024 NueApi. All rights reserved.</p>
-</footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                            
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://static.cbox.ws/embed/2.js" async></script>
-<script>
-    const images = ["https://anime-reactions.uzairashraf.dev/sad/aqua-sad.jpg","https://anime-reactions.uzairashraf.dev/sad/cri.gif","https://anime-reactions.uzairashraf.dev/sad/die.jpg","https://anime-reactions.uzairashraf.dev/sad/fumiko.jpg","https://anime-reactions.uzairashraf.dev/sad/how-to-die.jpg","https://anime-reactions.uzairashraf.dev/sad/itsnot.JPG","https://anime-reactions.uzairashraf.dev/sad/owo-face.gif","https://anime-reactions.uzairashraf.dev/sad/sad-3.gif","https://anime-reactions.uzairashraf.dev/sad/sad.gif","https://anime-reactions.uzairashraf.dev/sad/sad.png","https://anime-reactions.uzairashraf.dev/sad/sad2.gif","https://anime-reactions.uzairashraf.dev/sad/sed.jpg","https://anime-reactions.uzairashraf.dev/sad/tearup.gif"]
-    let currentIndex = 0;
+    <script>
+        // Image Slider
+        const images = [
+            "/api/anime-reaction",
+            "/api/anime-reaction?no=1",
+            "/api/anime-reaction?no=2",
+            "/api/anime-reaction?no=3",
+            "/api/anime-reaction?no=4",
+            "/api/anime-reaction?no=5",
+        ];
+        let currentIndex = 0;
 
-    function updateBanner() {
-        document.querySelector('.banner').style.background = `url(${images[currentIndex]}) no-repeat center center/cover`;
-    }
-
-    function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateBanner();
-    }
-
-    function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateBanner();
-    }
-
-    function autoChangeImage() {
-        nextImage();
-        setTimeout(autoChangeImage, 10000);
-    }
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
+        function updateBanner() {
+            document.querySelector('.banner').style.backgroundImage = `url(${images[currentIndex]})`;
         }
-        updateBanner();
-        setTimeout(autoChangeImage, 10000);
-    });
 
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    }
-</script>
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateBanner();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateBanner();
+        }
+
+        // Auto-change images every 10 seconds
+        setInterval(nextImage, 10000); 
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // Check for theme preference on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateBanner(); // Initialize banner image
+        });
+    </script>
+
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1146079/t/1"></script>
+
+    <script type='text/javascript' src='https://cdn.trakteer.id/js/embed/trbtn.min.js?date=18-11-2023'></script>
+    <script type='text/javascript'>
+        (function(){
+            var trbtnId = trbtn.init('Belikan saya Rokok🙃','#be1e2d','https://trakteer.id/NueApi/tip','https://trakteer-uploads.sgp1.digitaloceanspaces.com/images/units/uic-LzjGUfjMrIvdzKmZJprHAfIQBkQ9uJEI1721682244.jpeg','40');
+            trbtn.draw(trbtnId);
+        })();
+    </script>
+
+    <script src="https://static.cbox.ws/embed/2.js" async></script>
+    <script>
+        window['CboxReady'] = function (Cbox) {
+            Cbox('button', '5-951321-TFAjW9');
+        }
+    </script>
 </body>
 </html>
