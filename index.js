@@ -25,24 +25,27 @@ app.get('/yt', async (req, res) => {
   const url = req.query.url;
 
   if (!url) {
-    return res.status(400).send('URL parameter is required');
+    return res.status(400).json({ error: 'URL parameter is required' });
   }
 
   try {
+    // Get video info
     const info = await ytdl.getInfo(url);
 
-    // Find the best audio & video format
-    const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'videoandaudio' });
-    const audioFormat = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: 'audioonly' });
+    // Find audio and video formats
+    const audioAndVideoFormat = ytdl.filterFormats(info.formats, 'audioandvideo')[0];
+    const audioOnlyFormat = ytdl.filterFormats(info.formats, 'audioonly')[0];
+
+    if (!audioAndVideoFormat || !audioOnlyFormat) {
+      return res.status(404).json({ error: 'No suitable formats found' });
+    }
 
     res.json({
-      audio: audioFormat.url,
-      video: videoFormat ? videoFormat.url : null // Some videos might not have a videoFormat
+      audio: audioOnlyFormat.url,
+      video: audioAndVideoFormat.url
     });
-
   } catch (error) {
-    console.error('Error fetching video info:', error);
-    res.status(500).send('Error fetching video info');
+    res.status(500).json({ error: 'Failed to fetch video info', details: error.message });
   }
 });
 
