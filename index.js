@@ -3,6 +3,7 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
+const ytdl = require('ytdl-core');
 
 const app = express();
 app.use('/', router);
@@ -19,6 +20,31 @@ app.use('/api', v1);
 app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
 app.set('json spaces', 2);
+
+app.get('/yt', async (req, res) => {
+  const url = req.query.url;
+
+  if (!url) {
+    return res.status(400).send('URL parameter is required');
+  }
+
+  try {
+    const info = await ytdl.getInfo(url);
+
+    // Find the best audio & video format
+    const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'videoandaudio' });
+    const audioFormat = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: 'audioonly' });
+
+    res.json({
+      audio: audioFormat.url,
+      video: videoFormat ? videoFormat.url : null // Some videos might not have a videoFormat
+    });
+
+  } catch (error) {
+    console.error('Error fetching video info:', error);
+    res.status(500).send('Error fetching video info');
+  }
+});
 
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
