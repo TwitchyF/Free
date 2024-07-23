@@ -9,68 +9,41 @@
     <style>
         body {
             background-color: #121212;
-            color: #f8f9fa; /* White color for text */
+            color: #f8f9fa;
             font-family: Arial, sans-serif;
             margin: 0;
         }
 
-        .menu-container {
+        .container {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin: 20px;
-            padding: 10px;
-            border: 1px solid #343a40; /* Dark color for border */
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         .menu-item {
-            width: 100%;
-            max-width: 500px;
-            margin: 10px;
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
             border: 1px solid #343a40;
-            background-color: #1f1f1f; /* Darker background for items */
+            padding: 20px;
             border-radius: 8px;
+            text-align: center;
         }
 
-        .button {
-            display: inline-block;
-            margin: 10px 0;
-            padding: 10px 20px;
-            border: none;
-            color: #f8f9fa;
-            background-color: #007bff; /* Primary color */
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .button:disabled {
-            background-color: #6c757d; /* Gray color when disabled */
-            cursor: not-allowed;
-        }
-
-        .button:hover:enabled {
-            background-color: #0056b3; /* Darker shade of primary color */
-        }
-
-        .home-button {
-            margin: 20px;
-            padding: 10px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .home-button img {
-            width: 40px;
-            height: 40px;
+        h1, h2, p {
+            text-align: center;
         }
 
         .input-field {
             width: calc(100% - 20px);
             padding: 10px;
-            margin: 5px 0;
+            margin: 10px 0;
             border: 1px solid #343a40;
             border-radius: 4px;
             background-color: #2c2c2c;
@@ -82,287 +55,280 @@
             outline: none;
         }
 
-        /* Menu Hamburger */
-        .hamburger-menu {
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            color: #f8f9fa;
+            background-color: #007bff;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .button:hover:enabled {
+            background-color: #0056b3;
+        }
+
+        .home-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            z-index: 100; /* Ensure it's on top */
-            background-color: #1f1f1f;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .home-button img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #search-bar {
+            width: 100%;
             padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .hamburger-menu-icon {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 25px;
-            height: 15px;
-        }
-
-        .hamburger-menu-icon div {
-            width: 100%;
-            height: 3px;
-            background-color: #f8f9fa;
-            border-radius: 2px;
-        }
-
-        .hamburger-menu-content {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 20px;
-            transform: translateX(-100%); /* Hidden by default */
-            transition: transform 0.3s ease;
-            z-index: 99; /* Ensure it's below content */
-        }
-
-        .hamburger-menu-content.active {
-            transform: translateX(0); /* Show content when active */
-        }
-
-        .hamburger-menu-item {
-            margin-bottom: 15px;
-            padding: 10px 20px;
-            background-color: #1f1f1f;
+            margin-bottom: 20px;
             border: 1px solid #343a40;
-            border-radius: 5px;
-            color: #f8f9fa;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .hamburger-menu-item:hover {
+            border-radius: 4px;
             background-color: #2c2c2c;
-        }
-
-        /* Content Section */
-        .content-section {
-            margin-top: 80px; /* Adjust to account for hamburger menu */
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Hide all content sections initially */
-        .content-section > div {
-            display: none;
-        }
-
-        /* Show the initial content section */
-        .content-section > div.active {
-            display: block;
+            color: #f8f9fa;
         }
     </style>
 </head>
 <body>
-    <div class="hamburger-menu" onclick="toggleMenu()">
-        <div class="hamburger-menu-icon">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+    <a href="/dashboard" class="home-button">
+        <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
+    </a>
+
+
+    <div class="container">
+        <div class="menu-container" id="menu-container">
+<input type="text" id="search-bar" placeholder="Cari menu...">
+            </div>
     </div>
-    <div class="hamburger-menu-content">
-        <a href="#" class="hamburger-menu-item" onclick="showContent('download')">Download</a>
-        <a href="#" class="hamburger-menu-item" onclick="showContent('ai')">AI</a>
-        <a href="#" class="hamburger-menu-item" onclick="showContent('other')">Other</a>
-        <a href="#" class="hamburger-menu-item" onclick="showContent('search')">Search</a>
-    </div>
-    <div class="content-section">
-        <h1 class="title">Nue-APIs</h1>
-        <button class="home-button" onclick="location.href='/dashboard'">
-            <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
-        </button>
+    
 
-        <div id="download" class="active">
-            <div class="menu-item">
-                <h2>FB & IG</h2>
-                <p>Pengunduh video/foto IG/FB</p>
-                <input type="text" class="input-field" id="instagram-url" placeholder="Masukkan URL Fb/Ig">
-                <button class="button" id="instagram-button" disabled onclick="tryNow('/api/snapsave?url=', 'instagram-url')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>TikTok</h2>
-                <p>Unduh video, foto, dan music Dari TikTok</p>
-                <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan URL TikTok">
-                <button class="button" id="tiktok-button" disabled onclick="tryNow('/api/tt-dl?url=', 'tiktok-url')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Play YT</h2>
-                <p>Cari dan play video/audio YouTube</p>
-                <input type="text" class="input-field" id="youtube-query" placeholder="Masukkan query YouTube">
-                <button class="button" id="youtube-button" disabled onclick="tryNow('/api/play?query=', 'youtube-query')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>YouTubeDL</h2>
-                <p>Unduh video/audio YouTube</p>
-                <input type="text" class="input-field" id="ytdl-url" placeholder="Masukkan URL YouTube">
-                <button class="button" id="ytdl-button" disabled onclick="tryNow('/api/ytdl?url=', 'ytdl-url')">Try Now</button>
-            </div>
-        </div>
-
-        <div id="ai">
-            <div class="menu-item">
-                <h2>Stable diffusion</h2>
-                <p>AI yang bisa bikin gambar dari text</p>
-                <button class="button" onclick="location.href='https://tattered-classy-comic.glitch.me/sdlist'">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Stable diffusion XL</h2>
-                <p>AI yang bisa bikin gambar dari text dengan kualitas lebih tinggi</p>
-                <button class="button" onclick="location.href='https://tattered-classy-comic.glitch.me/sdxllist'">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>AI Logic</h2>
-                <p>Buat AI anda sendiri dengan model <h4>Model Gemma2 dengan session chat</h4> agar AI dapat mengingat percakapan. <h6>NOTE:</h6> setiap kali anda mencoba prompt baru pastikan untuk mengubah user dan sedikit saran agar Gunakan prompt yang agak panjang dan jelas agar berhasil</p>
-                <input type="text" class="input-field" id="alicia-text" placeholder="Siapa kamu?" oninput="checkInput('alicia-text', 'instagram-button')">
-                <button class="button" id="instagram-button" disabled onclick="tryNow('/api/lgpt?user=Gapur&systemPrompt=anda adalah NueAI asisten cerdas yang dapat membantu apa saja berbasis teks, anda masih dalam tahap pengembangan dan pengembangan ini di pimpin oleh NueApi&text=', 'alicia-text')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Gemini.google.com</h2>
-                <p>Gemini ini hasil scraping dari gemini.google.com, tidak resmi dan bisa error kapan saja</p>
-                <input type="text" class="input-field" id="gemini-text" placeholder="Masukkan perintah" oninput="checkInput('gemini-text', 'gemini-button')">
-                <button class="button" id="gemini-button" disabled onclick="tryNow('/api/bard?text=', 'gemini-text')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Gemini Model</h2>
-                <p>Model gemini flash dari google AI</p>
-                <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan perintah" oninput="checkInput('tiktok-url', 'gemini-q')">
-                <button class="button" id="gemini-q" disabled onclick="tryNow('/api/gemini?prompt=', 'tiktok-url')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>NueAI uses sessions</h2>
-                <p>Interaksi dengan NueAI bertenaga <h4>Model Gemma2 with session chat</h4> agar AI bisa mengingat pesan sebelumnya</p>
-                <input type="text" class="input-field" id="sgpt-text" placeholder="Masukkan perintah" oninput="checkInput('sgpt-text', 'sgpt-button')">
-                <button class="button" id="sgpt-button" disabled onclick="tryNow('/api/sgpt?user=yanto&text=', 'sgpt-text')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>ChatGpt</h2>
-                <p>model GPT-3</p>
-                <input type="text" class="input-field" id="chatgpt-prompt" placeholder="Masukkan perintah" oninput="checkInput('chatgpt-prompt', 'youtube-button')">
-                <button class="button" id="youtube-button" disabled onclick="tryNow('/api/gpt?model=gpt-3.5-turbo&prompt=', 'chatgpt-prompt')">Try Now</button>
-            </div>
-        </div>
-
-        <div id="other">
-            <div class="menu-item">
-                <h2>anime reaction</h2>
-                <p>Get anime reaction</p>
-                <button class="button" onclick="location.href='/api/anime-reaction'">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>anime schedule</h2>
-                <p>Jadwal anime berdasarkan hari</p>
-                <input type="text" class="input-field" id="anime" placeholder="Masukkan hari" oninput="enableDisableButton('anime-button', 'anime')">
-                <button class="button" id="anime-button" disabled onclick="tryNow('/api/anime-jadwal?hari=', 'anime')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>calendar events</h2>
-                <p>Melihat daftar acara kalender</p>
-                <button class="button" onclick="location.href='/api/acara'">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Date Now</h2>
-                <p>Waktu, tanggal dan acara yang akan datang</p>
-                <button class="button" onclick="location.href='/api/date?zone=Asia/Jakarta'">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Info gempa(BMKG)</h2>
-                <p>Informasi gempa bumi terbaru dari BMKG</p>
-                <button class="button" onclick="location.href='/api/gempa'">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Text To Speech</h2>
-                <p>Ubah teks ke audio</p>
-                <input type="text" class="input-field" id="tts-text" placeholder="Masukkan text" oninput="enableDisableButton('tts-button', 'tts-text')">
-                <button class="button" id="tts-button" disabled onclick="tryNow('/api/tts?lang=id&text=', 'tts-text')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Upscale Image</h2>
-                <p>Upscale image from URL</p>
-                <input type="text" class="input-field" id="upscale-url" placeholder="Masukkan URL gambar" oninput="enableDisableButton('upscale-button', 'upscale-url')">
-                <button class="button" id="upscale-button" disabled onclick="tryNow('/api/upscale?url=', 'upscale-url')">Try Now</button>
-            </div>
-        </div>
-
-        <div id="search">
-            <div class="menu-item">
-                <h2>Google Search</h2>
-                <p>Cari di Google</p>
-                <input type="text" class="input-field" id="google-query" placeholder="Masukkan query">
-                <button class="button" id="google-button" disabled onclick="tryNow('/api/google?limit=3&query=', 'google-query')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>Image Search</h2>
-                <p>Cari gambar di internet</p>
-                <input type="text" class="input-field" id="image-query" placeholder="Masukkan query">
-                <button class="button" id="image-button" disabled onclick="tryNow('/api/image?query=', 'image-query')">Try Now</button>
-            </div>
-            <div class="menu-item">
-                <h2>YouTube Search</h2>
-                <p>Cari video di YouTube</p>
-                <input type="text" class="input-field" id="yt-query" placeholder="Masukkan query">
-                <button class="button" id="yt-button" disabled onclick="tryNow('/api/yt-search?query=', 'yt-query')">Try Now</button>
-            </div>
-        </div>
-    </div>
     <script>
-        // Menu Hamburger
-        let hamburgerMenu = document.querySelector('.hamburger-menu-content');
-        let hamburgerIcon = document.querySelector('.hamburger-menu');
-
-        function toggleMenu() {
-            hamburgerMenu.classList.toggle('active');
-        }
-
-        // Content Section
-        function showContent(contentId) {
-            let contentSections = document.querySelectorAll('.content-section > div');
-            contentSections.forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(contentId).classList.add('active');
-            toggleMenu(); // Close the hamburger menu after clicking an item
-        }
-
-        // Input validation and tryNow functions
-        document.querySelectorAll('.input-field').forEach(input => {
-            input.addEventListener('input', function() {
-                const buttonId = input.id.replace('-url', '-button').replace('-query', '-button');
-                const button = document.getElementById(buttonId);
-                button.disabled = !this.value.trim();
-            });
+        document.getElementById('search-bar').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            renderMenuItems(searchTerm);
         });
 
+        const menuItems = [
+            {
+                title: 'AI Logic',
+                description: 'Buat AI Anda sendiri dengan model Gemma2 dengan sesi chat',
+                inputPlaceholder: 'Siapa kamu?',
+                endpoint: '/api/lgpt?user=Gapur&systemPrompt=anda adalah NueAI asisten cerdas yang dapat membantu apa saja berbasis teks, anda masih dalam tahap pengembangan dan pengembangan ini di pimpin oleh NueApi&text=',
+                inputId: 'alicia-text'
+            },
+            {
+                title: 'Anime Reaction',
+                description: 'Dapatkan reaksi anime',
+                endpoint: '/api/anime-reaction',
+                isButtonOnly: true 
+            },
+            {
+                title: 'Anime Schedule',
+                description: 'Jadwal anime berdasarkan hari',
+                inputPlaceholder: 'Masukkan hari',
+                endpoint: '/api/anime-jadwal?hari=',
+                inputId: 'anime-day'
+            },
+            {
+                title: 'Calendar Events',
+                description: 'Lihat daftar acara kalender',
+                endpoint: '/api/acara',
+                isButtonOnly: true
+            },
+            {
+                title: 'ChatGPT',
+                description: 'Model GPT-3',
+                inputPlaceholder: 'Masukkan perintah',
+                endpoint: '/api/gpt?model=gpt-3.5-turbo&prompt=',
+                inputId: 'chatgpt-prompt'
+            },
+            {
+                title: 'Date Now',
+                description: 'Waktu, tanggal, dan acara mendatang',
+                endpoint: '/api/date?zone=Asia/Jakarta',
+                isButtonOnly: true 
+            },
+            {
+                title: 'FB & IG Downloader',
+                description: 'Download video/foto dari Instagram dan Facebook',
+                inputPlaceholder: 'Masukkan URL Instagram/Facebook',
+                endpoint: '/api/snapsave?url=',
+                inputId: 'instagram-url'
+            },
+            {
+                title: 'Gemini (Scraped)',
+                description: 'Gemini hasil scraping dari gemini.google.com (tidak resmi)',
+                inputPlaceholder: 'Masukkan perintah',
+                endpoint: '/api/bard?text=',
+                inputId: 'gemini-text'
+            },
+            {
+                title: 'Gemini Model',
+                description: 'Model Gemini Flash dari Google AI',
+                inputPlaceholder: 'Masukkan perintah',
+                endpoint: '/api/gemini?prompt=',
+                inputId: 'gemini-model-prompt'
+            },
+            {
+                title: 'Google Search',
+                description: 'Cari di Google',
+                inputPlaceholder: 'Masukkan kata kunci',
+                endpoint: '/api/google?limit=3&query=',
+                inputId: 'google-query'
+            },
+            {
+                title: 'Image Search',
+                description: 'Cari gambar di internet',
+                inputPlaceholder: 'Masukkan kata kunci',
+                endpoint: '/api/image?query=',
+                inputId: 'image-query'
+            },
+            {
+                title: 'Info Gempa (BMKG)',
+                description: 'Informasi gempa bumi terbaru dari BMKG',
+                endpoint: '/api/gempa',
+                isButtonOnly: true
+            },
+            {
+                title: 'NueAI (with Sessions)',
+                description: 'Berinteraksi dengan NueAI (Model Gemma2 dengan sesi chat)',
+                inputPlaceholder: 'Masukkan perintah',
+                endpoint: '/api/sgpt?user=yanto&text=',
+                inputId: 'sgpt-text'
+            },
+            {
+                title: 'Stable Diffusion',
+                description: 'AI yang dapat menghasilkan gambar dari teks',
+                endpoint: 'https://tattered-classy-comic.glitch.me/sdlist',
+                isButtonOnly: true 
+            },
+            {
+                title: 'Stable Diffusion XL',
+                description: 'AI yang dapat menghasilkan gambar dari teks dengan kualitas lebih tinggi',
+                endpoint: 'https://tattered-classy-comic.glitch.me/sdxllist',
+                isButtonOnly: true 
+            },
+            {
+                title: 'Text To Speech',
+                description: 'Ubah teks menjadi audio',
+                inputPlaceholder: 'Masukkan teks',
+                endpoint: '/api/tts?lang=id&text=',
+                inputId: 'tts-text'
+            },
+            {
+                title: 'TikTok Downloader',
+                description: 'Download video, foto, dan musik dari TikTok',
+                inputPlaceholder: 'Masukkan URL TikTok',
+                endpoint: '/api/tt-dl?url=',
+                inputId: 'tiktok-url'
+            },
+            {
+                title: 'Upscale Image',
+                description: 'Upscale gambar dari URL',
+                inputPlaceholder: 'Masukkan URL gambar',
+                endpoint: '/api/upscale?url=',
+                inputId: 'upscale-url'
+            },
+            {
+                title: 'YouTube Downloader',
+                description: 'Download video/audio dari YouTube',
+                inputPlaceholder: 'Masukkan URL YouTube',
+                endpoint: '/api/ytdl?url=',
+                inputId: 'ytdl-url'
+            },
+            {
+                title: 'YouTube Player',
+                description: 'Cari dan putar video/audio YouTube',
+                inputPlaceholder: 'Masukkan kata kunci YouTube',
+                endpoint: '/api/play?query=',
+                inputId: 'youtube-query'
+            },
+            {
+                title: 'YouTube Search',
+                description: 'Cari video di YouTube',
+                inputPlaceholder: 'Masukkan kata kunci',
+                endpoint: '/api/yt-search?query=',
+                inputId: 'yt-search-query'
+            }
+        ];
+
+        function renderMenuItems(searchTerm = '') {
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.innerHTML = ''; 
+
+            const filteredMenuItems = menuItems
+                .filter(item => item.title.toLowerCase().includes(searchTerm))
+                .sort((a, b) => a.title.localeCompare(b.title));
+
+            filteredMenuItems.forEach(item => {
+                const menuItemElement = document.createElement('div');
+                menuItemElement.classList.add('menu-item');
+
+                const titleElement = document.createElement('h2');
+                titleElement.textContent = item.title;
+                menuItemElement.appendChild(titleElement);
+
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = item.description;
+                menuItemElement.appendChild(descriptionElement);
+
+                if (!item.isButtonOnly) {
+                    const inputElement = document.createElement('input');
+                    inputElement.type = 'text';
+                    inputElement.classList.add('input-field');
+                    inputElement.id = item.inputId;
+                    inputElement.placeholder = item.inputPlaceholder;
+                    inputElement.required = true;
+                    menuItemElement.appendChild(inputElement);
+
+                    const buttonElement = document.createElement('button');
+                    buttonElement.classList.add('button');
+                    buttonElement.textContent = 'Try Now';
+                    buttonElement.disabled = true; 
+                    buttonElement.addEventListener('click', () => tryNow(item.endpoint, item.inputId));
+                    menuItemElement.appendChild(buttonElement);
+
+                    inputElement.addEventListener('input', () => {
+                        buttonElement.disabled = !inputElement.value;
+                    });
+                } else {
+                    const buttonElement = document.createElement('button');
+                    buttonElement.classList.add('button');
+                    buttonElement.textContent = 'Try Now';
+                    buttonElement.addEventListener('click', () => {
+                        if (item.endpoint.startsWith('http')) {
+                            window.location.href = item.endpoint; 
+                        } else {
+                            tryNow(item.endpoint, item.inputId); 
+                        }
+                    });
+                    menuItemElement.appendChild(buttonElement);
+                }
+                menuContainer.appendChild(menuItemElement);
+            });
+        }
+
         function tryNow(endpoint, inputId) {
-            const input = document.getElementById(inputId);
-            if (input.value) {
-                location.href = endpoint + encodeURIComponent(input.value);
+            const inputValue = document.getElementById(inputId).value;
+            if (inputValue) {
+                location.href = `${endpoint}${encodeURIComponent(inputValue)}`;
             }
         }
 
-        function checkInput(inputId, buttonId) {
-            const input = document.getElementById(inputId);
-            const button = document.getElementById(buttonId);
-            button.disabled = !input.value;
-        }
-
-        function enableDisableButton(buttonId, inputId) {
-            const input = document.getElementById(inputId);
-            const button = document.getElementById(buttonId);
-            button.disabled = !input.value.trim();
-        }
+        renderMenuItems();
     </script>
 </body>
 </html>
