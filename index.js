@@ -3,7 +3,7 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
-const ytdl = require('ytdl-core');
+const ytdl = require('@distube/ytdl-core');
 
 const app = express();
 app.use('/', router);

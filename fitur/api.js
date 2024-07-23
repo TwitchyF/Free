@@ -6,7 +6,7 @@ const { youtube } = require("scrape-youtube");
 const googleTTS = require("google-tts-api");
 const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
-const ytdl = require("ytdl-core");
+const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat} = require('./func/openaiFast.js');
 

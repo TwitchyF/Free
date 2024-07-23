@@ -22,6 +22,7 @@
   "homepage": "https://github.com/hatuanem199801/express-vercel#readme",
   "dependencies": {
     "@bochilteam/scraper": "^4.2.4",
+    "@distube/ytdl-core": "^4.13.5",
     "@replit/node-fetch": "^3.1.0",
     "@tobyg74/tiktok-api-dl": "^1.1.7",
     "axios": "^1.7.2",
@@ -34,7 +35,6 @@
     "groq-sdk": "^0.5.0",
     "luxon": "^3.4.4",
     "node-base91": "^0.3.4",
-    "scrape-youtube": "^2.4.0",
-    "ytdl-core": "npm:@distub/ytdl-core@lastest"
+    "scrape-youtube": "^2.4.0"
   }
 }
