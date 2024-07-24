@@ -3,7 +3,7 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
-const ytdl = require('@distube/ytdl-core');
+const {ytmp3v2, ytmp4 } = require('ruhend-scraper');
 
 const app = express();
 app.use('/', router);
@@ -29,23 +29,11 @@ app.get('/yt', async (req, res) => {
   }
 
   try {
-    // Get video info
-    const info = await ytdl.getInfo(url);
-
-    // Find audio and video formats
-    const audioAndVideoFormat = ytdl.filterFormats(info.formats, 'audioandvideo')[0];
-    const audioOnlyFormat = ytdl.filterFormats(info.formats, 'audioonly')[0];
-
-    if (!audioAndVideoFormat || !audioOnlyFormat) {
-      return res.status(404).json({ error: 'No suitable formats found' });
-    }
-
-    res.json({
-      audio: audioOnlyFormat.url,
-      video: audioAndVideoFormat.url
-    });
+    const info = await ytmp3v2(url);
+    const info2 = await ytmp4(url);
+    res.status(200).json({audio:info.audio, video: info2.video});
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch video info', details: error.message });
+    res.status(500).json({ error: 'Error fetching video information' });
   }
 });
 
