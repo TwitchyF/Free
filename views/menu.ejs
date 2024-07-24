@@ -39,7 +39,7 @@
             padding: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center; 
+            align-items: center;
         }
 
         header h1 {
@@ -135,16 +135,16 @@
     <div class="content">
         <header>
             <a href="/dashboard" class="back-button">
-                <i class="fas fa-arrow-left"></i> Kembali
+                <i class="fas fa-arrow-left"></i> Back
             </a>
-            <h1>Selamat Datang di NueApi</h1>
+            <h1>Welcome to NueApi</h1>
         </header>
         <div class="search-container">
-            <input type="text" id="search-bar" placeholder="Cari API...">
+            <input type="text" id="search-bar" placeholder="Search API...">
         </div>
         <main>
             <div class="menu-grid" id="menu-container">
-                </div>
+            </div>
         </main>
     </div>
     <footer>
@@ -324,7 +324,7 @@
             });
 
             if (filteredMenuItems.length === 0) {
-                menuContainer.innerHTML = '<p class="no-results">Tidak ditemukan API.</p>';
+                menuContainer.innerHTML = '<p class="no-results">No APIs found.</p>';
                 return;
             }
 
@@ -335,16 +335,25 @@
                     let finalUrl = item.endpoint;
 
                     if (item.params && item.params.length > 0) {
+                        let allParamsProvided = true; 
                         finalUrl += '?';
+
                         item.params.forEach((param, index) => {
-                            let inputValue = prompt(`Masukkan nilai untuk ${param.name}: (${param.example || ''})`);
+                            let inputValue = prompt(`Enter a value for ${param.name}: (${param.example || ''})`);
                             if (inputValue !== null && inputValue.trim() !== "") {
                                 finalUrl += `${param.name}=${encodeURIComponent(inputValue)}`;
                                 if (index < item.params.length - 1) {
                                     finalUrl += '&';
                                 }
+                            } else {
+                                allParamsProvided = false;
                             }
                         });
+
+                        if (!allParamsProvided) {
+                            alert('Please fill in all required parameters.');
+                            return; 
+                        }
                     }
 
                     window.location.href = finalUrl;
