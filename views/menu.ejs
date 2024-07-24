@@ -1,82 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NueApi</title>
     <link rel="icon" type="image/png" href="https://telegra.ph/file/e07e0fddc2a2967bd08d6.jpg"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rest apis WhatsApp bot, Telegram bot, and Discord bot, free, has AI download IG feature and others">
     <meta name="tag" content="free api, nue-api, rest-api, azzapi">
     <style>
-        body {
-            background-color: #121212;
-            color: #f8f9fa;
-            font-family: Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        main {
             padding: 20px;
         }
 
-        .menu-container {
+        #search-bar {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
-        .menu-item {
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid #343a40;
-            padding: 20px;
+        .menu-card {
+            background-color: #fff;
             border-radius: 8px;
-            text-align: center;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        h1, h2, p {
-            text-align: center;
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .input-field {
-            width: calc(100% - 20px);
+        .menu-card h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .menu-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .menu-card input[type="text"] {
+            width: calc(100% - 16px);
             padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #343a40;
-            border-radius: 4px;
-            background-color: #2c2c2c;
-            color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
 
-        .input-field:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        .button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: none;
-            color: #f8f9fa;
+        .menu-card button {
             background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease;
         }
 
-        .button:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .button:hover:enabled {
+        .menu-card button:hover {
             background-color: #0056b3;
         }
 
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            font-size: 12px;
+        }
         .home-button {
             position: fixed;
             top: 20px;
@@ -90,37 +132,24 @@
             width: 40px;
             height: 40px;
         }
-
-        #search-bar {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #343a40;
-            border-radius: 4px;
-            background-color: #2c2c2c;
-            color: #f8f9fa;
-        }
     </style>
 </head>
 <body>
     <a href="/dashboard" class="home-button">
         <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
     </a>
-
-
-    <div class="container">
-        <div class="menu-container" id="menu-container">
-<input type="text" id="search-bar" placeholder="Cari menu...">
-            </div>
-    </div>
-    
-
+    <header>
+        <h1>Welcome to NueApi</h1>
+        <p>Explore our free APIs for your projects</p>
+    </header>
+    <main>
+        <input type="text" id="search-bar" placeholder="Search API...">
+        <div class="menu-grid" id="menu-container"></div>
+    </main>
+    <footer>
+        <p>© 2023 NueApi. All rights reserved.</p>
+    </footer>
     <script>
-        document.getElementById('search-bar').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            renderMenuItems(searchTerm);
-        });
-
         const menuItems = [
             {
                 title: 'AI Logic',
@@ -133,7 +162,7 @@
                 title: 'Anime Reaction',
                 description: 'Dapatkan reaksi anime',
                 endpoint: '/api/anime-reaction',
-                isButtonOnly: true 
+                isButtonOnly: true
             },
             {
                 title: 'Anime Schedule',
@@ -159,7 +188,7 @@
                 title: 'Date Now',
                 description: 'Waktu, tanggal, dan acara mendatang',
                 endpoint: '/api/date?zone=Asia/Jakarta',
-                isButtonOnly: true 
+                isButtonOnly: true
             },
             {
                 title: 'FB & IG Downloader',
@@ -213,13 +242,13 @@
                 title: 'Stable Diffusion',
                 description: 'AI yang dapat menghasilkan gambar dari teks',
                 endpoint: 'https://tattered-classy-comic.glitch.me/sdlist',
-                isButtonOnly: true 
+                isButtonOnly: true
             },
             {
                 title: 'Stable Diffusion XL',
                 description: 'AI yang dapat menghasilkan gambar dari teks dengan kualitas lebih tinggi',
                 endpoint: 'https://tattered-classy-comic.glitch.me/sdxllist',
-                isButtonOnly: true 
+                isButtonOnly: true
             },
             {
                 title: 'Text To Speech',
@@ -265,68 +294,73 @@
             }
         ];
 
-        function renderMenuItems(searchTerm = '') {
-            const menuContainer = document.getElementById('menu-container');
-            menuContainer.innerHTML = ''; 
+        const menuContainer = document.getElementById('menu-container');
+        const searchBar = document.getElementById('search-bar');
 
-            const filteredMenuItems = menuItems
-                .filter(item => item.title.toLowerCase().includes(searchTerm))
-                .sort((a, b) => a.title.localeCompare(b.title));
+        function renderMenuItems(searchTerm = '') {
+            menuContainer.innerHTML = '';
+
+            const filteredMenuItems = menuItems.filter(item => {
+                const titleMatch = item.title.toLowerCase().includes(searchTerm);
+                const descriptionMatch = item.description.toLowerCase().includes(searchTerm);
+                return titleMatch || descriptionMatch;
+            });
+
+            if (filteredMenuItems.length === 0) {
+                menuContainer.innerHTML = '<p class="no-results">No APIs found.</p>';
+                return;
+            }
 
             filteredMenuItems.forEach(item => {
-                const menuItemElement = document.createElement('div');
-                menuItemElement.classList.add('menu-item');
+                const card = `
+                    <div class="menu-card">
+                        <h2>${item.title}</h2>
+                        <p>${item.description}</p>
+                        ${item.isButtonOnly ? `
+                            <button onclick="tryNow('${item.endpoint}', '${item.inputId}')">Try Now</button>
+                        ` : `
+                            <input type="text" id="${item.inputId}" placeholder="${item.inputPlaceholder}" required>
+                            <button onclick="tryNow('${item.endpoint}', '${item.inputId}')" disabled>Try Now</button>
+                        `}
+                    </div>
+                `;
+                menuContainer.innerHTML += card;
+            });
 
-                const titleElement = document.createElement('h2');
-                titleElement.textContent = item.title;
-                menuItemElement.appendChild(titleElement);
+            attachInputListeners();
+        }
 
-                const descriptionElement = document.createElement('p');
-                descriptionElement.textContent = item.description;
-                menuItemElement.appendChild(descriptionElement);
-
-                if (!item.isButtonOnly) {
-                    const inputElement = document.createElement('input');
-                    inputElement.type = 'text';
-                    inputElement.classList.add('input-field');
-                    inputElement.id = item.inputId;
-                    inputElement.placeholder = item.inputPlaceholder;
-                    inputElement.required = true;
-                    menuItemElement.appendChild(inputElement);
-
-                    const buttonElement = document.createElement('button');
-                    buttonElement.classList.add('button');
-                    buttonElement.textContent = 'Try Now';
-                    buttonElement.disabled = true; 
-                    buttonElement.addEventListener('click', () => tryNow(item.endpoint, item.inputId));
-                    menuItemElement.appendChild(buttonElement);
-
-                    inputElement.addEventListener('input', () => {
-                        buttonElement.disabled = !inputElement.value;
-                    });
-                } else {
-                    const buttonElement = document.createElement('button');
-                    buttonElement.classList.add('button');
-                    buttonElement.textContent = 'Try Now';
-                    buttonElement.addEventListener('click', () => {
-                        if (item.endpoint.startsWith('http')) {
-                            window.location.href = item.endpoint; 
-                        } else {
-                            tryNow(item.endpoint, item.inputId); 
-                        }
-                    });
-                    menuItemElement.appendChild(buttonElement);
-                }
-                menuContainer.appendChild(menuItemElement);
+        function attachInputListeners() {
+            const inputFields = document.querySelectorAll('.menu-card input[type="text"]');
+            inputFields.forEach(input => {
+                input.addEventListener('input', () => {
+                    const button = input.nextElementSibling;
+                    button.disabled = !input.value;
+                });
             });
         }
 
         function tryNow(endpoint, inputId) {
-            const inputValue = document.getElementById(inputId).value;
-            if (inputValue) {
-                location.href = `${endpoint}${encodeURIComponent(inputValue)}`;
+            if (inputId) {
+                const inputValue = document.getElementById(inputId).value;
+                if (inputValue) {
+                    window.location.href = `${endpoint}${encodeURIComponent(inputValue)}`;
+                } else {
+                    alert('Please fill in the input field.');
+                }
+            } else {
+                if (endpoint.startsWith('http')) {
+                    window.location.href = endpoint;
+                } else {
+                    window.location.href = endpoint; 
+                }
             }
         }
+
+        searchBar.addEventListener('input', () => {
+            const searchTerm = searchBar.value.toLowerCase();
+            renderMenuItems(searchTerm);
+        });
 
         renderMenuItems();
     </script>
