@@ -3,7 +3,6 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
-const {ytmp3v2, ytmp4 } = require('ruhend-scraper');
 
 const app = express();
 app.use('/', router);
@@ -21,21 +20,6 @@ app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
-app.get('/yt', async (req, res) => {
-  const url = req.query.url;
-
-  if (!url) {
-    return res.status(400).json({ error: 'URL parameter is required' });
-  }
-
-  try {
-    const info = await ytmp3v2(url);
-    const info2 = await ytmp4(url);
-    res.status(200).json({audio:info.audio, video: info2.video});
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching video information' });
-  }
-});
 
 app.get("/succes", async (req,res)=>{
   const re = req.query.re;
