@@ -22,70 +22,60 @@
             background-color: #f4f4f4;
             color: #333;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
 
-        .sidebar {
-            background-color: #3498db;
-            color: #fff;
-            width: 250px;
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .sidebar .search-bar-icon {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .sidebar .search-bar-icon input[type="text"] {
-            width: 100%;
-            padding: 10px 10px 10px 30px; 
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .sidebar .search-bar-icon i {
-            position: absolute;
-            top: 50%;
-            left: 10px; 
-            transform: translateY(-50%);
-            color: #888;
-        }
-
-
         .content {
-            flex-grow: 1;
-            margin-left: 250px;
             padding: 30px;
+            flex-grow: 1;
         }
 
         header {
             text-align: center;
             margin-bottom: 30px;
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
         }
 
         header h1 {
-            color: #3498db;
             font-size: 36px;
-            margin-bottom: 10px;
+            margin-bottom: 0; 
         }
 
         header p {
             font-size: 18px;
-            color: #666;
+            margin-bottom: 0; 
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            padding: 5px 10px;
+            font-size: 1.2em;
+            color: white; 
+            cursor: pointer;
+            transition: transform 0.2s; 
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         .menu-grid {
@@ -102,6 +92,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             text-decoration: none;
             color: inherit;
+            cursor: pointer;
         }
 
         .menu-card:hover {
@@ -121,54 +112,12 @@
             margin-bottom: 20px;
         }
 
-        .menu-card input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .menu-card button {
-            background-color: #2ecc71;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            width: 100%;
-        }
-
-        .menu-card button:hover {
-            background-color: #27ae60;
-        }
-
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 10; 
-        }
-
-        .home-button img {
-            width: 40px;
-            height: 40px;
-        }
-
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            margin-top: 30px;
         }
 
         footer p {
@@ -183,26 +132,19 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>NueApi</h2>
-        <div class="search-bar-icon">
-            <input type="text" id="search-bar" placeholder="Cari API...">
-            <i class="fas fa-search"></i>
-        </div>
-    </div>
-
     <div class="content">
-        <a href="/dashboard" class="home-button">
-            <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
-        </a>
         <header>
+            <a href="/dashboard" class="back-button">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
             <h1>Selamat Datang di NueApi</h1>
-            <p>Jelajahi API gratis kami untuk proyek Anda</p>
         </header>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Cari API...">
+        </div>
         <main>
             <div class="menu-grid" id="menu-container">
-
-            </div>
+                </div>
         </main>
     </div>
     <footer>
@@ -213,143 +155,161 @@
             {
                 title: 'AI Logic',
                 description: 'Buat AI Anda sendiri dengan model Gemma2 dengan sesi chat',
-                inputPlaceholder: 'Siapa kamu?',
-                endpoint: '/api/lgpt?user=Gapur&systemPrompt=anda adalah NueAI asisten cerdas yang dapat membantu apa saja berbasis teks, anda masih dalam tahap pengembangan dan pengembangan ini di pimpin oleh NueApi&text=',
-                inputId: 'alicia-text'
+                endpoint: '/api/lgpt',
+                params: [
+                    { name: 'user', example: 'John Doe' },
+                    { name: 'systemPrompt', example: 'Anda adalah asisten AI' },
+                    { name: 'text', example: 'Halo!' }
+                ]
             },
             {
                 title: 'Anime Reaction',
                 description: 'Dapatkan reaksi anime',
-                endpoint: '/api/anime-reaction',
-                isButtonOnly: true
+                endpoint: '/api/anime-reaction' 
             },
             {
                 title: 'Anime Schedule',
                 description: 'Jadwal anime berdasarkan hari',
-                inputPlaceholder: 'Masukkan hari',
-                endpoint: '/api/anime-jadwal?hari=',
-                inputId: 'anime-day'
+                endpoint: '/api/anime-jadwal', 
+                params: [
+                    { name: 'hari', example: 'Senin' }
+                ]
             },
             {
                 title: 'Calendar Events',
                 description: 'Lihat daftar acara kalender',
-                endpoint: '/api/acara',
-                isButtonOnly: true
+                endpoint: '/api/acara'
             },
             {
                 title: 'ChatGPT',
                 description: 'Model GPT-3',
-                inputPlaceholder: 'Masukkan perintah',
-                endpoint: '/api/gpt?model=gpt-3.5-turbo&prompt=',
-                inputId: 'chatgpt-prompt'
+                endpoint: '/api/gpt',
+                params: [
+                    { name: 'model', example: 'gpt-3.5-turbo' },
+                    { name: 'prompt', example: 'Apa itu artificial intelligence?' }
+                ]
             },
             {
                 title: 'Date Now',
                 description: 'Waktu, tanggal, dan acara mendatang',
-                endpoint: '/api/date?zone=Asia/Jakarta',
-                isButtonOnly: true
+                endpoint: '/api/date',
+                params: [
+                    { name: 'zone', example: 'Asia/Jakarta' }
+                ]
             },
             {
                 title: 'FB & IG Downloader',
                 description: 'Download video/foto dari Instagram dan Facebook',
-                inputPlaceholder: 'Masukkan URL Instagram/Facebook',
-                endpoint: '/api/snapsave?url=',
-                inputId: 'instagram-url'
+                endpoint: '/api/snapsave',
+                params: [
+                    { name: 'url', example: 'https://www.instagram.com/p/C12345678/' }
+                ]
             },
             {
                 title: 'Gemini (Scraped)',
                 description: 'Gemini hasil scraping dari gemini.google.com (tidak resmi)',
-                inputPlaceholder: 'Masukkan perintah',
-                endpoint: '/api/bard?text=',
-                inputId: 'gemini-text'
+                endpoint: '/api/bard',
+                params: [
+                    { name: 'text', example: 'Jelaskan tentang alam semesta' }
+                ]
             },
             {
                 title: 'Gemini Model',
                 description: 'Model Gemini Flash dari Google AI',
-                inputPlaceholder: 'Masukkan perintah',
-                endpoint: '/api/gemini?prompt=',
-                inputId: 'gemini-model-prompt'
+                endpoint: '/api/gemini',
+                params: [
+                    { name: 'prompt', example: 'Tulis puisi tentang hujan' }
+                ]
             },
             {
                 title: 'Google Search',
                 description: 'Cari di Google',
-                inputPlaceholder: 'Masukkan kata kunci',
-                endpoint: '/api/google?limit=3&query=',
-                inputId: 'google-query'
+                endpoint: '/api/google',
+                params: [
+                    { name: 'limit', example: '3' },
+                    { name: 'query', example: 'Javascript' }
+                ]
             },
             {
                 title: 'Image Search',
                 description: 'Cari gambar di internet',
-                inputPlaceholder: 'Masukkan kata kunci',
-                endpoint: '/api/image?query=',
-                inputId: 'image-query'
+                endpoint: '/api/image',
+                params: [
+                    { name: 'query', example: 'Kucing lucu' }
+                ]
             },
             {
                 title: 'Info Gempa (BMKG)',
                 description: 'Informasi gempa bumi terbaru dari BMKG',
-                endpoint: '/api/gempa',
-                isButtonOnly: true
+                endpoint: '/api/gempa'
             },
             {
                 title: 'NueAI (with Sessions)',
                 description: 'Berinteraksi dengan NueAI (Model Gemma2 dengan sesi chat)',
-                inputPlaceholder: 'Masukkan perintah',
-                endpoint: '/api/sgpt?user=yanto&text=',
-                inputId: 'sgpt-text'
+                endpoint: '/api/sgpt',
+                params: [
+                    { name: 'user', example: 'yanto' },
+                    { name: 'text', example: 'Bagaimana kabarmu?' }
+                ]
             },
             {
                 title: 'Stable Diffusion',
                 description: 'AI yang dapat menghasilkan gambar dari teks',
-                endpoint: 'https://tattered-classy-comic.glitch.me/sdlist',
-                isButtonOnly: true
+                endpoint: 'https://tattered-classy-comic.glitch.me/sdlist' 
             },
             {
                 title: 'Stable Diffusion XL',
                 description: 'AI yang dapat menghasilkan gambar dari teks dengan kualitas lebih tinggi',
-                endpoint: 'https://tattered-classy-comic.glitch.me/sdxllist',
-                isButtonOnly: true
+                endpoint: 'https://tattered-classy-comic.glitch.me/sdxllist' 
             },
             {
                 title: 'Text To Speech',
                 description: 'Ubah teks menjadi audio',
-                inputPlaceholder: 'Masukkan teks',
-                endpoint: '/api/tts?lang=id&text=',
-                inputId: 'tts-text'
+                endpoint: '/api/tts',
+                params: [
+                    { name: 'lang', example: 'id' },
+                    { name: 'text', example: 'Halo dunia!' }
+                ]
             },
             {
                 title: 'TikTok Downloader',
                 description: 'Download video, foto, dan musik dari TikTok',
-                inputPlaceholder: 'Masukkan URL TikTok',
-                endpoint: '/api/tt-dl?url=',
-                inputId: 'tiktok-url'
+                endpoint: '/api/tt-dl',
+                params: [
+                    { name: 'url', example: 'https://www.tiktok.com/@username/video/1234567890' }
+                ]
             },
             {
                 title: 'Upscale Image',
                 description: 'Upscale gambar dari URL',
-                inputPlaceholder: 'Masukkan URL gambar',
-                endpoint: '/api/upscale?url=',
-                inputId: 'upscale-url'
+                endpoint: '/api/upscale',
+                params: [
+                    { name: 'url', example: 'https://example.com/gambar.jpg' }
+                ]
             },
             {
                 title: 'YouTube Downloader',
                 description: 'Download video/audio dari YouTube',
-                inputPlaceholder: 'Masukkan URL YouTube',
-                endpoint: '/api/ytdl?url=',
-                inputId: 'ytdl-url'
+                endpoint: '/api/ytdl',
+                params: [
+                    { name: 'url', example: 'https://www.youtube.com/watch?v=abcdefghijk' }
+                ]
             },
             {
                 title: 'YouTube Player',
                 description: 'Cari dan putar video/audio YouTube',
-                inputPlaceholder: 'Masukkan kata kunci YouTube',
-                endpoint: '/api/play?query=',
-                inputId: 'youtube-query'
+                endpoint: '/api/play',
+                params: [
+                    { name: 'query', example: 'Musik relaksasi' }
+                ]
             },
             {
                 title: 'YouTube Search',
                 description: 'Cari video di YouTube',
-                inputPlaceholder: 'Masukkan kata kunci',
-                endpoint: '/api/yt-search?query=',
-                inputId: 'yt-search-query'
+                endpoint: '/api/yt-search',
+                params: [
+                    { name: 'query', example: 'Tutorial memasak' }
+                ]
             }
         ];
 
@@ -357,10 +317,11 @@
         const searchBar = document.getElementById('search-bar');
 
         function renderMenuItems(searchTerm = '') {
-            menuContainer.innerHTML = ''; 
+            menuContainer.innerHTML = '';
+
             const filteredMenuItems = menuItems.filter(item => {
-                return item.title.toLowerCase().includes(searchTerm.toLowerCase()) 
-                       || item.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       item.description.toLowerCase().includes(searchTerm.toLowerCase());
             });
 
             if (filteredMenuItems.length === 0) {
@@ -369,61 +330,42 @@
             }
 
             filteredMenuItems.forEach(item => {
-                const card = document.createElement('a');
+                const card = document.createElement('div');
                 card.classList.add('menu-card');
+                card.addEventListener('click', () => {
+                    let finalUrl = item.endpoint;
 
+                    if (item.params && item.params.length > 0) {
+                        finalUrl += '?';
+                        item.params.forEach((param, index) => {
+                            let inputValue = prompt(`Masukkan nilai untuk ${param.name}: (${param.example || ''})`);
+                            if (inputValue !== null && inputValue.trim() !== "") {
+                                finalUrl += `${param.name}=${encodeURIComponent(inputValue)}`;
+                                if (index < item.params.length - 1) {
+                                    finalUrl += '&';
+                                }
+                            }
+                        });
+                    }
 
-                if (item.isButtonOnly) {
-                    card.href = item.endpoint; 
-                    card.innerHTML = `
-                        <h2>${item.title}</h2>
-                        <p>${item.description}</p>
-                        <button>Coba Sekarang</button> 
-                    `;
-                } else {
-                    card.href = '#'; 
-                    card.innerHTML = `
-                        <h2>${item.title}</h2>
-                        <p>${item.description}</p>
-                        <input type="text" id="${item.inputId}" placeholder="${item.inputPlaceholder}" required>
-                        <button onclick="tryNow('${item.endpoint}', '${item.inputId}')" disabled>Coba Sekarang</button>
-                    `;
-                }
+                    window.location.href = finalUrl;
+                });
+
+                card.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p>${item.description}</p>
+                `;
 
                 menuContainer.appendChild(card);
             });
-
-
-            attachInputListeners();
-        }
-
-
-        function attachInputListeners() {
-            const inputFields = document.querySelectorAll('.menu-card input[type="text"]');
-            inputFields.forEach(input => {
-                input.addEventListener('input', () => {
-                    const button = input.nextElementSibling;
-                    button.disabled = !input.value;
-                });
-            });
-        }
-
-        function tryNow(endpoint, inputId) {
-            const inputValue = document.getElementById(inputId).value;
-            if (inputValue) {
-                window.location.href = `${endpoint}${encodeURIComponent(inputValue)}`; 
-            } else {
-                alert('Silahkan isi kolom input.'); 
-            }
         }
 
         searchBar.addEventListener('input', () => {
             const searchTerm = searchBar.value;
-            renderMenuItems(searchTerm); 
+            renderMenuItems(searchTerm);
         });
 
-
-        renderMenuItems(); 
+        renderMenuItems();
     </script>
 </body>
 </html>
