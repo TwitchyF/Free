@@ -26,53 +26,57 @@
             min-height: 100vh;
         }
 
-        .content {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 30px;
-            flex-grow: 1;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 30px;
-            background-color: #3498db;
-            color: #fff;
-            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
         }
 
-        header h1 {
-            font-size: 36px;
-            margin-bottom: 0; 
+        .logo {
+            display: flex;
+            align-items: center;
         }
 
-        header p {
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .dashboard-link {
+            color: #fff;
+            text-decoration: none;
             font-size: 18px;
-            margin-bottom: 0; 
+            transition: color 0.3s;
         }
 
-        .back-button {
-            background: none;
-            border: none;
-            padding: 5px 10px;
-            font-size: 1.2em;
-            color: white; 
-            cursor: pointer;
-            transition: transform 0.2s; 
-        }
-
-        .back-button:hover {
-            transform: translateX(-3px);
+        .dashboard-link:hover {
+            color: #ecf0f1;
         }
 
         .search-container {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .search-container input[type="text"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
@@ -112,12 +116,27 @@
             margin-bottom: 20px;
         }
 
+        .try-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .try-button:hover {
+            background-color: #2980b9;
+        }
+
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 10px;
             margin-top: 30px;
+            border-radius: 10px;
         }
 
         footer p {
@@ -132,24 +151,30 @@
     </style>
 </head>
 <body>
-    <div class="content">
+    <div class="container">
         <header>
-            <a href="/dashboard" class="back-button">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
-            <h1>Welcome to NueApi</h1>
+            <div class="logo">
+                <img src="https://telegra.ph/file/e07e0fddc2a2967bd08d6.jpg" alt="NueApi Logo">
+                <h1>NueApi</h1>
+            </div>
+            <a href="/dashboard" class="dashboard-link">Dashboard</a>
         </header>
+
         <div class="search-container">
-            <input type="text" id="search-bar" placeholder="Search API...">
+            <input type="text" id="search-bar" placeholder="Cari API...">
         </div>
+
         <main>
             <div class="menu-grid" id="menu-container">
+
             </div>
         </main>
+
+        <footer>
+            <p>© 2023 NueApi. All rights reserved.</p>
+        </footer>
     </div>
-    <footer>
-        <p>© 2023 NueApi. All rights reserved.</p>
-    </footer>
+
     <script>
         const menuItems = [
             {
@@ -324,25 +349,41 @@
             });
 
             if (filteredMenuItems.length === 0) {
-                menuContainer.innerHTML = '<p class="no-results">No APIs found.</p>';
+                menuContainer.innerHTML = '<p class="no-results">Tidak ada API yang ditemukan.</p>';
                 return;
             }
 
             filteredMenuItems.forEach(item => {
                 const card = document.createElement('div');
                 card.classList.add('menu-card');
-                card.addEventListener('click', () => {
-                    let finalUrl = item.endpoint;
 
-                    if (item.params && item.params.length > 0) {
+                card.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p>${item.description}</p>
+                    <button class="try-button" data-endpoint="${item.endpoint}" data-params='${JSON.stringify(item.params)}'>Coba</button>
+                `;
+
+                menuContainer.appendChild(card);
+            });
+
+            // Tambahkan event listener setelah kartu ditambahkan ke DOM
+            const tryButtons = document.querySelectorAll('.try-button');
+            tryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const endpoint = button.dataset.endpoint;
+                    const params = JSON.parse(button.dataset.params);
+
+                    let finalUrl = endpoint;
+
+                    if (params && params.length > 0) {
                         let allParamsProvided = true; 
                         finalUrl += '?';
 
-                        item.params.forEach((param, index) => {
-                            let inputValue = prompt(`Enter a value for ${param.name}: (${param.example || ''})`);
+                        params.forEach((param, index) => {
+                            let inputValue = prompt(`Masukkan nilai untuk ${param.name}: (${param.example || ''})`);
                             if (inputValue !== null && inputValue.trim() !== "") {
                                 finalUrl += `${param.name}=${encodeURIComponent(inputValue)}`;
-                                if (index < item.params.length - 1) {
+                                if (index < params.length - 1) {
                                     finalUrl += '&';
                                 }
                             } else {
@@ -351,20 +392,13 @@
                         });
 
                         if (!allParamsProvided) {
-                            alert('Please fill in all required parameters.');
+                            alert('Mohon isi semua parameter yang diperlukan.');
                             return; 
                         }
                     }
 
                     window.location.href = finalUrl;
                 });
-
-                card.innerHTML = `
-                    <h2>${item.title}</h2>
-                    <p>${item.description}</p>
-                `;
-
-                menuContainer.appendChild(card);
             });
         }
 
