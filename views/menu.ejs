@@ -190,12 +190,13 @@
             {
                 title: 'Anime Reaction',
                 description: 'Dapatkan reaksi anime',
-                endpoint: '/api/anime-reaction' 
+                endpoint: '/api/anime-reaction',
+                params: []
             },
             {
                 title: 'Anime Schedule',
                 description: 'Jadwal anime berdasarkan hari',
-                endpoint: '/api/anime-jadwal', 
+                endpoint: '/api/anime-jadwal',
                 params: [
                     { name: 'hari', example: 'Senin' }
                 ]
@@ -203,13 +204,14 @@
             {
                 title: 'Calendar Events',
                 description: 'Lihat daftar acara kalender',
-                endpoint: '/api/acara'
+                endpoint: '/api/acara',
+                params: []
             },
             {
                 title: 'ChatGPT',
                 description: 'Model GPT-3',
                 endpoint: '/api/gpt',
-                params: [        
+                params: [
                     { name: 'prompt', example: 'Apa itu artificial intelligence?' }
                 ]
             },
@@ -265,7 +267,8 @@
             {
                 title: 'Info Gempa (BMKG)',
                 description: 'Informasi gempa bumi terbaru dari BMKG',
-                endpoint: '/api/gempa'
+                endpoint: '/api/gempa',
+                params: []
             },
             {
                 title: 'NueAI (with Sessions)',
@@ -279,12 +282,14 @@
             {
                 title: 'Stable Diffusion',
                 description: 'AI yang dapat menghasilkan gambar dari teks',
-                endpoint: 'https://tattered-classy-comic.glitch.me/sdlist' 
+                endpoint: 'https://tattered-classy-comic.glitch.me/sdlist',
+                params: []
             },
             {
                 title: 'Stable Diffusion XL',
                 description: 'AI yang dapat menghasilkan gambar dari teks dengan kualitas lebih tinggi',
-                endpoint: 'https://tattered-classy-comic.glitch.me/sdxllist' 
+                endpoint: 'https://tattered-classy-comic.glitch.me/sdxllist',
+                params: []
             },
             {
                 title: 'Text To Speech',
@@ -366,17 +371,16 @@
                 menuContainer.appendChild(card);
             });
 
-            // Tambahkan event listener setelah kartu ditambahkan ke DOM
             const tryButtons = document.querySelectorAll('.try-button');
             tryButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const endpoint = button.dataset.endpoint;
-                    const params = JSON.parse(button.dataset.params);
+                    const params = JSON.parse(button.dataset.params || '[]');
 
                     let finalUrl = endpoint;
 
-                    if (params && params.length > 0) {
-                        let allParamsProvided = true; 
+                    if (params.length > 0) {
+                        let allParamsProvided = true;
                         finalUrl += '?';
 
                         params.forEach((param, index) => {
@@ -393,7 +397,7 @@
 
                         if (!allParamsProvided) {
                             alert('Mohon isi semua parameter yang diperlukan.');
-                            return; 
+                            return;
                         }
                     }
 
