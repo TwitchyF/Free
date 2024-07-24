@@ -174,8 +174,8 @@ router.get('/ytdl', async (req, res) => {
   try {
     const info = await ytdl.getInfo(url);
     
-    const dlMp3 = encodeURIComponent(`https://tattered-classy-comic.glitch.me/yt-mp3?url=${url}`);
-    const dlMp4 = encodeURIComponent(`https://tattered-classy-comic.glitch.me/yt-mp4?url=${url}`);
+    const dlMp3 = encodeURIComponent(`https://dour-glory-nectarine.glitch.me/yt-mp3?url=${url}`);
+    const dlMp4 = encodeURIComponent(`https://dour-glory-nectarine.glitch.me/yt-mp4?url=${url}`);
     
     res.json({status: true, download : {audio:`https://nueapi.vercel.app/redirect?re=${dlMp3}`, video:`https://nueapi.vercel.app/redirect?re=${dlMp4}`}, info : info.videoDetails})
   } catch (error) {

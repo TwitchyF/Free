@@ -33,20 +33,23 @@ app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid Url");
   res.redirect(req.query.re);
 });
-
 app.get("/uptime", async (req, res) => {
   const chatAi = 'https://copper-ambiguous-velvet.glitch.me/';
   const sideSrvr = 'https://tattered-classy-comic.glitch.me/';
-  let sideRes = null;
-  let chatRes = null;
+  const Scraper = 'https://dour-glory-nectarine.glitch.me';
+
   try {
-        sideRes = await axios.get(sideSrvr);
-        chatRes = await axios.get(chatAi);
-          res.send("Server Uptime: " + sideRes.status + " | ChatAI Uptime: " + chatRes.status)
-    } catch (error) {
-        res.send("Server Uptime: " + sideRes.status + " | ChatAI Uptime: " + chatRes.status)
+    const [chatRes, sideRes, scrapRes] = await Promise.all([
+      axios.get(chatAi),
+      axios.get(sideSrvr),
+      axios.get(Scraper)
+    ]);
+
+    res.send(`Server Uptime: ${sideRes.status} | ChatAI Uptime: ${chatRes.status} | Scraper Uptime: ${scrapRes.status}`);
+  } catch (error) {
+    res.send("Error fetching uptime information");
   }
-})
+});
 
 app.listen(3000, function() {
   console.log('Server berjalan di port 3000');
