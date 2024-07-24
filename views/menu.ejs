@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="https://telegra.ph/file/e07e0fddc2a2967bd08d6.jpg"/>
     <meta name="description" content="Rest apis WhatsApp bot, Telegram bot, and Discord bot, free, has AI download IG feature and others">
     <meta name="tag" content="free api, nue-api, rest-api, azzapi">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
@@ -18,92 +19,146 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f4f4f4;
             color: #333;
+            display: flex;
+            min-height: 100vh;
         }
 
-        header {
-            background-color: #fff;
+        .sidebar {
+            background-color: #3498db;
+            color: #fff;
+            width: 250px;
             padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
+        .sidebar .search-bar-icon {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .search-bar-icon input[type="text"] {
+            width: 100%;
+            padding: 10px 10px 10px 30px; 
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .sidebar .search-bar-icon i {
+            position: absolute;
+            top: 50%;
+            left: 10px; 
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+
+        .content {
+            flex-grow: 1;
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         header h1 {
+            color: #3498db;
+            font-size: 36px;
             margin-bottom: 10px;
         }
 
         header p {
-            font-size: 14px;
+            font-size: 18px;
             color: #666;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        #search-bar {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #333;
         }
 
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-gap: 30px;
         }
 
         .menu-card {
             background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            color: inherit;
         }
 
         .menu-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .menu-card h2 {
+            color: #3498db;
+            font-size: 20px;
             margin-bottom: 10px;
-            color: #333;
         }
 
         .menu-card p {
             font-size: 14px;
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .menu-card input[type="text"] {
-            width: calc(100% - 16px);
+            width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            margin-bottom: 10px;
             font-size: 14px;
+            margin-bottom: 15px;
         }
 
         .menu-card button {
-            background-color: #007bff;
+            background-color: #2ecc71;
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.2s ease;
+            width: 100%;
         }
 
         .menu-card button:hover {
-            background-color: #0056b3;
+            background-color: #27ae60;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10; 
+        }
+
+        .home-button img {
+            width: 40px;
+            height: 40px;
         }
 
         footer {
@@ -119,33 +174,37 @@
         footer p {
             font-size: 12px;
         }
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-        }
 
-        .home-button img {
-            width: 40px;
-            height: 40px;
+        .no-results {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <a href="/dashboard" class="home-button">
-        <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
-    </a>
-    <header>
-        <h1>Welcome to NueApi</h1>
-        <p>Explore our free APIs for your projects</p>
-    </header>
-    <main>
-        <input type="text" id="search-bar" placeholder="Search API...">
-        <div class="menu-grid" id="menu-container"></div>
-    </main>
+    <div class="sidebar">
+        <h2>NueApi</h2>
+        <div class="search-bar-icon">
+            <input type="text" id="search-bar" placeholder="Cari API...">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <div class="content">
+        <a href="/dashboard" class="home-button">
+            <img src="https://static.vecteezy.com/system/resources/previews/024/029/940/original/home-icon-clipart-transparent-background-free-png.png" alt="Home">
+        </a>
+        <header>
+            <h1>Selamat Datang di NueApi</h1>
+            <p>Jelajahi API gratis kami untuk proyek Anda</p>
+        </header>
+        <main>
+            <div class="menu-grid" id="menu-container">
+
+            </div>
+        </main>
+    </div>
     <footer>
         <p>© 2023 NueApi. All rights reserved.</p>
     </footer>
@@ -298,37 +357,46 @@
         const searchBar = document.getElementById('search-bar');
 
         function renderMenuItems(searchTerm = '') {
-            menuContainer.innerHTML = '';
-
+            menuContainer.innerHTML = ''; 
             const filteredMenuItems = menuItems.filter(item => {
-                const titleMatch = item.title.toLowerCase().includes(searchTerm);
-                const descriptionMatch = item.description.toLowerCase().includes(searchTerm);
-                return titleMatch || descriptionMatch;
+                return item.title.toLowerCase().includes(searchTerm.toLowerCase()) 
+                       || item.description.toLowerCase().includes(searchTerm.toLowerCase());
             });
 
             if (filteredMenuItems.length === 0) {
-                menuContainer.innerHTML = '<p class="no-results">No APIs found.</p>';
+                menuContainer.innerHTML = '<p class="no-results">Tidak ditemukan API.</p>';
                 return;
             }
 
             filteredMenuItems.forEach(item => {
-                const card = `
-                    <div class="menu-card">
+                const card = document.createElement('a');
+                card.classList.add('menu-card');
+
+
+                if (item.isButtonOnly) {
+                    card.href = item.endpoint; 
+                    card.innerHTML = `
                         <h2>${item.title}</h2>
                         <p>${item.description}</p>
-                        ${item.isButtonOnly ? `
-                            <button onclick="tryNow('${item.endpoint}', '${item.inputId}')">Try Now</button>
-                        ` : `
-                            <input type="text" id="${item.inputId}" placeholder="${item.inputPlaceholder}" required>
-                            <button onclick="tryNow('${item.endpoint}', '${item.inputId}')" disabled>Try Now</button>
-                        `}
-                    </div>
-                `;
-                menuContainer.innerHTML += card;
+                        <button>Coba Sekarang</button> 
+                    `;
+                } else {
+                    card.href = '#'; 
+                    card.innerHTML = `
+                        <h2>${item.title}</h2>
+                        <p>${item.description}</p>
+                        <input type="text" id="${item.inputId}" placeholder="${item.inputPlaceholder}" required>
+                        <button onclick="tryNow('${item.endpoint}', '${item.inputId}')" disabled>Coba Sekarang</button>
+                    `;
+                }
+
+                menuContainer.appendChild(card);
             });
+
 
             attachInputListeners();
         }
+
 
         function attachInputListeners() {
             const inputFields = document.querySelectorAll('.menu-card input[type="text"]');
@@ -341,28 +409,21 @@
         }
 
         function tryNow(endpoint, inputId) {
-            if (inputId) {
-                const inputValue = document.getElementById(inputId).value;
-                if (inputValue) {
-                    window.location.href = `${endpoint}${encodeURIComponent(inputValue)}`;
-                } else {
-                    alert('Please fill in the input field.');
-                }
+            const inputValue = document.getElementById(inputId).value;
+            if (inputValue) {
+                window.location.href = `${endpoint}${encodeURIComponent(inputValue)}`; 
             } else {
-                if (endpoint.startsWith('http')) {
-                    window.location.href = endpoint;
-                } else {
-                    window.location.href = endpoint; 
-                }
+                alert('Silahkan isi kolom input.'); 
             }
         }
 
         searchBar.addEventListener('input', () => {
-            const searchTerm = searchBar.value.toLowerCase();
-            renderMenuItems(searchTerm);
+            const searchTerm = searchBar.value;
+            renderMenuItems(searchTerm); 
         });
 
-        renderMenuItems();
+
+        renderMenuItems(); 
     </script>
 </body>
 </html>
