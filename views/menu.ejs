@@ -178,6 +178,16 @@
     <script>
         const menuItems = [
             {
+                title: 'Gemini Model with Session',
+                description: 'Model Gemini Flash dari Google AI, dengan sesi chat',
+                endpoint: '/api/sgemini',
+                params: [
+                    { name: 'user', example: 'Riki' },
+                    { name: 'systemPrompt', example: 'Anda adalah NueAI asisten cerdas buatan NueAPI yang membantu apa saja berbasis text' },
+                    { name: 'query', example: 'hallo siapa kamu' }
+                ]
+            },
+            {
                 title: 'Nature Text To Speech',
                 description: 'Ubah teks menjadi audio dengan suara alami',
                 endpoint: '/api/nature-tts',
