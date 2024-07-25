@@ -40,7 +40,7 @@ const handleChat = async (req, res, systemMessage) => {
             assistantMessage.content = assistantMessage.content.replace(/\*\*/g, '*');
 
             await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
-                [userId]: chatHistory
+                json:chatHistory
             });
 
             res.json({ result: assistantMessage.content, history: messages });
@@ -55,7 +55,7 @@ const handleChat = async (req, res, systemMessage) => {
         try {
             readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
         } catch (error) {
-            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {});
+            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {json:[]});
             readResponse.data = {};
         }
         chatHistory = readResponse.data[userId] || [];
