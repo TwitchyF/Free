@@ -8,18 +8,8 @@ const google = require("./func/search-google.js");
 const hari = require("./func/other-date.js");
 const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
-const {handleChat} = require('./func/openaiFast.js');
-const {gemini} = require('./func/gemini.js');
+const {handleChat} = require('./func/openaiFast.js'); 
 
-router.get('/sgemini', async (req, res) =>{
-  const {user, systemPrompt, query} = req.query;
-  if (!user && !systemPrompt && !query) return res.status(400).json({ error: 'Missing required parameters' });
-  gemini(systemPrompt, query, user).then(response => {
-    res.status(200).json(response);
-  }).catch(error => {
-    res.status(500).json({ error: 'Internal Server Error' });
-  })
-})
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
 
