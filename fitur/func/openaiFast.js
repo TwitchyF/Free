@@ -43,7 +43,7 @@ const handleChat = async (req, res, systemMessage) => {
                 json:chatHistory
             });
 
-            res.json({ result: assistantMessage.content, history: messages });
+            res.json({ result: assistantMessage.content, history: `https://copper-ambiguous-velvet.glitch.me/read/${userId}` });
             return true;
         } catch (error) {
             return false;
@@ -71,7 +71,7 @@ const handleChat = async (req, res, systemMessage) => {
         if (!success) throw new Error('All retries failed');
     } catch (error) {
         await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
-            [userId]: []
+            json: []
         });
         console.error('Error request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
