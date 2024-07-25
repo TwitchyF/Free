@@ -14,7 +14,7 @@ const gemini = async (systemMessage, prompt, userId) => {
             };
 
             const formattedMessages = payload.messages.map(msg => `${msg.role === "system" ? "System" : "User"}: ${msg.content}`).join("\n");
-            const apiUrl = `https://nue-api.vercel.app/api/gemini?prompt=[${formattedMessages}]\nPermintaan-baru: ${prompt}`;
+            const apiUrl = `https://nue-api.vercel.app/api/gemini?prompt=[${formattedMessages}]\nPermintaan-baru: ${prompt}\n\nnote: Jawablah permintaan baru secara langsung`;
 
             const response = await axios.get(apiUrl);
 
