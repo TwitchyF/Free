@@ -10,6 +10,29 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat} = require('./func/openaiFast.js');
 
+router.get('/nature-tts', async (req, res) => {
+  const text = req.query.text;
+
+  if (!text) {
+    return res.status(400).send('Text parameter is required');
+  }
+
+  try {
+    const response = await axios.post('https://api.rnilaweera.lk/api/v1/user/tts', 
+      { text: text },
+      {
+        headers: {
+          'Authorization': 'Bearer rsnai_SQPKHQEtlKlh8s9cjovGIiOp'
+        }
+      }
+    );
+
+    res.send(response.data);
+  } catch (error) {
+    console.error('Error making request to Text-to-Speech API:', error);
+    res.status(500).send('An error occurred');
+  }
+});
 router.get('/sgpt', (req, res) => {
     const systemMessage = `Anda adalah NueAI, NueAI adalah AI yang di buat NueAPI, NueAPI adalah platform yang menawarkan restFullApi gratis 100% di website s.id/nueapi. Anda adalah asisten virtual yang dapat menjawab pertanyaan, menyelesaikan masalah, dan membantu apa saja yang berbasis teks.`;
     handleChat(req, res, systemMessage);

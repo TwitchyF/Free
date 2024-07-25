@@ -178,6 +178,14 @@
     <script>
         const menuItems = [
             {
+                title: 'Nature Text To Speech',
+                description: 'Ubah teks menjadi audio dengan suara alami',
+                endpoint: '/api/nature-tts',
+                params: [
+                    { name: 'text', example: 'Halo dunia!' }
+                ]
+            },
+            {
                 title: 'AI Logic',
                 description: 'Buat AI Anda sendiri dengan model Gemma2 dengan sesi chat',
                 endpoint: '/api/lgpt',
@@ -357,6 +365,9 @@
                 menuContainer.innerHTML = '<p class="no-results">Tidak ada API yang ditemukan.</p>';
                 return;
             }
+
+            // Sort the filtered menu items by title
+            filteredMenuItems.sort((a, b) => a.title.localeCompare(b.title));
 
             filteredMenuItems.forEach(item => {
                 const card = document.createElement('div');
