@@ -6,7 +6,7 @@ let chatHistory = [];
 const handleChat = async (req, res, systemMessage) => {
     const userId = req.query.user;
     const prompt = req.query.text;
-    systemMessage = systemMessage || req.query.systemPrompt
+    systemMessage = systemMessage || req.query.systemPrompt;
 
     const sendRequest = async (sliceLength) => {
         try {
@@ -39,10 +39,8 @@ const handleChat = async (req, res, systemMessage) => {
             assistantMessage.content = assistantMessage.content.replace(/\n\n/g, '\n    ');
             assistantMessage.content = assistantMessage.content.replace(/\*\*/g, '*');
 
-            await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
-                params: {
-                    json: JSON.stringify({ [userId]: chatHistory })
-                }
+            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
+                [userId]: chatHistory
             });
 
             res.json({ result: assistantMessage.content, history: messages });
@@ -53,12 +51,12 @@ const handleChat = async (req, res, systemMessage) => {
     };
 
     try {
-        let readResponse = {data:{}}
+        let readResponse = { data: {} };
         try {
-         readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
+            readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
         } catch (error) {
-         await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}?json={}`)
-        readResponse.data = []
+            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {});
+            readResponse.data = {};
         }
         chatHistory = readResponse.data[userId] || [];
 
@@ -72,10 +70,8 @@ const handleChat = async (req, res, systemMessage) => {
         }
         if (!success) throw new Error('All retries failed');
     } catch (error) {
-        await axios.get(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
-            params: {
-                json: JSON.stringify({ [userId]: [] })
-            }
+        await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
+            [userId]: []
         });
         console.error('Error request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
