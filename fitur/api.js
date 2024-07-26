@@ -10,17 +10,6 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat} = require('./func/openaiFast.js'); 
 
-router.get('/sgemini', async (req, res) => {
-  const user = req.query.user;
-  const systemPrompt = req.query.systemPrompt;
-  const text = req.query.text;
-
-  if (!user || !systemPrompt || !text) {
-    return res.status(400).json({ error: "user, systemPrompt and text parameters are required" });
-  }
-
-  res.redirect(`https://tattered-classy-comic.glitch.me/sgemini?systemPrompt=${encodeURIComponent(systemPrompt)}&text=${encodeURIComponent(text)}&user=${encodeURIComponent(user)}`);
-});
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
 
