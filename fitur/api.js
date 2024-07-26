@@ -10,6 +10,10 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat} = require('./func/openaiFast.js'); 
 
+router.get('/sgemini', async (req, res) => {
+  const { systemPrompt, user, text } = req.query;
+  res.redirect(`https://tattered-classy-comic.glitch.me/sgemini?systemPrompt=${encodeURIComponent(systemPrompt || '')}&user=${encodeURIComponent(user || '')}&text=${encodeURIComponent(text || '')}`);
+});
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
 
