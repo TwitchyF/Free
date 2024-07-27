@@ -78,4 +78,4 @@ const handleChat = async (req, res, systemMessage) => {
     }
 };
 
-module.exports = { handleChat };
+module.exports = { handleChat, groq };
