@@ -10,7 +10,8 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat, groq} = require('./func/openaiFast.js'); 
 
-const sideUrl = 'https://tattered-classy-comic.glitch.me';
+let side = ['https://tattered-classy-comic.glitch.me','https://wily-dory-pakpurpur-b5600d6d.koyeb.app'];
+
 
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
@@ -48,7 +49,7 @@ router.get('/lgpt', (req, res) => {
 router.get('/anime-reaction', async (req, res) => {
   try {
     let randomCategory;
-    
+
     // Cek apakah req.query.category ada
     if (req.query.category) {
       randomCategory = req.query.category;
@@ -91,35 +92,35 @@ router.get("/gempa", async (req, res) => {
 router.get("/bard", async (req, res) => {
   const { text } = req.query;
   if (!text) return res.status(400).send("Invalid text");
-  res.redirect(`${sideUrl}/bard?text=${encodeURIComponent(text)}`);
+  res.redirect(`${side[0]}/bard?text=${encodeURIComponent(text)}`);
 });
 router.get("/diffpreset", async (req, res) => {
   const { prompt, model, preset } = req.query;
   if (!prompt) return res.send("Invalid prompt");
   if (!model) return res.status(400).send(`Invalid model`);
   if (!preset) return res.status(400).send(`invalid preset`);
-  
-  res.redirect(`${sideUrl}/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
+
+  res.redirect(`${side[0]}/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
 });
 
 router.get("/sdxl", async (req, res) => {
   const { prompt, model } = req.query;
-  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${sideUrl}/sdxllist" target="_blank">List berikut</a>`);
-  
-  res.redirect(`${sideUrl}/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${side[0]}/sdxllist" target="_blank">List berikut</a>`);
+
+  res.redirect(`${side[0]}/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
 router.get("/text2img", async (req, res) => {
   const { prompt, model } = req.query;
-  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${sideUrl}/sdlist" target="_blank">List berikut</a>`);
-  
-  res.redirect(`${sideUrl}/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${side[0]}/sdlist" target="_blank">List berikut</a>`);
+
+  res.redirect(`${side[0]}/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
 router.get("/upscale", async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).send("Masukkan url");
-  res.redirect(`${sideUrl}/upscale?url=${url}`);
+  res.redirect(`${side[0]}/upscale?url=${url}`);
 });
 
 
@@ -198,10 +199,10 @@ router.get('/ytdl', async (req, res) => {
   if (!url) return res.json({ status: false, download:{}, info:{} });
   try {
     const info = await ytdl.getInfo(url);
-    
+
     const dlMp3 = encodeURIComponent(`https://dour-glory-nectarine.glitch.me/yt-mp3?url=${url}`);
     const dlMp4 = encodeURIComponent(`https://dour-glory-nectarine.glitch.me/yt-mp4?url=${url}`);
-    
+
     res.json({status: true, download : {audio:`https://nueapi.vercel.app/redirect?re=${dlMp3}`, video:`https://nueapi.vercel.app/redirect?re=${dlMp4}`}, info : info.videoDetails})
   } catch (error) {
     res.json({status: false, download:{}, info:{}})
@@ -212,8 +213,8 @@ router.get('/snapsave', async (req, res) => {
  const url = req.query.url;
   if (!url) return res.json({ status: false, download:null});
   try {
-    
-    const urlapi = `${sideUrl}/snapsave?url=`+url
+
+    const urlapi = `${side[0]}/snapsave?url=`+url
     res.redirect(urlapi);
   } catch (error) {
     res.json({status: false, download:null});
@@ -223,7 +224,7 @@ router.get('/snapsave', async (req, res) => {
 
 router.get('/gemini', async (req, res) => {
 if (!req.query.prompt) return res.status(404).send("Invalid prompt");
-  res.redirect(`${sideUrl}/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
+  res.redirect(`${side[0]}/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/date", async (req, res) => {
@@ -331,7 +332,7 @@ main();
 router.get("/image", async (req, res) => {
   const query = req.query.query;
   if (!query) return res.status(400).json({ error: "Masukkan query" });
-  res.redirect(`${sideUrl}/image?query=${query}`)
+  res.redirect(`${side[0]}/image?query=${query}`)
 });
 
 router.get("/google", async (req, res) => {
