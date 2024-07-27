@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-router.get('/dashboard', async (req, res) => {
+router.get('/docs', async (req, res) => {
     try {
-        const response = await axios.get('https://tattered-classy-comic.glitch.me/read');
+        const response = await axios.get('https://wily-dory-pakpurpur-b5600d6d.koyeb.app/read');
         const data = {today:response.data.today, yesterday:response.data.yesterday,all:response.data.total};
         res.render('dashboard', { jsonData: data });
     } catch (error) {
@@ -19,10 +19,6 @@ router.get('/error', function (req, res) {
 
 router.get('/googlee023af832ca272f7.html', (req, res) => {
 res.render('googlee023af832ca272f7');
-});
-
-router.get('/loading', (req, res) => {
-  res.render('loading');
 });
 
 router.get('/', (req, res) => {
