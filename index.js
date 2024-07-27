@@ -35,17 +35,15 @@ app.get("/redirect", async (req, res) =>{
 });
 app.get("/uptime", async (req, res) => {
   const chatAi = 'https://copper-ambiguous-velvet.glitch.me/';
-  const sideSrvr = 'https://tattered-classy-comic.glitch.me/';
   const Scraper = 'https://dour-glory-nectarine.glitch.me';
 
   try {
-    const [chatRes, sideRes, scrapRes] = await Promise.all([
+    const [chatRes, scrapRes] = await Promise.all([
       axios.get(chatAi),
-      axios.get(sideSrvr),
       axios.get(Scraper)
     ]);
 
-    res.send(`Server Uptime: ${sideRes.status} | ChatAI Uptime: ${chatRes.status} | Scraper Uptime: ${scrapRes.status}`);
+    res.send(`DB Uptime: ${chatRes.status} | Scraper Uptime: ${scrapRes.status}`);
   } catch (error) {
     res.send("Error fetching uptime information");
   }

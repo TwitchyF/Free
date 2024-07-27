@@ -10,6 +10,7 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat} = require('./func/openaiFast.js'); 
 
+const sideUrl = 'https://wily-dory-pakpurpur-b5600d6d.koyeb.app';
 
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
@@ -90,7 +91,7 @@ router.get("/gempa", async (req, res) => {
 router.get("/bard", async (req, res) => {
   const { text } = req.query;
   if (!text) return res.status(400).send("Invalid text");
-  res.redirect(`https://tattered-classy-comic.glitch.me/bard?text=${encodeURIComponent(text)}`);
+  res.redirect(`${sideUrl}/bard?text=${encodeURIComponent(text)}`);
 });
 router.get("/diffpreset", async (req, res) => {
   const { prompt, model, preset } = req.query;
@@ -98,27 +99,27 @@ router.get("/diffpreset", async (req, res) => {
   if (!model) return res.status(400).send(`Invalid model`);
   if (!preset) return res.status(400).send(`invalid preset`);
   
-  res.redirect(`https://tattered-classy-comic.glitch.me/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
+  res.redirect(`${sideUrl}/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
 });
 
 router.get("/sdxl", async (req, res) => {
   const { prompt, model } = req.query;
-  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdxllist" target="_blank">List berikut</a>`);
+  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${sideUrl}/sdxllist" target="_blank">List berikut</a>`);
   
-  res.redirect(`https://tattered-classy-comic.glitch.me/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+  res.redirect(`${sideUrl}/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
 router.get("/text2img", async (req, res) => {
   const { prompt, model } = req.query;
-  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="https://tattered-classy-comic.glitch.me/sdlist" target="_blank">List berikut</a>`);
+  if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${sideUrl}/sdlist" target="_blank">List berikut</a>`);
   
-  res.redirect(`https://tattered-classy-comic.glitch.me/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+  res.redirect(`${sideUrl}/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
 router.get("/upscale", async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).send("Masukkan url");
-  res.redirect(`https://tattered-classy-comic.glitch.me/upscale?url=${url}`);
+  res.redirect(`${sideUrl}/upscale?url=${url}`);
 });
 
 
@@ -212,7 +213,7 @@ router.get('/snapsave', async (req, res) => {
   if (!url) return res.json({ status: false, download:null});
   try {
     
-    const urlapi = "https://tattered-classy-comic.glitch.me/snapsave?url="+url
+    const urlapi = `${sideUrl}/snapsave?url=`+url
     res.redirect(urlapi);
   } catch (error) {
     res.json({status: false, download:null});
@@ -222,7 +223,7 @@ router.get('/snapsave', async (req, res) => {
 
 router.get('/gemini', async (req, res) => {
 if (!req.query.prompt) return res.status(404).send("Invalid prompt");
-  res.redirect(`https://tattered-classy-comic.glitch.me/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
+  res.redirect(`${sideUrl}/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/date", async (req, res) => {
@@ -296,13 +297,13 @@ router.get("/gpt", async (req, res) => {
     return res
       .status(400)
       .json({ status: 400, message: "masukkan parameter prompt" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/gpt?prompt=${encodeURIComponent(req.query.prompt)}`);
+  res.redirect(`${sideUrl}/gpt?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/image", async (req, res) => {
   const query = req.query.query;
   if (!query) return res.status(400).json({ error: "Masukkan query" });
-  res.redirect(`https://tattered-classy-comic.glitch.me/image?query=${query}`)
+  res.redirect(`${sideUrl}/image?query=${query}`)
 });
 
 router.get("/google", async (req, res) => {
