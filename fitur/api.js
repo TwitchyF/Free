@@ -10,7 +10,7 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat, groq} = require('./func/openaiFast.js'); 
 
-const sideUrl = 'https://wily-dory-pakpurpur-b5600d6d.koyeb.app';
+const sideUrl = 'https://tattered-classy-comic.glitch.me';
 
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
