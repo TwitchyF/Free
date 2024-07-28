@@ -3,6 +3,7 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
+let key = [];
 
 const app = express();
 app.use('/', router);
@@ -21,13 +22,13 @@ app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
 
-app.get("/succes", async (req,res)=>{
-  const re = req.query.re;
-try {
-res.status(200).json(JSON.parse(re));
-} catch (error) {
-  res.status(500).send(error+" tidak valid pastikan anda menggunakan endpoint Yang tertera pada JSON hasil arigatou!😑");
-}
+app.get('/generate', async (req, res) => {
+  const angka_dan_huruf_acak_A_Z_dan_1_9 = Math.random().toString(36).substring(2, 10);
+  key.push(angka_dan_huruf_acak_A_Z_dan_1_9)
+res.status(200).send(angka_dan_huruf_acak_A_Z_dan_1_9);
+});
+app.get('/key', (req, res) =>{
+  res.json(key)
 });
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid Url");

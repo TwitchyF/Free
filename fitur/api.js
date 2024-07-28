@@ -12,6 +12,16 @@ const {handleChat, groq} = require('./func/openaiFast.js');
 
 let side = ['https://wily-dory-pakpurpur-b5600d6d.koyeb.app'];
 
+const redirectWithKey = async (req, res, endpoint) => {
+  try {
+    const generate = await axios.get('/generate');
+    const key = generate.data;
+    res.redirect(`${side[0]}${endpoint}&key=${key}`);
+  } catch (error) {
+    console.error(`Error in redirectWithKey for ${endpoint}:`, error);
+    res.status(500).send('An error occurred');
+  }
+};
 
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
@@ -92,38 +102,40 @@ router.get("/gempa", async (req, res) => {
 router.get("/bard", async (req, res) => {
   const { text } = req.query;
   if (!text) return res.status(400).send("Invalid text");
-  res.redirect(`${side[0]}/bard?text=${encodeURIComponent(text)}`);
+  const generate = await axios.get('/generate');
+  const key = generate.data;
+  res.redirect(`${side[0]}/bard?text=${encodeURIComponent(text)}&key=${key}`);
 });
+
 router.get("/diffpreset", async (req, res) => {
   const { prompt, model, preset } = req.query;
-  if (!prompt) return res.send("Invalid prompt");
-  if (!model) return res.status(400).send(`Invalid model`);
-  if (!preset) return res.status(400).send(`invalid preset`);
+  if (!prompt) return res.status(400).send("Invalid prompt");
+  if (!model) return res.status(400).send("Invalid model");
+  if (!preset) return res.status(400).send("Invalid preset");
 
-  res.redirect(`${side[0]}/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
+  redirectWithKey(req, res, `/diff?prompt=${encodeURIComponent(prompt)}&model=${model}&preset=${preset}`);
 });
 
 router.get("/sdxl", async (req, res) => {
   const { prompt, model } = req.query;
   if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${side[0]}/sdxllist" target="_blank">List berikut</a>`);
 
-  res.redirect(`${side[0]}/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+  redirectWithKey(req, res, `/sdxl?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
 router.get("/text2img", async (req, res) => {
   const { prompt, model } = req.query;
   if (!prompt || !model ) return res.status(400).send(`Pastikan prompt dan model terisi, untuk melihat daftar model bisa akses <a href="${side[0]}/sdlist" target="_blank">List berikut</a>`);
 
-  res.redirect(`${side[0]}/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
+  redirectWithKey(req, res, `/text2img?model=${model}&prompt=${encodeURIComponent(prompt)}`);
 });
 
 router.get("/upscale", async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).send("Masukkan url");
-  res.redirect(`${side[0]}/upscale?url=${url}`);
+
+  redirectWithKey(req, res, `/upscale?url=${url}`);
 });
-
-
 
 router.get("/anime-jadwal", async (req, res) => {
   try {
@@ -213,9 +225,7 @@ router.get('/snapsave', async (req, res) => {
  const url = req.query.url;
   if (!url) return res.json({ status: false, download:null});
   try {
-
-    const urlapi = `${side[0]}/snapsave?url=`+url
-    res.redirect(urlapi);
+    redirectWithKey(req, res, `/snapsave?url=${url}`);
   } catch (error) {
     res.json({status: false, download:null});
   }
@@ -223,8 +233,8 @@ router.get('/snapsave', async (req, res) => {
 
 
 router.get('/gemini', async (req, res) => {
-if (!req.query.prompt) return res.status(404).send("Invalid prompt");
-  res.redirect(`${side[0]}/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
+  if (!req.query.prompt) return res.status(404).send("Invalid prompt");
+  redirectWithKey(req, res, `/gemini?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/date", async (req, res) => {
@@ -332,7 +342,7 @@ main();
 router.get("/image", async (req, res) => {
   const query = req.query.query;
   if (!query) return res.status(400).json({ error: "Masukkan query" });
-  res.redirect(`${side[0]}/image?query=${query}`)
+  redirectWithKey(req, res, `/image?query=${encodeURIComponent(query)}`);
 });
 
 router.get("/google", async (req, res) => {
