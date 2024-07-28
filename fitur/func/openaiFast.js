@@ -1,6 +1,9 @@
 const Groq = require('groq-sdk');
 const axios = require('axios');
-const groq = new Groq({ apiKey: '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' });
+
+const key = ['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','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']
+const randomKey = key[Math.floor(Math.random() * key.length)];
+const groq = new Groq({ apiKey: randomKey });
 let chatHistory = [];
 
 const handleChat = async (req, res, systemMessage) => {
@@ -23,7 +26,7 @@ const handleChat = async (req, res, systemMessage) => {
                 messages: payload.messages,
                 model: "Gemma2-9b-It",
                 temperature: 1,
-                max_tokens: 1024,
+                max_tokens: 150,
                 top_p: 1,
                 stream: false,
                 stop: null
