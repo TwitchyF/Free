@@ -3,7 +3,6 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
-let key = [];
 
 const app = express();
 app.use('/', router);
@@ -23,8 +22,20 @@ app.set('json spaces', 2);
 
 
 app.get('/generate', async (req, res) => {
+  let key = []
+  try {
+   const response = await axios.get('https://copper-ambiguous-velvet.glitch.me/read/nuekey');
+    key = response.data;
+  } catch (e) {
+    key = []
+  }
   const angka_dan_huruf_acak_A_Z_dan_1_9 = Math.random().toString(36).substring(2, 10);
   key.push(angka_dan_huruf_acak_A_Z_dan_1_9)
+
+  if (key.length > 5) {
+    key = key.slice(-5);
+  }
+  await axios.post('https://copper-ambiguous-velvet.glitch.me/write/nuekey',{json: key})
 res.status(200).send(angka_dan_huruf_acak_A_Z_dan_1_9);
 });
 app.get('/key', (req, res) =>{
