@@ -14,7 +14,7 @@ let side = ['https://wily-dory-pakpurpur-b5600d6d.koyeb.app'];
 
 const redirectWithKey = async (req, res, endpoint) => {
   try {
-    const generate = await axios.get('/generate');
+    const generate = await axios.get('https://nue-api.vercel.app/generate');
     const key = generate.data;
     res.redirect(`${side[0]}${endpoint}&key=${key}`);
   } catch (error) {
@@ -102,7 +102,7 @@ router.get("/gempa", async (req, res) => {
 router.get("/bard", async (req, res) => {
   const { text } = req.query;
   if (!text) return res.status(400).send("Invalid text");
-  const generate = await axios.get('/generate');
+  const generate = await axios.get('https://nue-api.vercel.app/generate');
   const key = generate.data;
   res.redirect(`${side[0]}/bard?text=${encodeURIComponent(text)}&key=${key}`);
 });
