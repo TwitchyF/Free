@@ -39,7 +39,7 @@ app.get('/generate', async (req, res) => {
 res.status(200).send(angka_dan_huruf_acak_A_Z_dan_1_9);
 });
 app.get('/key', (req, res) =>{
-  res.json(key)
+  res.redirect('https://copper-ambiguous-velvet.glitch.me/read/nuekey')
 });
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid Url");
