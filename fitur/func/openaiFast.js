@@ -21,12 +21,12 @@ const handleChat = async (req, res, systemMessage) => {
 
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
-                model: "Gemma2-9b-It",
+                model: "llama-3.1-70b-versatile",
                 temperature: 1,
                 max_tokens: 1024,
                 top_p: 1,
                 stream: false,
-                stop: "\n\n\n"
+                stop: null
             });
 
             const assistantMessage = { role: "assistant", content: response.choices[0].message.content.trim() };
