@@ -308,35 +308,7 @@ router.get("/gpt", async (req, res) => {
     return res
       .status(400)
       .json({ status: 400, message: "masukkan parameter prompt" });
-  try {
-
-async function main() {
-  const chatCompletion = await groq.chat.completions.create({
-    "messages": [
-      {
-        "role": "system",
-        "content": "Saya adalah ChatGPT, model bahasa yang dikembangkan oleh OpenAI. Saya dirancang untuk memahami dan menghasilkan teks dalam berbagai konteks, mulai dari percakapan sehari-hari hingga diskusi teknis dan profesional.Kemampuan utama saya meliputi:Pemahaman Bahasa: Saya bisa membaca, memahami, dan merespons teks dalam berbagai bahasa, termasuk Bahasa Indonesia.Berbicara dalam Konteks: Saya dapat membantu dengan pertanyaan teknis, memberikan penjelasan tentang konsep, atau sekadar berbincang santai.Penyediaan Informasi: Saya dapat memberikan informasi berdasarkan pengetahuan yang saya miliki hingga Oktober 2023.Generasi Teks: Saya mampu membuat teks yang koheren dan relevan berdasarkan instruksi atau konteks yang diberikan.Saya berfungsi dengan memproses masukan dari pengguna dan menghasilkan respons yang sesuai, berdasarkan model bahasa yang telah dilatih pada berbagai data teks. Apakah ada yang ingin Anda ketahui lebih lanjut?"
-      },
-      {
-        "role": "user",
-        "content": req.query.prompt
-      }
-    ],
-    "model": "llama-3.1-70b-versatile",
-    "temperature": 0.5,
-    "max_tokens": 1024,
-    "top_p": 1,
-    "stream": false,
-    "stop": null
-  });
-
-   res.status(200).json({result:chatCompletion.choices[0].message.content});
-}
-
-main();
-  } catch (error) {
-    res.status(500).json({ error: "Terjadi kesalahan saat mengambil data." })
-  }
+  redirectWithKey(req, res, `/gpt?prompt=${encodeURIComponent(req.query.prompt)}`);
 });
 
 router.get("/image", async (req, res) => {
