@@ -24,10 +24,10 @@ const handleChat = async (req, res, systemMessage) => {
 
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
-                model: "llama-3.1-70b-versatile",
-                temperature: 1,
+                model: "llama3-70b-8192",
+                temperature: 0.5,
                 max_tokens: 150,
-                top_p: 1,
+                top_p: 0.9,
                 stream: false,
                 stop: null
             });
