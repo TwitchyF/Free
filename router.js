@@ -4,7 +4,7 @@ const axios = require('axios');
 
 router.get('/docs', async (req, res) => {
     try {
-        const response = await axios.get('https://wily-dory-pakpurpur-b5600d6d.koyeb.app/read');
+        const response = await axios.get('https://nue-api.koyeb.app/read');
         const data = {today:response.data.today, yesterday:response.data.yesterday,all:response.data.total};
         res.render('dashboard', { jsonData: data });
     } catch (error) {

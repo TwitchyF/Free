@@ -7,7 +7,7 @@ const axios = require('axios');
 const app = express();
 app.use('/', router);
 app.use('/api', async (req, res, next) => {
-  const apiUrl = 'https://wily-dory-pakpurpur-b5600d6d.koyeb.app/count';
+  const apiUrl = 'https://nue-api.koyeb.app/count';
   try {
     await axios.get(apiUrl);
     next();
@@ -48,7 +48,7 @@ app.get("/redirect", async (req, res) =>{
 app.get("/uptime", async (req, res) => {
   const chatAi = 'https://copper-ambiguous-velvet.glitch.me/';
   const Scraper = 'https://dour-glory-nectarine.glitch.me/';
- const sideSrv = 'https://wily-dory-pakpurpur-b5600d6d.koyeb.app/'
+ const sideSrv = 'https://nue-api.koyeb.app/'
 
 
   try {
