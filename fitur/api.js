@@ -10,7 +10,7 @@ const ytdl = require("@distube/ytdl-core");
 let bmkg_info = require('gempa-id-info')
 const {handleChat, groq} = require('./func/openaiFast.js'); 
 
-let side = ['https://wily-dory-pakpurpur-b5600d6d.koyeb.app'];
+let side = ['https://nue-api.koyeb.app'];
 
 const redirectWithKey = async (req, res, endpoint) => {
   try {
