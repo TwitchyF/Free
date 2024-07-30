@@ -10,6 +10,7 @@ const handleChat = async (req, res, systemMessage) => {
     const userId = req.query.user;
     const prompt = req.query.text;
     systemMessage = systemMessage || req.query.systemPrompt;
+    const aiMessage = req.query.aiMessage;
 
     const sendRequest = async (sliceLength) => {
         try {
@@ -18,8 +19,9 @@ const handleChat = async (req, res, systemMessage) => {
                 messages: [
                     { role: "system", content: systemMessage },
                     ...messages.map(msg => ({ role: msg.role, content: msg.content })),
-                    { role: "user", content: prompt }
-                ]
+                    aiMessage ? { role: "assistant", content: aiMessage } : null,
+  { role: "user", content: prompt }
+                ].filter(Boolean)
             };
 
             const response = await groq.chat.completions.create({
