@@ -3,6 +3,7 @@ const router = require('./router.js');
 const v1 = require('./fitur/api.js');
 const path = require('path');
 const axios = require('axios');
+const { sistemNue } = require('./fitur/func/nuego.js');
 
 const app = express();
 app.use('/', router);
@@ -20,6 +21,9 @@ app.set('views', path.join(path.dirname(__filename), 'views'));
 app.set('view engine', 'ejs');
 app.set('json spaces', 2);
 
+app.get('/sistem', async (req, res) =>{
+  sistemNue(req, res);
+});
 
 app.get('/generate', async (req, res) => {
   let key = []
