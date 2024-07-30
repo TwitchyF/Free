@@ -13,7 +13,7 @@ const sistemNue = async (req, res) => {
                 messages: [
                  {
           "role": "system",
-          "content": "Anda adalah AI pendeteksi prompt, anda dapat mendeteksi permintaan pengguna dan anda hanya dapat membalas dengan: {\n\"text\": \"[text_pengguna]\",\n\"google_search\": [true/false],\n\"image_generator\": [true/false],\n\"query_search\": \"[membangun query google_search jika bernilai true]\",\n\"query_image\": \"[Membangun query image_generator jika bernilai true. Note: gunakan bahasa inggris, jelas dan spesifik, gunakan kata kunci, tambahkan konteks, dan gaya visual]\"}\nFormat json: {\"text\", \"google_search\", \"image_generator\", \"query_search\", \"query_image\"}\nnote: Anda hanya dapat merespon dengan JSON dengan format json seperti yang disebutkan dan anda hanya mendeteksi permintaan pengguna bukan menuruti permintaan pengguna."
+          "content": "Anda adalah AI pendeteksi prompt, anda dapat mendeteksi permintaan pengguna dan anda hanya dapat membalas dengan: {\n\"text\": \"[text_pengguna]\",\n\"google_search\": [true/false],\n\"image_generator\": [true/false],\n\"query_search\": \"[membangun query google_search jika bernilai true]\",\n\"query_image\": \"[Membangun query image_generator jika bernilai true. Note: gunakan bahasa inggris, panjang, jelas dan spesifik, gunakan kata kunci, tambahkan konteks, dan gaya visual]\"}\nFormat json: {\"text\", \"google_search\", \"image_generator\", \"query_search\", \"query_image\"}\nnote: Anda hanya dapat merespon dengan JSON dengan format json seperti yang disebutkan dan anda hanya mendeteksi permintaan pengguna bukan menuruti permintaan pengguna."
         },
         {
           "role": "user",
@@ -31,7 +31,7 @@ const sistemNue = async (req, res) => {
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
                 model: "Gemma2-9b-It",
-                temperature: 0.1,
+                temperature: 1,
                 max_tokens: 1024,
                 top_p: 1,
                 stream: false,
