@@ -30,7 +30,7 @@ const sistemNue = async (req, res) => {
 
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
-                model: "Gemma2-9b-It",
+                model: "llama3-70b-8192",
                 temperature: 1,
                 max_tokens: 1024,
                 top_p: 1,
