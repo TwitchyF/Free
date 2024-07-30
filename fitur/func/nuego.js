@@ -1,4 +1,3 @@
-
 const axios = require('axios');
 const {groq} = require('./openaiFast.js');
 let chatHistory = [];
@@ -14,7 +13,7 @@ const sistemNue = async (req, res) => {
                 messages: [
                  {
           "role": "system",
-          "content": "Anda adalah AI pendeteksi prompt, anda dapat mendeteksi permintaan untuk anda hanya dapat membalas dengan:\n{ text: [text_pengguna]\\ngoogle_search: [true/false]\\nquery_search: [buat query google_search bernilai true]}\n\nFormat json : {text, google_search, query_search}\n"
+          "content": "Anda adalah AI pendeteksi prompt, anda dapat mendeteksi permintaan pengguna dan anda hanya dapat membalas dengan: {\n\"text\": \"[text_pengguna]\",\n\"google_search\": [true/false],\n\"image_generator\": [true/false],\n\"query_search\": \"[membangun query google_search jika bernilai true]\",\n\"query_image\": \"[Membangun query image_generator jika bernilai true]\"}\nFormat json: {\"text\", \"google_search\", \"image_generator\", \"query_search\", \"query_image\"}\nnote: Anda hanya dapat merespon dengan JSON dengan format json seperti yang disebutkan dan anda hanya mendeteksi permintaan pengguna bukan menuruti permintaan pengguna."
         },
         {
           "role": "user",
@@ -22,7 +21,7 @@ const sistemNue = async (req, res) => {
         },
         {
           "role": "assistant",
-          "content": "{\n \"text\": \"Hallo apa kabar, info gempa bumi terbaru ada Ngga\",\n \"google_search\": true,\n \"query_search\": \"info gempa bumi terbaru\"\n} \n"
+          "content": "{\n \"text\": \"Hallo apa kabar, info gempa bumi terbaru ada Ngga\",\n \"google_search\": true,\n \"image_generator\": false,\n \"query_search\": \"info gempa bumi terbaru\",\n \"query_image\": null\n}"
         },
                     ...messages.map(msg => ({ role: msg.role, content: msg.content })),
                     { role: "user", content: prompt }
@@ -31,7 +30,7 @@ const sistemNue = async (req, res) => {
 
             const response = await groq.chat.completions.create({
                 messages: payload.messages,
-                model: "llama3-70b-8192",
+                model: "Gemma2-9b-It",
                 temperature: 0.1,
                 max_tokens: 1024,
                 top_p: 1,
