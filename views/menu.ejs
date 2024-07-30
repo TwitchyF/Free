@@ -177,7 +177,15 @@
 
     <script>
         const menuItems = [
-            
+            {
+                title: 'NueGo (with Sessions && searchEngine)',
+                description: 'NueGo Search engine AI, AI akan otomatis mengaktifkan Search engine dan tidak jika hanya mengobrol biasa',
+                endpoint: '/api/nuego',
+                params: [
+                    { name: 'user', example: 'iky' },
+                    { name: 'q', example: 'Aku mau tanya apa itu ikan' }
+                ]
+            },
             {
                 title: 'Nature Text To Speech',
                 description: 'Ubah teks menjadi audio dengan suara alami',

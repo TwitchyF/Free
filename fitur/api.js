@@ -16,13 +16,62 @@ const redirectWithKey = async (req, res, endpoint) => {
   try {
     const generate = await axios.get('https://nue-api.vercel.app/generate');
     const key = generate.data;
-    res.redirect(`${side[0]}${endpoint}&key=${key}`);
+    res.redirect(`${side[0]}${endpoint.trim()}&key=${key}`);
   } catch (error) {
     console.error(`Error in redirectWithKey for ${endpoint}:`, error);
     res.status(500).send('An error occurred');
   }
 };
 
+router.get('/nuego', async (req, res) =>{
+  const {user, q} = req.query;
+  if (!q && !user) return res.status(400).send('Masukan parameter q dan user');
+  async function main() {
+    const chatCompletion = await groq.chat.completions.create({
+      "messages": [
+        {
+          "role": "system",
+          "content": "Anda adalah AI pendeteksi prompt, anda dapat mendeteksi permintaan untuk anda hanya dapat membalas dengan:\n{ text: [text_pengguna]\\ngoogle_search: [true/false]\\nquery_search: [buat query google_search bernilai true]}\n\nFormat json : {text, google_search, query_search}\n"
+        },
+        {
+          "role": "user",
+          "content": "Hallo apa kabar, info gempa bumi terbaru ada Ngga"
+        },
+        {
+          "role": "assistant",
+          "content": "{\n \"text\": \"Hallo apa kabar, info gempa bumi terbaru ada Ngga\",\n \"google_search\": true,\n \"query_search\": \"info gempa bumi terbaru\"\n} \n"
+        },
+        {
+          "role": "user",
+          "content": q
+        }
+      ],
+      "model": "gemma2-9b-it",
+      "temperature": 0.1,
+      "max_tokens": 1024,
+      "top_p": 1,
+      "stream": false,
+      "stop": null
+    });
+    const {text, google_search, query_search} = JSON.parse(chatCompletion.choices[0].message.content);
+let hs = ''
+    if (google_search) {
+      const hasil = await axios.get(`https://nue-api.vercel.app/api/google?limit=5&query=${query_search}`);
+      hs = hasil.data.map(item => `${item.title}, ${item.snippet}, ${item.link}`).join('\n');
+    }
+    const response = await axios.get('https://nue-api.vercel.app/api/lgpt', {params: {
+      text: q,
+      systemPrompt:`Anda adalah AI bernama nuego anda adalah AI dengan pengetahuan real-time dan sudah terintegrasi dengan google.
+
+AI-knowledge: ${hs}`,
+      user: user
+          }});
+    res.status(200).send({system: JSON.parse(chatCompletion.choices[0].message.content), result: response.data.result, history: response.data.history});
+  }
+
+  main();
+  
+});
 router.get('/nature-tts', async (req, res) => {
   const text = req.query.text;
 
