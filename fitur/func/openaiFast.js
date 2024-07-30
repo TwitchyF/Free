@@ -26,7 +26,7 @@ const handleChat = async (req, res, systemMessage) => {
                 messages: payload.messages,
                 model: "llama3-70b-8192",
                 temperature: 0.5,
-                max_tokens: 150,
+                max_tokens: 1024,
                 top_p: 0.9,
                 stream: false,
                 stop: null
