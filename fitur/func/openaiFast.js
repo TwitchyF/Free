@@ -20,7 +20,7 @@ const handleChat = async (req, res, systemMessage) => {
                     { role: "system", content: systemMessage },
                     ...messages.map(msg => ({ role: msg.role, content: msg.content })),
   { role: "user", content: prompt },
-                    aiMessage ? { role: "assistant", content: aiMessage } : null
+                    aiMessage ? { role: "system", content: aiMessage } : null
                 ].filter(Boolean)
             };
 

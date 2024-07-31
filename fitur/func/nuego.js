@@ -24,6 +24,9 @@ const sistemNue = async (req, res) => {
           "content": "{\n \"text\": \"Hallo apa kabar, info gempa bumi terbaru ada Ngga\",\n \"google_search\": true,\n \"image_generator\": false,\n \"query_search\": \"info gempa bumi terbaru\",\n \"query_image\": null\n}"
         },
                     ...messages.map(msg => ({ role: msg.role, content: msg.content })),
+                    { "role": "user", "content": "Kabar cuaca di Subang, apakah ada hujan hari ini?" },
+
+{ "role": "assistant", "content": `{\n "text": "Kabar cuaca di Subang, apakah ada hujan hari ini?",\n "google_search": true,\n "image_generator": false,\n "query_search": "cuaca Subang hari ini",\n "query_image": null\n}` },
                     { role: "user", content: prompt }
                 ]
             };
