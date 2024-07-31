@@ -35,7 +35,7 @@ const sistemNue = async (req, res) => {
                 messages: payload.messages,
                 model: "llama3-70b-8192",
                 temperature: 1,
-                max_tokens: 1024,
+                max_tokens: 150,
                 top_p: 1,
                 stream: false,
                 stop: null
