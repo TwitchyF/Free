@@ -28,7 +28,7 @@ app.get('/sistem', async (req, res) =>{
 app.get('/generate', async (req, res) => {
   let key = []
   try {
-   const response = await axios.get('https://copper-ambiguous-velvet.glitch.me/read/nuekey');
+   const response = await axios.get('https://nue-db.koyeb.app/read/nuekey');
     key = response.data;
   } catch (e) {
     key = []
@@ -39,18 +39,18 @@ app.get('/generate', async (req, res) => {
   if (key.length > 5) {
     key = key.slice(-5);
   }
-  await axios.post('https://copper-ambiguous-velvet.glitch.me/write/nuekey',{json: key})
+  await axios.post('https://nue-db.koyeb.app/write/nuekey',{json: key})
 res.status(200).send(angka_dan_huruf_acak_A_Z_dan_1_9);
 });
 app.get('/key', (req, res) =>{
-  res.redirect('https://copper-ambiguous-velvet.glitch.me/read/nuekey')
+  res.redirect('https://nue-db.koyeb.app/read/nuekey')
 });
 app.get("/redirect", async (req, res) =>{
   if (!req.query.re) return res.send("Invalid Url");
   res.redirect(req.query.re);
 });
 app.get("/uptime", async (req, res) => {
-  const chatAi = 'https://copper-ambiguous-velvet.glitch.me/';
+  const chatAi = 'https://nue-db.koyeb.app/';
   const Scraper = 'https://dour-glory-nectarine.glitch.me/';
  const sideSrv = 'https://nue-api.koyeb.app/'
 
