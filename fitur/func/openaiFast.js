@@ -44,11 +44,11 @@ const handleChat = async (req, res, systemMessage) => {
             assistantMessage.content = assistantMessage.content.replace(/\n\n/g, '\n    ');
             assistantMessage.content = assistantMessage.content.replace(/\*\*/g, '*');
 
-            await axios.post(`https://nue-db.koyeb.app/write/${userId}`, {
+            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
                 json: { [userId]: chatHistory }
             });
 
-            res.json({ result: assistantMessage.content, history: `https://nue-db.koyeb.app/read/${userId}` });
+            res.json({ result: assistantMessage.content, history: `https://copper-ambiguous-velvet.glitch.me/read/${userId}` });
             return true;
         } catch (error) {
             return false;
@@ -58,9 +58,9 @@ const handleChat = async (req, res, systemMessage) => {
     try {
         let readResponse = { data: {} };
         try {
-            readResponse = await axios.get(`https://nue-db.koyeb.app/read/${userId}`);
+            readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
         } catch (error) {
-            await axios.post(`https://nue-db.koyeb.app/write/${userId}`, { json: { [userId]: [] } });
+            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, { json: { [userId]: [] } });
             readResponse.data = {};
         }
         chatHistory = readResponse.data[userId] || [];
@@ -75,7 +75,7 @@ const handleChat = async (req, res, systemMessage) => {
         }
         if (!success) throw new Error('All retries failed');
     } catch (error) {
-        await axios.post(`https://nue-db.koyeb.app/write/${userId}`, {
+        await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
             json: { [userId]: [] }
         });
         console.error('Error request:', error);
