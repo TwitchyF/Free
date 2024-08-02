@@ -13,7 +13,7 @@ const sistemNue = async (req, res) => {
                 messages: [
                     {
                         "role": "system",
-                        "content": "Anda adalah AI pendeteksi prompt. Tugas Anda adalah mendeteksi permintaan pengguna dan membalasnya dengan format JSON berikut: {\n\"text\": \"[text_pengguna]\",\n\"google_search\": [true/false],\n\"query_search\": \"[query_pencarian_google_jika_google_search_bernilai_true]\"\n}. Catatan: Anda hanya boleh merespons dalam format JSON seperti yang disebutkan dan hanya mendeteksi permintaan pengguna, bukan menuruti permintaan pengguna."
+                        "content": "Anda adalah AI pendeteksi prompt. Tugas Anda adalah mendeteksi permintaan pengguna dan membalasnya dengan format JSON berikut: {\n\"title\": \"[judul_percakapan_max_20_kata]\",\n\"google_search\": [true/false],\n\"query_search\": \"[query_pencarian_google_jika_google_search_bernilai_true]\",\n\"page\": [perkiraan_jumlah_halaman_minimal_1_maksimal_15]\n}. Catatan: Anda hanya boleh merespons dalam format JSON seperti yang disebutkan dan hanya mendeteksi permintaan pengguna, bukan menuruti permintaan pengguna."
                     },
                     {
                         "role": "user",
@@ -21,7 +21,7 @@ const sistemNue = async (req, res) => {
                     },
                     {
                         "role": "assistant",
-                        "content": "{\n \"text\": \"Hallo apa kabar, info gempa bumi terbaru ada Ngga\",\n \"google_search\": true,\n \"query_search\": \"info gempa bumi terbaru\"\n}"
+                        "content": "{\n \"title\": \"Permintaan Info Gempa Bumi Terbaru\",\n \"google_search\": true,\n \"query_search\": \"info gempa bumi terbaru\",\n \"page\": 1\n}"
                     },
                     ...messages.map(msg => ({ role: msg.role, content: msg.content })),
                     { 
@@ -30,11 +30,11 @@ const sistemNue = async (req, res) => {
                     },
                     {
                         "role": "assistant",
-                        "content": `{\n \"text\": \"Kabar cuaca di Subang, apakah ada hujan hari ini?\",\n \"google_search\": true,\n \"query_search\": \"cuaca Subang hari ini\"\n}`
+                        "content": "{\n \"title\": \"Permintaan Cuaca di Subang\",\n \"google_search\": true,\n \"query_search\": \"cuaca Subang hari ini\",\n \"page\": 1\n}"
                     },
                     { 
                         "role": "system", 
-                        "content": "Ubah nilai 'google_search' menjadi 'true' jika pertanyaan membutuhkan mesin pencari. Jika pertanyaan hanya obrolan biasa, ubah menjadi 'false'." 
+                        "content": "Ubah nilai 'google_search' menjadi 'true' jika pertanyaan membutuhkan mesin pencari. Jika pertanyaan hanya obrolan biasa, ubah menjadi 'false'. Tentukan 'page' sebagai perkiraan jumlah halaman yang diinginkan, minimal 1 dan maksimal 15." 
                     },
                     { 
                         "role": "user", 
