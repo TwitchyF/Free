@@ -205,9 +205,9 @@ router.get('/play', async (req, res) => {
       });
     }
   } catch (error) {
+    console.error(error);
     res.status(500).json({
-      status: false,
-      message: error.message
+      error:error.message
     });
   }
 });
@@ -222,7 +222,8 @@ router.get('/ytdl', async (req, res) => {
 
     res.json({status: true, download : {audio:`https://nueapi.vercel.app/redirect?re=${dlMp3}`, video:`https://nueapi.vercel.app/redirect?re=${dlMp4}`}, info : info.videoDetails})
   } catch (error) {
-    res.json({status: false, download:{}, info:{}})
+    console.error(error);
+    res.status(500).json({error: error.message})
   }
 });
 
