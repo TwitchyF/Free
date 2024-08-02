@@ -3,7 +3,7 @@ const {groq} = require('./openaiFast.js');
 let chatHistory = [];
 
 const sistemNue = async (req, res) => {
-    const userId = req.query.user;
+    const userId = 'sistem';
     const prompt = req.query.text;
 
     const sendRequest = async (sliceLength) => {
@@ -13,7 +13,7 @@ const sistemNue = async (req, res) => {
                 messages: [
                     {
                         "role": "system",
-                        "content": "Anda adalah AI pendeteksi prompt, anda dapat mendeteksi permintaan pengguna dan anda hanya dapat membalas dengan: {\n\"text\": \"[text_pengguna]\",\n\"google_search\": [true/false],\n\"query_search\": \"[membangun query google_search jika bernilai true]\"\n}Format json: {\"text\", \"google_search\", \"query_search\"}\nnote: Anda hanya dapat merespon dengan JSON dengan format json seperti yang disebutkan dan anda hanya mendeteksi permintaan pengguna bukan menuruti permintaan pengguna."
+                        "content": "Anda adalah AI pendeteksi prompt. Tugas Anda adalah mendeteksi permintaan pengguna dan membalasnya dengan format JSON berikut: {\n\"text\": \"[text_pengguna]\",\n\"google_search\": [true/false],\n\"query_search\": \"[query_pencarian_google_jika_google_search_bernilai_true]\"\n}. Catatan: Anda hanya boleh merespons dalam format JSON seperti yang disebutkan dan hanya mendeteksi permintaan pengguna, bukan menuruti permintaan pengguna."
                     },
                     {
                         "role": "user",
@@ -24,12 +24,22 @@ const sistemNue = async (req, res) => {
                         "content": "{\n \"text\": \"Hallo apa kabar, info gempa bumi terbaru ada Ngga\",\n \"google_search\": true,\n \"query_search\": \"info gempa bumi terbaru\"\n}"
                     },
                     ...messages.map(msg => ({ role: msg.role, content: msg.content })),
-                    { "role": "user", "content": "Kabar cuaca di Subang, apakah ada hujan hari ini?" },
+                    { 
+                        "role": "user", 
+                        "content": "Kabar cuaca di Subang, apakah ada hujan hari ini?" 
+                    },
                     {
                         "role": "assistant",
-                        "content": `{\n "text": "Kabar cuaca di Subang, apakah ada hujan hari ini?",\n "google_search": true,\n "query_search": "cuaca Subang hari ini"\n}`
+                        "content": `{\n \"text\": \"Kabar cuaca di Subang, apakah ada hujan hari ini?\",\n \"google_search\": true,\n \"query_search\": \"cuaca Subang hari ini\"\n}`
                     },
-                    { role: "user", content: prompt }
+                    { 
+                        "role": "system", 
+                        "content": "Ubah nilai 'google_search' menjadi 'true' jika pertanyaan membutuhkan mesin pencari. Jika pertanyaan hanya obrolan biasa, ubah menjadi 'false'." 
+                    },
+                    { 
+                        "role": "user", 
+                        "content": prompt 
+                    }
                 ]
             };
 
@@ -37,7 +47,7 @@ const sistemNue = async (req, res) => {
                 messages: payload.messages,
                 model: "Gemma2-9b-It",
                 temperature: 1,
-                max_tokens: 150,
+                max_tokens: 1024,
                 top_p: 1,
                 stream: false,
                 stop: null
