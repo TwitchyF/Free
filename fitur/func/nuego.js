@@ -63,7 +63,7 @@ const sistemNue = async (req, res) => {
             assistantMessage.content = assistantMessage.content.replace(/\n\n/g, '\n    ');
             assistantMessage.content = assistantMessage.content.replace(/\*\*/g, '*');
 
-            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
+            await axios.post(`https://nue-db.vercel.app/write/${userId}`, {
                 json: { [userId]: chatHistory }
             });
 
@@ -77,11 +77,11 @@ const sistemNue = async (req, res) => {
     try {
         let readResponse = { data: {} };
         try {
-            readResponse = await axios.get(`https://copper-ambiguous-velvet.glitch.me/read/${userId}`);
+            readResponse = await axios.get(`https://nue-db.vercel.app/read/${userId}`);
         } catch (error) {
-            await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, { json: { [userId]: [] } });
-            readResponse.data = {};
+        return res.status(500).json({ error: "Internal Server Error" });
         }
+        readResponse.data = readResponse.data || {};
         chatHistory = readResponse.data[userId] || [];
 
         let success = await sendRequest(20);
@@ -94,7 +94,7 @@ const sistemNue = async (req, res) => {
         }
         if (!success) throw new Error('All retries failed');
     } catch (error) {
-        await axios.post(`https://copper-ambiguous-velvet.glitch.me/write/${userId}`, {
+        await axios.post(`https://nue-db.vercel.app/write/${userId}`, {
             json: { [userId]: [] }
         });
         console.error('Error request:', error);
