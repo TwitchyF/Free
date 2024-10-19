@@ -14,7 +14,7 @@ let side = ['https://free-ochre.vercel.app/'];
 
 const redirectWithKey = async (req, res, endpoint) => {
   try {
-    const generate = await axios.get('https://nue-api.vercel.app/generate');
+    const generate = await axios.get('https://free-ochre.vercel.app/generate');
     const key = generate.data;
     res.redirect(`${side[0]}${endpoint.trim()}&key=${key}`);
   } catch (error) {
