@@ -13,6 +13,10 @@ router.get('/docs', async (req, res) => {
     }
 });
 
+router.get('/has', (req, res) => {
+  res.render('menu');
+});
+
 router.get('/error', function (req, res) {
   res.status(500).render('error');
 });
