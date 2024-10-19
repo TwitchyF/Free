@@ -2,20 +2,6 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-router.get('/docs', async (req, res) => {
-    try {
-        const response = await axios.get('https://free-ochre.vercel.app/read');
-        const data = {today:response.data.today, yesterday:response.data.yesterday,all:response.data.total};
-        res.render('dashboard', { jsonData: data });
-    } catch (error) {
-        console.error('Error fetching JSON data:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
-router.get('/has', (req, res) => {
-  res.render('menu');
-});
 
 router.get('/error', function (req, res) {
   res.status(500).render('error');
